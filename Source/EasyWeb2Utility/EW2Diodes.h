@@ -10,19 +10,11 @@
 
 #pragma once
 
-/** Macros wrapping the selected buttons */
-#define MSP_BUTTON_FIRST 0
-#define MSP_BUTTON_SECOND 1
-#define MSP_BUTTON_THIRD 2
-#define MSP_BUTTON_FOURTH 3
+#define MSP_DIODES_STATUS      0
+#define MSP_DIODES_RELAY_TYPE1 1
+#define MSP_DIODES_RELAY_TYPE2 2
 
-/** Initializes the buttons on EasyWeb2 Board */
-void buttonsStartUp();
 
-/**
- *  Checks, if the given button is pressed
- *  
- *  @param [in] button Selected button
- *  @return true if pressed, otherwise false.
- */
-bool buttonsIsPressed(int button);
+void diodesSetUpPorts(void);
+
+void diodesSwitch(int type);

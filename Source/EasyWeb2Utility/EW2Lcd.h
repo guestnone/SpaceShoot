@@ -39,18 +39,22 @@
 #define MSP_LCD_CUSTOM_CHAR_6 0x06
 #define MSP_LCD_CUSTOM_CHAR_7 0x07
 
-lcdExecuteCommand(void);
+void lcdExecuteCommand(void);
 
-lcdSendData(unsigned char data);
+void lcdSendData(unsigned char data);
 
-lcdSendCharacter(unsigned char character);
+void lcdSendCharacter(unsigned char character);
 
-lcdSendCommand(unsigned char command);
+void lcdSendCommand(unsigned char command);
 
-lcdSetUpPorts();
+void lcdSetUpPorts(void);
 
-lcdStartUp();
+void lcdStartUp(void);
 
-lcdClearDisplay();
+void lcdClearDisplay(void);
 
-lcdUploadCustomCharacters(customCharSet, unsigned int numOfCharacters);
+void lcdUploadCustomCharacters(char customCharSet, unsigned int numOfCharacters);
+
+void lcdGoToFirstLine(void);
+
+void lcdGoToSecondLine(void);

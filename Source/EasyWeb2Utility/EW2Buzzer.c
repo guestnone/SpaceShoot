@@ -8,18 +8,32 @@
 */
 //---------------------------------------------------------------------------
 
-#include "CommonUtil.h"
+#include "EW2Buzzer.h"
 
 #include <msp430x14x.h>
 
-void commonDelay(unsigned int us)
+void buzzerSetUpPorts(void)
 {
-	int count;
-	for (count = 0 ; count != us; ++count)
+	P4SEL = 0;
+	P4OUT = 0;
+	P4DIR = BIT2 | BIT3;
+}
+
+void buzzerSwitch(int type)
+{
+	switch(type)
 	{
-		_NOP();
-		_NOP();
-		_NOP();
-		_NOP();
+	case MSP_BUZZER_TYPE1:
+		P4OUT ^= BIT2;
+		break;
+	case MSP_BUZZER_TYPE1:
+		P4OUT ^= BIT3;
+		break;
 	}
+}
+
+void buzzerReset()
+{
+	P4OUT &= ~BIT2;
+	P4OUT &= ~BIT3;
 }

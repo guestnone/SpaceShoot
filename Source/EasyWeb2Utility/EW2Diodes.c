@@ -8,18 +8,31 @@
 */
 //---------------------------------------------------------------------------
 
-#include "CommonUtil.h"
+#include "EW2Diodes.h"
 
 #include <msp430x14x.h>
 
-void commonDelay(unsigned int us)
+void diodesSetUpPorts()
 {
-	int count;
-	for (count = 0 ; count != us; ++count)
+	// Initialize the Status diode
+	P2DIR |= BIT1;
+	// Initialize the Relay diodes
+	P1DIR |= BIT5;
+    P1DIR |= BIT6;
+}
+
+void diodesSwitch(int type)
+{
+	switch (type)
 	{
-		_NOP();
-		_NOP();
-		_NOP();
-		_NOP();
+	case MSP_DIODES_STATUS:
+		P2OUT ^= BIT1;
+		break;
+	case MSP_DIODES_RELAY_TYPE1:
+		P1OUT ^= BIT5;
+		break;
+	case MSP_DIODES_RELAY_TYPE2:
+		P1OUT ^= BIT6;
+		break;
 	}
 }
