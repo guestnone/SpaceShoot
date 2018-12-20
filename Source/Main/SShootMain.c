@@ -10,5 +10,6 @@
 
 int main()
 {
-	
+	int x, y;
+	char tab[10][10];
 }
