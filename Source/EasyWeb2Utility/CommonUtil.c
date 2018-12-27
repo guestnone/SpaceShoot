@@ -23,3 +23,8 @@ void commonDelay(unsigned int us)
 		_NOP();
 	}
 }
+
+void commonTurnOffWatchdog(void)
+{
+	WDTCTL = WDTPW + WDTHOLD;
+}

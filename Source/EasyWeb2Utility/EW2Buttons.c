@@ -8,8 +8,9 @@
 */
 //---------------------------------------------------------------------------
 
+#include "EW2Buttons.h"
 
-#include "EasyWeb2Utility/EW2Buttons.h"
+#include <msp430x14x.h>
 
 void buttonsStartUp()
 {

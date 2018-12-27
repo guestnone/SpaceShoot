@@ -1,8 +1,18 @@
+//---------------------------------------------------------------------------
+/*  SPDX-License-Identifier: Expat
+	
+	Copyright (C) 2018 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
+	
+	This source file is released under the MIT License.
+	See LICENSE.md for full terms. This notice is not to be removed.
+*/
+//---------------------------------------------------------------------------
+
 #pragma once
 
 #define MSP_LCD_DATA_PORT           P2OUT              
-#define MSP_LCD_EXECUTE_BIT             3                 //P2.3
-#define MSP_LCD_COMMUNICATION_MODE_BIT  2                 //P2.2
+#define MSP_LCD_EXECUTE_BIT             3                 // P2.3
+#define MSP_LCD_COMMUNICATION_MODE_BIT  2                 // P2.2
 
 /************************************************************************/
 /* 	                          LCD COMMANDS                              */
@@ -53,7 +63,7 @@ void lcdStartUp(void);
 
 void lcdClearDisplay(void);
 
-void lcdUploadCustomCharacters(char customCharSet, unsigned int numOfCharacters);
+void lcdUploadCustomCharacters(char *customCharSet, unsigned int numOfCharacters);
 
 void lcdGoToFirstLine(void);
 

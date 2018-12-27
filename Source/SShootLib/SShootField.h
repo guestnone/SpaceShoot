@@ -7,3 +7,6 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+
+
+void fieldUpdateDisplayOutput();

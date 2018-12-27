@@ -8,8 +8,19 @@
 */
 //---------------------------------------------------------------------------
 
+#include <EasyWeb2Utility/CommonUtil.h>
+
+void mainStartUpDevice()
+{
+	commonTurnOffWatchdog();
+
+}
+
 int main()
 {
 	int x, y;
 	char tab[10][10];
+	mainStartUpDevice();
+
+
 }

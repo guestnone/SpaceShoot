@@ -7,3 +7,15 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+
+void gmplUpdatePositions();
+
+void gmplResolveCollision();
+
+
+void gmplUpdate();
+
+void gmplSetUp();
+
+
+void gmplLoopEnter();

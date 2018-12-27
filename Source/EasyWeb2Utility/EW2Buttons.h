@@ -16,7 +16,7 @@
 #define MSP_BUTTON_THIRD 2
 #define MSP_BUTTON_FOURTH 3
 
-/** Initializes the buttons on EasyWeb2 Board */
+/** Initialize the buttons on EasyWeb2 Board */
 void buttonsStartUp();
 
 /**

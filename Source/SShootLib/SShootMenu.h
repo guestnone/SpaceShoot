@@ -7,3 +7,16 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+
+void menuMainWindow();
+
+void menuSettings();
+
+void menuShipSelect();
+
+void menuAbout();
+
+void menuToGameSwitchWindow();
+
+
+void menuLoopEnter();

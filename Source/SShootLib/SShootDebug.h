@@ -8,21 +8,5 @@
 */
 //---------------------------------------------------------------------------
 
-#pragma once
 
-#define EVER (;;)
-
-/**
- * Our own bool type, since we don't know if old IAR C Compiler
- * supports this type.
- */
-typedef int bool;
-#define true 1
-#define false 0
-
-#define MSP_SET_BIT(var,bitno) ((var) |= 1 << (bitno))
-#define MSP_CLEAR_BIT(var,bitno) ((var) &= ~(1 << (bitno)))
-
-void commonDelay(unsigned int us);
-
-void commonTurnOffWatchdog(void);
+void debugUpdateDebugOutput();

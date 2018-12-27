@@ -88,7 +88,7 @@ void lcdStartUp(void)
 	commonDelay(100*100); //10ms
 	lcdExecuteCommand();
 	commonDelay(100*100); //10ms
-	    
+	
 	LCD_DATA_PORT &= ~BIT4;
 	lcdExecuteCommand();
 
@@ -108,9 +108,19 @@ void lcdClearDisplay(void)
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 }
 
-void lcdUploadCustomCharacters(char customCharSet, unsigned int numOfCharacters)
+void lcdUploadCustomCharacters(char *customCharSet, unsigned int numOfCharacters)
 {
+	int i;
+	int j;
 
+	lcdSendCommand(MSP_LCD_CHARACTER_GEN_RAM_ADDRESS);
+	for (i = 0; i < numOfCharacters; i++)
+	{
+		for (j = 0; j < 8; j++)
+		{
+			lcdSendData(customCharSet[i][j]);
+		}
+	}
 }
 
 void lcdGoToFirstLine(void)

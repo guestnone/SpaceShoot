@@ -12,7 +12,7 @@
 
 #include <msp430x14x.h>
 
-void diodesSetUpPorts()
+void diodesSetUpPorts(void)
 {
 	// Initialize the Status diode
 	P2DIR |= BIT1;
