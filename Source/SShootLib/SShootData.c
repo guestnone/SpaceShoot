@@ -8,4 +8,14 @@
 */
 //---------------------------------------------------------------------------
 
-
+void dataCreateCustomScreenCharset(char chars[8][8])
+{
+	SEND_CMD(CG_RAM_ADDR);
+	for(int i=0;i<8;i++)
+	{
+		for(int u=0;u<8;u++)
+		{
+			SEND_CHAR(chars[i][u]);
+		}
+	}
+}
