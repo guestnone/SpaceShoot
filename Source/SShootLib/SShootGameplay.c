@@ -16,9 +16,18 @@ char powerUpYPos;
 char powerUpType;
 char playerYPos=0;
 
+typedef enum powerUpType
+{
+	HPUp,
+	Defense,
+	LaserPowerUp,
+	DecreaseSpeed
+}powUpType;
+
+
 void gmplUpdateObjectsPositions()
 {
-	//
+	
 	obstacles[0][0]=0;
 	obstacles[1][0]=0;
 	
@@ -57,3 +66,47 @@ void gmplUpdatePowerUpPosition()
 		powerUpXpos--;
 	}
 }
+
+void gmplResolveObjectCollision()
+{	
+	// do napisania funkcje HpDown
+	if(playerYPos == 0 && obstacles[0][0]!=0)
+	{
+		HpDown();	
+	}
+	if(playerYPos == 1&& obstacles[1][0]!=0)
+	{
+		HpDown();
+	}
+	
+	if(playerYPos == 0 && bullets[0][0]!=0)
+	{
+		HpDown();	
+	}
+	if(playerYPos == 1&& bullets[1][0]!=0)
+	{
+		HpDown();
+	}
+	
+	if(playerYPos == powerUpYPos && powerUpXPos == 0)
+	{
+		//do napisania: funkcje do odpalania PowerUpów
+		switch(powUpType)
+		{
+			case HPUp:
+				
+				break;
+			case Defense:
+				
+				break;
+			case LaserPowerUp:
+				
+				break;
+			case DecreaseSpeed:
+				
+				break;
+		}
+	}
+	
+}
+
