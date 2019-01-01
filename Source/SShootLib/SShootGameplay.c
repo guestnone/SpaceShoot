@@ -38,7 +38,7 @@ void gmplUpdateObjectsPositions()
 			if(obstacles[i][u]!=0)
 			{
 				obstacles[i][u-1]=obstacles[i][u];
-				
+				obstacles[i][u]=0;
 			}
 		}
 	}
@@ -54,6 +54,7 @@ void gmplUpdateBulltetsPositions()
 			if(bullets[u]!=0)
 			{
 				bullets[i][u-1]=bullets[i][u];
+				bullters[i][u]=0;
 				
 			}
 		}
