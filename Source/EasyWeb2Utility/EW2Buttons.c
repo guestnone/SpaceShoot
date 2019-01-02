@@ -7,12 +7,14 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+// Button related functions - implementation.
+//---------------------------------------------------------------------------
 
 #include "EW2Buttons.h"
 
 #include <msp430x14x.h>
 
-void buttonsStartUp()
+void buttonsSetUpPorts();
 {
 	P4DIR &= ~(BIT4 // One
 	         | BIT5 // Two

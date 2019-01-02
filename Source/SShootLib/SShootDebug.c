@@ -8,3 +8,27 @@
 */
 //---------------------------------------------------------------------------
 
+#include "SShootDebug.h"
+
+#ifdef SSHOOT_DEBUG
+#include <EasyWeb2Utility/EW2Uart.h>
+
+
+void debugUartLog(char* message, LogChannel channel)
+{
+	switch(channel)
+	{
+	case Debug:
+		uartTransmitString("[DEBUG]: " + message);
+		break:
+	case Warning:
+		uartTransmitString("[WARNING]: " + message);
+		break;
+	case Error:
+		uartTransmitString("[ERROR]: " + message);
+		break:
+	}
+}
+
+
+#endif

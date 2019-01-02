@@ -7,17 +7,18 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
-
+// Button related functions - definitions.
+//---------------------------------------------------------------------------
 #pragma once
 
-/** Macros wrapping the selected buttons */
+/** Type of the button that the user wants to check. */
 #define MSP_BUTTON_FIRST 0
 #define MSP_BUTTON_SECOND 1
 #define MSP_BUTTON_THIRD 2
 #define MSP_BUTTON_FOURTH 3
 
-/** Initialize the buttons on EasyWeb2 Board */
-void buttonsStartUp();
+/** Initializes the buttons by setting up proper ports. */
+void buttonsSetUpPorts();
 
 /**
  *  Checks, if the given button is pressed

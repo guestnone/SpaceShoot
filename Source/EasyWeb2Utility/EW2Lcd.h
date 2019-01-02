@@ -7,7 +7,8 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
-
+// LCD controller related functions - definitions.
+//---------------------------------------------------------------------------
 #pragma once
 
 #define MSP_LCD_DATA_PORT           P2OUT              
@@ -48,23 +49,57 @@
 #define MSP_LCD_CUSTOM_CHAR_5 0x05
 #define MSP_LCD_CUSTOM_CHAR_6 0x06
 #define MSP_LCD_CUSTOM_CHAR_7 0x07
-
+/**
+ *  Sends the command to the LCD controller to execute written command 
+ *  @note Internal function.
+ */
 void lcdExecuteCommand(void);
 
+/**
+ * Sends the value (character or value for CGRAM) to the LCD controller.
+ *
+ * @param[in]  data  Value to be sent.
+ */
 void lcdSendData(unsigned char data);
 
+/**
+ * Sends the character to the LCD controller.
+ *
+ * @param[in]  character  Given character to send.
+ */
 void lcdSendCharacter(unsigned char character);
 
+/**
+ * Sends the command to the LCD controller.
+ *
+ * @param[in]  command  Command from the list of commands to be sent.
+ */
 void lcdSendCommand(unsigned char command);
 
+/**
+ * Sets up the ports for LCD controller.
+ * 
+ * @note This doesn't initializes the controller since it is in unknown state
+ * Please, call the lcdStartUp function to properly initialize the controller.
+ */
 void lcdSetUpPorts(void);
 
+/** Initializes the controller and clears up the display */
 void lcdStartUp(void);
 
+/** Clears up the display */
 void lcdClearDisplay(void);
 
+/**
+ * Uploads the custom defined character set to the Memory of the Character Generator
+ *
+ * @param      customCharSet    Arrary containing the character set
+ * @param[in]  numOfCharacters  The number of characters to be send to the memory.
+ */
 void lcdUploadCustomCharacters(char *customCharSet, unsigned int numOfCharacters);
 
+/** Sets the controller to first line of display */
 void lcdGoToFirstLine(void);
 
+/** Sets the controller to second line of display */
 void lcdGoToSecondLine(void);

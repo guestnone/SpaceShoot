@@ -9,11 +9,30 @@
 //---------------------------------------------------------------------------
 
 #include <EasyWeb2Utility/CommonUtil.h>
+#include <EasyWeb2Utility/EW2Buttons.h>
+#include <EasyWeb2Utility/EW2Buzzer.h>
+#include <EasyWeb2Utility/EW2Diodes.h>
+#include <EasyWeb2Utility/EW2Lcd.h>
+#include <EasyWeb2Utility/EW2Uart.h>
+
+
+
+#define MAIN_INIT_BAUDRATE 1200
 
 void mainStartUpDevice()
 {
 	commonTurnOffWatchdog();
-
+	
+	// port set-up
+	buttonsSetUpPorts();
+	buzzerSetUpPorts();
+	diodesSetUpPorts();
+	lcdSetUpPorts();
+	uartSetUpPorts();
+	
+	lcdStartUp();
+	void uartStartUp(MAIN_INIT_BAUDRATE);
+	
 }
 
 int main()
@@ -21,6 +40,7 @@ int main()
 	int x, y;
 	char tab[10][10];
 	mainStartUpDevice();
-
-
+	
+	
+	return 0;
 }

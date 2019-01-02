@@ -7,6 +7,8 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+// UART controller related functions - implementation.
+//---------------------------------------------------------------------------
 
 #include <msp430x14x.h>
 

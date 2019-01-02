@@ -7,6 +7,8 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+// LCD controller related functions - implementation.
+//---------------------------------------------------------------------------
 
 #include "EW2Lcd.h"
 #include "CommonUtil.h"
