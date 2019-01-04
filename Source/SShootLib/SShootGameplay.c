@@ -19,6 +19,16 @@ char playerYPos=0;
 char beginOfObstacles = 0;
 char beginOfBullets   = 0;
 char beginOfPowerUp   = 0;
+char lifesLeft=3;
+
+char idOfBullet=0;
+typedef struct playerBullet
+{
+	char x;
+	char y;
+	char isDown=1;
+} playerBullets[2];
+
 
 typedef enum powerUpType
 {
@@ -51,6 +61,20 @@ void gmplUpdateObjectsPositions()
 			}
 		}
 	}*/
+}
+
+void gmplDetectPlayerBulletCollision()
+{
+		
+}
+void gmplPlayerShootBullet()
+{
+	playerBullets[idOfBullet].x=player
+}
+
+void gmplEnemyShootBullet()
+{
+
 }
 void gmplUpdateBulltetsPositions()
 {
@@ -171,4 +195,11 @@ void gmplResolveObjectCollision()
 	}*/
 	
 }
-
+void HpDown()
+{
+	lifesLeft--;
+	if(lifesLeft==0)
+	{
+		gameOver();	
+	}
+}
