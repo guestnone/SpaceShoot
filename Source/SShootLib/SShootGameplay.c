@@ -15,7 +15,7 @@ char powerUpXPos;
 char powerUpYPos;
 char powerUpType;
 char playerYPos=0;
-
+char playerXpos=0;
 char beginOfObstacles = 0;
 char beginOfBullets   = 0;
 char beginOfPowerUp   = 0;
@@ -26,7 +26,7 @@ typedef struct playerBullet
 {
 	char x;
 	char y;
-	char isDown=1;
+	char isShot=0;
 } playerBullets[2];
 
 
@@ -38,7 +38,10 @@ typedef enum powerUpType
 	DecreaseSpeed
 }powUpType;
 
-
+void gmplUpdatePlayerXPos()
+{
+	playerXPos=(playerXPos+1)%16;	
+}
 void gmplUpdateObjectsPositions()
 {
 	beginOfObstacles=(beginOfObstacles+1)%16;
@@ -69,14 +72,24 @@ void gmplDetectPlayerBulletCollision()
 }
 void gmplPlayerShootBullet()
 {
-	playerBullets[idOfBullet].x=player
+	playerBullets[idOfBullet].y=playerYPos;
+	playerBullets[idOfBullet].x=0;
 }
-
-void gmplEnemyShootBullet()
+void gmplMovePlayerBullets()
 {
-
+	for(int i=0;i<2;++i)
+	{
+		if(playerBullets[i].isShot==true)
+		{
+			playerBullets[i].x=(playerBullets[i].x+1)%16;	
+		}
+	}
 }
-void gmplUpdateBulltetsPositions()
+void gmplEnemyShootBullet(char y)
+{
+	
+}
+void gmplUpdateEnemyBulltetsPositions()
 {
 	beginOfBullets=(beginOfBullets+1)%16;
 	bullets[0][beginOfBullets=0;
