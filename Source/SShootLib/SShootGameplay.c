@@ -57,9 +57,68 @@ void gmplDetectPlayerBulletCollision()
 			char x=(playerBullets[i].x + beginOfObstacles )%16;
 			if(obstacles[y][x]==2)
 			{
-				enemyIsDown(y,x);	
+				gmplEnemyIsDown(y,x);	
 			}
 		}
+}
+void gmplPutBarrierOnGamefield(char y)
+{
+	obstacles[y][beginOfObstacles]=1;
+}
+
+void gmplPutEnemyOnGamefield(char y)
+{
+	obstacles[y][beginOfObstacles]=2;
+	gmplEnemyShootBullet(y);
+	
+}
+
+void gmplPutPowerUpOnGamefield(char y, powerUpType put)
+{
+	
+}
+char gmplDoIGenerateNewObject()
+{
+	if()
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;	
+	}
+}
+void gmplGenerateNewObject()
+{
+	char y = gmplRandomYCoord();
+	unsigned char typeOfObject = gmplRandomobject();
+	if(typeOfObject==0)//power up
+	switch(typeOfObject)
+	{
+		case 0://power up
+			{
+				char typeOfPowerUp = gmplRandomPowerUp();
+				gmplPutPowerUpOnGamefield(y,typeOfPowerUp);
+			}
+			break;
+		case 1://enemy
+			gmplPutEnemyOnGamefield(y);
+			break;
+		case 2://barrier
+			gmplPutEnemyOnGamefield(y);
+			break;
+	}
+	
+			
+		
+		
+	
+	
+}
+
+void gmplEnemyIsDown(char x,char y)
+{
+	obstacles[y][x]=0;	
 }
 void gmplPlayerShootBullet()
 {
