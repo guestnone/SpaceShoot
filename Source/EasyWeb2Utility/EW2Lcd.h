@@ -103,3 +103,10 @@ void lcdGoToFirstLine(void);
 
 /** Sets the controller to second line of display */
 void lcdGoToSecondLine(void);
+
+/**
+ * Sends the string to the LCD controller
+ *
+ * @param  string  String that we want to send.
+ */
+void lcdSendString(char *string)

@@ -109,5 +109,5 @@ void uartTransmitCharacter(unsigned char character)
 void uartTransmitString(char *string)
 {
 	while(*string)
-    	uartTransmitCharacter(*string++);  
+		uartTransmitCharacter(*string++);  
 }

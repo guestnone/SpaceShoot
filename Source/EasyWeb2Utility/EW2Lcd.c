@@ -134,3 +134,9 @@ void lcdGoToSecondLine(void)
 {
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
 }
+
+void lcdSendString(char *string)
+{
+	while(*string)
+    	lcdSendData(*string++);  
+}

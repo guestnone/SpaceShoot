@@ -8,15 +8,13 @@
 */
 //---------------------------------------------------------------------------
 
-void menuMainWindow();
+MainLoopState menuMainWindow();
 
-void menuSettings();
+MainLoopState menuSettings();
 
-void menuShipSelect();
+MainLoopState menuHighScores();
 
-void menuAbout();
-
-void menuToGameSwitchWindow();
+MainLoopState menuAbout();
 
 
 void menuLoopEnter();
