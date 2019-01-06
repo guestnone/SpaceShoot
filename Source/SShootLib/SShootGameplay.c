@@ -68,7 +68,15 @@ void gmplUpdateObjectsPositions()
 
 void gmplDetectPlayerBulletCollision()
 {
-		
+		for(char i=0;i<2;++i)
+		{
+			char y = playerBullets[i].y;
+			char x=(playerBullets[i].x + beginOfObstacles )%16;
+			if(obstacles[y][x]==2)
+			{
+				enemyIsDown(y,x);	
+			}
+		}
 }
 void gmplPlayerShootBullet()
 {
@@ -77,7 +85,7 @@ void gmplPlayerShootBullet()
 }
 void gmplMovePlayerBullets()
 {
-	for(int i=0;i<2;++i)
+	for(char i=0;i<2;++i)
 	{
 		if(playerBullets[i].isShot==true)
 		{
@@ -87,7 +95,7 @@ void gmplMovePlayerBullets()
 }
 void gmplEnemyShootBullet(char y)
 {
-	
+	bullets[y][beginOfBullets]=1;
 }
 void gmplUpdateEnemyBulltetsPositions()
 {
