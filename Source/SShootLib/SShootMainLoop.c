@@ -28,22 +28,22 @@ void mainloopEnter()
 
 		if (mainLS == Game)
 		{
-			mainLS == gmplLoopEnter();
+			mainLS = gmplLoopEnter();
 		}
 
 		if (mainLS == Settings)
 		{
-			mainLS == menuSettings();
+			mainLS = menuSettings();
 		}		
 
 		if (mainLS == HighScore)
 		{
-			mainLS == menuHighScores();
+			mainLS = menuHighScores();
 		}		
 
 		if (mainLS == About)
 		{
-			mainLS == menuAbout();
+			mainLS = menuAbout();
 		}		
 
 	}
