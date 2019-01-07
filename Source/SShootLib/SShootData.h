@@ -16,18 +16,32 @@ enum CustomCharacterType
 /************************************************************************/
 /* 	                   SHIPS, ENEMIES AND OBJECT                        */
 /************************************************************************/
-char gShipData[4][5]
+char FirstShipData[5]
 {
-	{},
-	{},
-	{},
-	{},
-}
+	0, 0, 0, 0, 0
+};
+
+char SecondShipData[5]
+{
+	0, 0, 0, 0, 0
+};
+
+char ThirdShipData[5]
+{
+	0, 0, 0, 0, 0
+};
+
+char FourthShipData[5]
+{
+	0, 0, 0, 0, 0
+};
 
 
 /************************************************************************/
 /* 	                    POLISH LANGUAGE CHARACTERS                      */
 /************************************************************************/
+
+
 
 /************************************************************************/
 /* 	                           LCD STRINGS                              */
@@ -53,7 +67,7 @@ char gShipData[4][5]
 #define STR_ABOUT_BY "by"
 #define STR_ABOUT_AUTHOR_ONE "Patrick Recko"
 #define STR_ABOUT_AUTHOR_TWO "Yan Yanutsevich"
-#define STR_ABOUT_AUTHOR_THREE "Pawel Krzywosz"
+#define STR_ABOUT_AUTHOR_THREE "Paweł Krzywosz"
 
 #define STR_WAIT "WAIT!"
 
