@@ -15,10 +15,20 @@ char powerUpXPos;
 char powerUpYPos;
 char powerUpType;
 char playerYPos=0;
-
+char playerXpos=0;
 char beginOfObstacles = 0;
 char beginOfBullets   = 0;
 char beginOfPowerUp   = 0;
+char lifesLeft=3;
+
+char idOfBullet=0;
+typedef struct playerBullet
+{
+	char x;
+	char y;
+	char isShot=0;
+} playerBullets[2];
+
 
 typedef enum powerUpType
 {
@@ -28,65 +38,119 @@ typedef enum powerUpType
 	DecreaseSpeed
 }powUpType;
 
-
+void gmplUpdatePlayerXPos()
+{
+	playerXPos=(playerXPos+1)%16;	
+}
 void gmplUpdateObjectsPositions()
 {
 	beginOfObstacles=(beginOfObstacles+1)%16;
 	obstacles[0][beginOfObstacles]=0;
 	obstacles[1][beginOfObstacles]=0;
+}
 	
-	
-	
-	/*
-	obstacles[0][0]=0;
-	obstacles[0][0]=0;
-	for(int i=0;i<2;i++)
-	{
-		for(int u=1;u<16;u++)
+void gmplDetectPlayerBulletCollision()
+{
+		for(char i=0;i<2;++i)
 		{
-			if(obstacles[i][u]!=0)
+			char y = playerBullets[i].y;
+			char x=(playerBullets[i].x + beginOfObstacles )%16;
+			if(obstacles[y][x]==2)
 			{
-				obstacles[i][u-1]=obstacles[i][u];
-				obstacles[i][u]=0;
+				gmplEnemyIsDown(y,x);	
 			}
 		}
-	}*/
 }
-void gmplUpdateBulltetsPositions()
+void gmplPutBarrierOnGamefield(char y)
+{
+	obstacles[y][beginOfObstacles]=1;
+}
+	
+void gmplPutEnemyOnGamefield(char y)
+{
+	obstacles[y][beginOfObstacles]=2;
+	gmplEnemyShootBullet(y);
+	
+}
+
+void gmplPutPowerUpOnGamefield(char y, powerUpType put)
+	{
+	
+}
+char gmplDoIGenerateNewObject()
+		{
+	if()
+			{
+		return 1;
+			}
+	else
+	{
+		return 0;	
+		}
+}
+void gmplGenerateNewObject()
+{
+	char y = gmplRandomYCoord();
+	unsigned char typeOfObject = gmplRandomobject();
+	if(typeOfObject==0)//power up
+	switch(typeOfObject)
+	{
+		case 0://power up
+			{
+				char typeOfPowerUp = gmplRandomPowerUp();
+				gmplPutPowerUpOnGamefield(y,typeOfPowerUp);
+			}
+			break;
+		case 1://enemy
+			gmplPutEnemyOnGamefield(y);
+			break;
+		case 2://barrier
+			gmplPutEnemyOnGamefield(y);
+			break;
+	}
+	
+			
+		
+		
+	
+	
+}
+
+void gmplEnemyIsDown(char x,char y)
+	{
+	obstacles[y][x]=0;	
+}
+void gmplPlayerShootBullet()
+		{
+	playerBullets[idOfBullet].y=playerYPos;
+	playerBullets[idOfBullet].x=0;
+}
+void gmplMovePlayerBullets()
+			{
+	for(char i=0;i<2;++i)
+	{
+		if(playerBullets[i].isShot==true)
+		{
+			playerBullets[i].x=(playerBullets[i].x+1)%16;	
+			}
+		}
+	}
+void gmplEnemyShootBullet(char y)
+{
+	bullets[y][beginOfBullets]=1;
+}
+void gmplUpdateEnemyBulltetsPositions()
 {
 	beginOfBullets=(beginOfBullets+1)%16;
 	bullets[0][beginOfBullets=0;
 	bullets[1][beginOfBullets]=0;
-	
-	/*
-	bulltes[0][0]=0;
-	bullets[1][0]=0;
-	for(int i=0;i<2;i++)
-	{
-		for(int u=1;u<16;u++)
-		{
-			if(bullets[u]!=0)
-			{
-				bullets[i][u-1]=bullets[i][u];
-				bullters[i][u]=0;
-				
-			}
-		}
-	}
-	*/
 }
 void gmplUpdatePowerUpPosition()
 {
 	
 	beginOfPowerUp=(beginOfPowerUp+1)%16;
 	
-	/*
-	if(powerUpXpos!=0)
-	{
-		powerUpXpos--;
 	}
-	*/
-}
 
 void gmplResolveObjectCollision()
 {	
@@ -131,45 +195,16 @@ void gmplResolveObjectCollision()
 	}
 	
 	
-	/*
-	if(playerYPos == 0 && obstacles[0][0]!=0)
-	{
-		HpDown();	
-	}
-	if(playerYPos == 1&& obstacles[1][0]!=0)
-	{
-		HpDown();
-	}
 	
-	if(playerYPos == 0 && bullets[0][0]!=0)
-	{
-		HpDown();	
-	}
-	if(playerYPos == 1&& bullets[1][0]!=0)
-	{
-		HpDown();
-	}
 	
-	if(playerYPos == powerUpYPos && powerUpXPos == 0)
+	}
+void HpDown()
 	{
-		//do napisania: funkcje do odpalania PowerUpów
-		switch(powUpType)
-		{
-			case HPUp:
-				
-				break;
-			case Defense:
-				
-				break;
-			case LaserPowerUp:
-				
-				break;
-			case DecreaseSpeed:
-				
-				break;
+	lifesLeft--;
+	if(lifesLeft==0)
+	{
+		gameOver();	
 		}
-	}*/
-	
 }
 
 void gmplMainPart()
