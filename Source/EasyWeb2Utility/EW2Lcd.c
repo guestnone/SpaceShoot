@@ -7,6 +7,8 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+// LCD controller related functions - implementation.
+//---------------------------------------------------------------------------
 
 #include "EW2Lcd.h"
 #include "CommonUtil.h"
@@ -131,4 +133,10 @@ void lcdGoToFirstLine(void)
 void lcdGoToSecondLine(void)
 {
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
+}
+
+void lcdSendString(char *string)
+{
+	while(*string)
+    	lcdSendData(*string++);  
 }

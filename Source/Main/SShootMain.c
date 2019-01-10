@@ -9,18 +9,47 @@
 //---------------------------------------------------------------------------
 
 #include <EasyWeb2Utility/CommonUtil.h>
+#include <EasyWeb2Utility/EW2Buttons.h>
+#include <EasyWeb2Utility/EW2Buzzer.h>
+#include <EasyWeb2Utility/EW2Diodes.h>
+#include <EasyWeb2Utility/EW2Lcd.h>
+#include <EasyWeb2Utility/EW2Uart.h>
+#include <SShootLib/SShootMainLoop.h>
+
+#define MAIN_INIT_BAUDRATE 1200
+#define MAIN_EW2LIBTEST_MODE 1
 
 void mainStartUpDevice()
 {
 	commonTurnOffWatchdog();
-
+	
+	// port set-up
+	buttonsSetUpPorts();
+	buzzerSetUpPorts();
+	diodesSetUpPorts();
+	lcdSetUpPorts();
+	uartSetUpPorts();
+	
+	lcdStartUp();
+	uartStartUp(MAIN_INIT_BAUDRATE);
+	
 }
 
+if MAIN_EW2LIBTEST_MODE
 int main()
 {
-	int x, y;
-	char tab[10][10];
 	mainStartUpDevice();
-
-
+	// @todo plug (implemented) tests for EW2 lib
+	
+	return 0;
 }
+#else
+int main()
+{
+	mainStartUpDevice();
+	mainloopEnter();
+
+	
+	return 0;
+}
+#endif

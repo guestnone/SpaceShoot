@@ -7,6 +7,8 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+// UART controller related functions - implementation.
+//---------------------------------------------------------------------------
 
 #include <msp430x14x.h>
 
@@ -107,5 +109,5 @@ void uartTransmitCharacter(unsigned char character)
 void uartTransmitString(char *string)
 {
 	while(*string)
-    	uartTransmitCharacter(*string++);  
+		uartTransmitCharacter(*string++);  
 }

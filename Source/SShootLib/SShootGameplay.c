@@ -172,3 +172,17 @@ void gmplResolveObjectCollision()
 	
 }
 
+void gmplMainPart()
+{
+	// Paweł's stuff gets called here.
+}
+
+MainLoopState gmplLoopEnter()
+{
+	ShipType sType = gmplShipSelect();
+	gmplSetUp();
+	gmplMainPart();
+	gmplHighScoreInput();
+
+	return MainWindow;
+}

@@ -7,6 +7,8 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+// Buzzer related functions - implementation.
+//---------------------------------------------------------------------------
 
 #include "EW2Buzzer.h"
 

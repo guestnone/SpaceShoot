@@ -8,14 +8,26 @@
 */
 //---------------------------------------------------------------------------
 
+enum ShipType
+{
+	First,
+	Second,
+	Third,
+	Fourth
+};
+
 void gmplUpdatePositions();
 
 void gmplResolveCollision();
 
 
-void gmplUpdate();
+void gmplMainPart();
+
+void gmplHighScoreInput();
 
 void gmplSetUp();
 
 
-void gmplLoopEnter();
+MainLoopState gmplLoopEnter();
+
+ShipType gmplShipSelect();
