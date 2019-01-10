@@ -12,16 +12,17 @@
 
 #pragma once
 
-/** Used in for() loops to perform infinite loop */
-#define EVER (;;)
+#include <stdbool.h>
 
 /**
- * Our own bool type, since we don't know if old IAR C Compiler
- * supports this type.
+ *  Delays the execution of the code by a given time.
+ *  
+ *  @param [in] us Time in nano-seconds.
  */
-typedef int bool;
-#define true 1
-#define false 0
+void commonDelay(unsigned int us);
+
+/** Turns off the watchdog in the device. */
+void commonTurnOffWatchdog(void);
 
 /**
  *  Sets the bit in the variable/address to a positive value.
@@ -39,12 +40,3 @@ typedef int bool;
  */
 #define MSP_CLEAR_BIT(var,bitno) ((var) &= ~(1 << (bitno)))
 
-/**
- *  Delays the execution of the code by a given time.
- *  
- *  @param [in] us Time in nano-seconds.
- */
-void commonDelay(unsigned int us);
-
-/** Turns off the watchdog in the device. */
-void commonTurnOffWatchdog(void);

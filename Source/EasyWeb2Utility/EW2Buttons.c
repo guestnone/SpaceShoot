@@ -11,10 +11,11 @@
 //---------------------------------------------------------------------------
 
 #include "EW2Buttons.h"
+#include "CommonUtil.h"
 
 #include <msp430x14x.h>
 
-void buttonsSetUpPorts();
+void buttonsSetUpPorts()
 {
 	P4DIR &= ~(BIT4 // One
 	         | BIT5 // Two

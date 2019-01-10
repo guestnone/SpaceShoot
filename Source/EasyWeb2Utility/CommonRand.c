@@ -23,9 +23,9 @@ void randInit(int max, int min)
 	ADC12CTL0 = ADC12ON|REFON|SHT0_15; 
 	ADC12CTL1 = SHP|CSTARTADD_0;
 	ADC12MCTL0 = INCH_10|SREF_1;
-	for(k=0; k<0x3600; k++);
+	for(int k=0; k < 0x3600; k++);
  
-	CCR0 = INTERVAL;
+	CCR0 = 50000;
 	TACTL = TASSEL_2 | ID_3 | MC_1;
 	CCTL0 = CCIE;
 	_BIS_SR(GIE);
@@ -35,7 +35,7 @@ void randInit(int max, int min)
 	P2OUT ^= BIT1;
 	ADC12CTL0 |= ADC12SC;
 	while((ADC12CTL1 & ADC12BUSY) == 1);
-	gRandSeed = ADC12MEM0 * 1.0318-2777.4647 & 0x7fffffffU;
+	gRandSeed = ADC12MEM0 * 1.0318-2777.4647;
 
 	gRandMax = max;
 	gRandMin = min;
@@ -59,4 +59,10 @@ void randChangeUpperLimit(int max)
 void randChangeLowerLimit(int min)
 {
 	gRandMin = min;
+}
+
+#pragma vector=TIMERA0_VECTOR
+__interrupt void Timer_A (void)
+{
+  _BIC_SR_IRQ(LPM0_bits);
 }

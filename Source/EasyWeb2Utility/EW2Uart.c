@@ -34,7 +34,7 @@ void uartStartUp(unsigned int baudRate)
 	while ((IFG1 & OFIFG));
 	BCSCTL2 |= SELM1+SELM0 ;
 
-	switch(speed)
+	switch(baudRate)
 	{
 	case 1200:
 	{
@@ -74,7 +74,7 @@ void uartStartUp(unsigned int baudRate)
 	}
 	case 115200:
 	{
-		ME1 |= UTXE0 + URXE0
+		ME1 |= UTXE0 + URXE0;
 		UCTL0 |= CHAR;
 		UTCTL0 |= SSEL0;
 		UBR00 = 0x45;

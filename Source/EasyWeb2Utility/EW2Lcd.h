@@ -109,4 +109,4 @@ void lcdGoToSecondLine(void);
  *
  * @param  string  String that we want to send.
  */
-void lcdSendString(char *string)
+void lcdSendString(char *string);

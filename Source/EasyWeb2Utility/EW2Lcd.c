@@ -10,10 +10,10 @@
 // LCD controller related functions - implementation.
 //---------------------------------------------------------------------------
 
+#include <msp430x14x.h>
+
 #include "EW2Lcd.h"
 #include "CommonUtil.h"
-
-#include <msp430x14x.h>
 
 void lcdExecuteCommand(void)
 {
@@ -28,22 +28,22 @@ void lcdSendData(unsigned char data)
 	commonDelay(500);
 	
 	// upper nibble
-	temp = d & 0xf0;
+	temp = data & 0xf0;
 	
 	MSP_LCD_DATA_PORT &= 0x0f;
 	MSP_LCD_DATA_PORT |= temp;
 	
-	MSP_SET_BIT(MSP_LCD_DATA_PORT, COMMUNICATION_MODE_BIT);
+	MSP_SET_BIT(MSP_LCD_DATA_PORT, MSP_LCD_COMMUNICATION_MODE_BIT);
 	lcdExecuteCommand();
 	
 	// lower nibble
-	temp = d & 0x0f;
+	temp = data & 0x0f;
 	temp = temp << 4;
 	
 	MSP_LCD_DATA_PORT &= 0x0f;
 	MSP_LCD_DATA_PORT |= temp;
 	
-	MSP_SET_BIT(MSP_LCD_DATA_PORT, COMMUNICATION_MODE_BIT);
+	MSP_SET_BIT(MSP_LCD_DATA_PORT, MSP_LCD_COMMUNICATION_MODE_BIT);
 	lcdExecuteCommand();
 }
 
@@ -58,22 +58,22 @@ void lcdSendCommand(unsigned char command)
 	commonDelay(500);
 	
 	// upper nibble
-	temp = d & 0xf0;
+	temp = command & 0xf0;
 	
 	MSP_LCD_DATA_PORT &= 0x0f;
 	MSP_LCD_DATA_PORT |= temp;
 	
-	MSP_CLEAR_BIT(MSP_LCD_DATA_PORT, COMMUNICATION_MODE_BIT);
+	MSP_CLEAR_BIT(MSP_LCD_DATA_PORT, MSP_LCD_COMMUNICATION_MODE_BIT);
 	lcdExecuteCommand();
 	
 	// lower nibble
-	temp = d & 0x0f;
+	temp = command & 0x0f;
 	temp = temp << 4;
 	
 	MSP_LCD_DATA_PORT &= 0x0f;
 	MSP_LCD_DATA_PORT |= temp;
 	
-	MSP_CLEAR_BIT(MSP_LCD_DATA_PORT, COMMUNICATION_MODE_BIT);
+	MSP_CLEAR_BIT(MSP_LCD_DATA_PORT, MSP_LCD_COMMUNICATION_MODE_BIT);
 	lcdExecuteCommand();
 }
 
@@ -85,19 +85,29 @@ void lcdSetUpPorts(void)
 }
 
 void lcdStartUp(void)
-{
-	lcdExecuteCommand();
-	commonDelay(100*100); //10ms
-	lcdExecuteCommand();
-	commonDelay(100*100); //10ms
+{	
+	MSP_CLEAR_BIT(MSP_LCD_DATA_PORT, MSP_LCD_COMMUNICATION_MODE_BIT);
+	commonDelay(250*100);
+	commonDelay(250*100);
+	commonDelay(250*100);
+	commonDelay(250*100);
 	
-	LCD_DATA_PORT &= ~BIT4;
+	MSP_LCD_DATA_PORT |= BIT4 | BIT5;
+	MSP_LCD_DATA_PORT &= ~BIT6 & ~BIT7;
+	
 	lcdExecuteCommand();
+	commonDelay(100*100); //10ms
+	lcdExecuteCommand();
+	commonDelay(100*100); //10ms
+	lcdExecuteCommand();
+	commonDelay(100*100); //10ms	
+	
+	MSP_LCD_DATA_PORT &= ~BIT4;
+	lcdExecuteCommand();
+	
+    lcdSendCommand(MSP_LCD_COMMAND_DISPLAY_ON);
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 
-	lcdSendCommand(DISPLAY_ON);
-	lcdSendCommand(CLEAR_DISPLAY);
-
-	// 100ms
 	commonDelay(250*100);
 	commonDelay(250*100);
 	commonDelay(250*100);
@@ -120,7 +130,8 @@ void lcdUploadCustomCharacters(char *customCharSet, unsigned int numOfCharacters
 	{
 		for (j = 0; j < 8; j++)
 		{
-			lcdSendData(customCharSet[i][j]);
+			// @todo fix it!!!
+			//lcdSendData(customCharSet[i][j]);
 		}
 	}
 }

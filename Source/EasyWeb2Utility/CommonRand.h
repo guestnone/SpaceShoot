@@ -10,13 +10,15 @@
 // PRNG - definitions.
 //---------------------------------------------------------------------------
 
+#pragma once
+
 /**
  * Initializes the Pseudo-Random Number Generator based on the 
  * temperature of the CPU
  *
  * @param[in]  max   Upper limit of the numbers get from the PRNG.
  */
-void randInit(int max);
+void randInit(int max, int min);
 
 /**
  * Gets the random number from the PRNG.

@@ -10,6 +10,7 @@
 // Button related functions - definitions.
 //---------------------------------------------------------------------------
 #pragma once
+#include "CommonUtil.h"
 
 /** Type of the button that the user wants to check. */
 #define MSP_BUTTON_FIRST 0
@@ -27,3 +28,4 @@ void buttonsSetUpPorts();
  *  @return true if pressed, otherwise false.
  */
 bool buttonsIsPressed(int button);
+

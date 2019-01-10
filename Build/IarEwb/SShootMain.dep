@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$TOOLKIT_DIR$\inc\clib\sysmac.h</file>
+      <file>$TOOLKIT_DIR$\inc\clib\stdlib.h</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\CommonRand.c</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\CommonRand.h</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\CommonUtil.c</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\CommonUtil.h</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2.h</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Buttons.c</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Buttons.h</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Buzzer.c</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Buzzer.h</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Diodes.c</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Diodes.h</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Lcd.c</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Lcd.h</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Uart.c</file>
+      <file>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Uart.h</file>
+      <file>$PROJ_DIR$\..\..\Source\Main\SShootMain.c</file>
+      <file>$TOOLKIT_DIR$\inc\msp430x14x.h</file>
+      <file>$TOOLKIT_DIR$\inc\in430.h</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$TOOLKIT_DIR$\inc\clib\stdbool.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\CommonRand.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Uart.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Lcd.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\CommonRand.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\CommonUtil.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Buttons.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Buzzer.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Diodes.r43</file>
+      <file>$PROJ_DIR$\Debug\Obj\CommonUtil.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Buttons.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Diodes.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Buzzer.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Lcd.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\EW2Uart.pbi</file>
+      <file>$TOOLKIT_DIR$\config\multiplier.xcl</file>
+      <file>$TOOLKIT_DIR$\lib\clib\cl430f.r43</file>
+      <file>$PROJ_DIR$\Debug\Exe\SShoot.d43</file>
+      <file>$PROJ_DIR$\Debug\Obj\SShootMain.pbd</file>
+      <file>$TOOLKIT_DIR$\config\lnk430F149.xcl</file>
+      <file>$PROJ_DIR$\Debug\Obj\SShootMain.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\SShootMain.r43</file>
+    </outputs>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 38</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\CommonRand.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 22</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 25</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3 18 19 20</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 3 18 19 20</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\CommonUtil.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 30</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 26</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5 21 18 19 20</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 5 21 18 19 20</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Buttons.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 31</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 27</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 8 5 21 18 19 20</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 8 5 21 18 19 20</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Buzzer.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 33</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 28</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 10 18 19 20</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 10 18 19 20</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Diodes.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 32</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 29</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 12 18 19 20</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 12 18 19 20</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Lcd.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 34</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 24</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18 19 20 14 5 21</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 18 19 20 14 5 21</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Uart.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 35</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 23</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18 19 20 16</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 18 19 20 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\Source\Main\SShootMain.c</name>
+      <outputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 41</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 42</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>BICOMP</name>
+          <file> 1 0</file>
+        </tool>
+        <tool>
+          <name>ICC430</name>
+          <file> 5 21 8 10 12 14 16 3 1 0</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\SShoot.d43</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 40 36 25 26 27 28 29 24 23 42 37</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\SShootMain.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 22 30 31 33 32 34 35 41</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

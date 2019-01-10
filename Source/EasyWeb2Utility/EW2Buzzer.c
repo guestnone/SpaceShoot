@@ -28,7 +28,7 @@ void buzzerSwitch(int type)
 	case MSP_BUZZER_TYPE1:
 		P4OUT ^= BIT2;
 		break;
-	case MSP_BUZZER_TYPE1:
+	case MSP_BUZZER_TYPE2:
 		P4OUT ^= BIT3;
 		break;
 	}
