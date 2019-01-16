@@ -8,17 +8,17 @@
 */
 //---------------------------------------------------------------------------
 
-
+#include "EasyWeb2Utility/CommonRand.h";
 char obstacles[2][16];
 char bullets[2][16];
 char powerUpXPos;
 char powerUpYPos;
-char powerUpType;
-char playerYPos=0;
-char playerXpos=0;
+//char powerUpType;
+//char playerYPos=0;
+//char playerXpos=0;
 char beginOfObstacles = 0;
 char beginOfBullets   = 0;
-char beginOfPowerUp   = 0;
+//char beginOfPowerUp   = 0;
 char lifesLeft=3;
 
 char idOfBullet=0;
@@ -38,6 +38,15 @@ typedef enum powerUpType
 	DecreaseSpeed
 }powUpType;
 
+typedef struct powerUp
+{
+	powerUpType powerUpType1;
+	char x=0;
+	char y=0;
+	char beginOfPowerUp=0;
+	
+}powerUp1;
+
 void gmplUpdatePlayerXPos()
 {
 	playerXPos=(playerXPos+1)%16;	
@@ -48,7 +57,11 @@ void gmplUpdateObjectsPositions()
 	obstacles[0][beginOfObstacles]=0;
 	obstacles[1][beginOfObstacles]=0;
 }
-	
+void clearJunk()
+{
+	obstacles[0][beginOfObstacles]=0;
+	obstacles[1][beginOfObstacles]=0;	
+}
 void gmplDetectPlayerBulletCollision()
 {
 		for(char i=0;i<2;++i)
@@ -63,35 +76,72 @@ void gmplDetectPlayerBulletCollision()
 }
 void gmplPutBarrierOnGamefield(char y)
 {
-	obstacles[y][beginOfObstacles]=1;
+	obstacles[y][(beginOfObstacles-1+16)%16]=1;
 }
 	
 void gmplPutEnemyOnGamefield(char y)
 {
-	obstacles[y][beginOfObstacles]=2;
+	obstacles[y][(beginOfObstacles-1+16)%16]=2;
 	gmplEnemyShootBullet(y);
 	
 }
 
 void gmplPutPowerUpOnGamefield(char y, powerUpType put)
-	{
-	
+{
+	powerUp1.powerUpType1 = put;
+	powerUp1.x=0;
+	powerUp1.y=y;
 }
 char gmplDoIGenerateNewObject()
-		{
-	if()
-			{
+{
+	randChangeLowerLimit(0);
+	randChangeUpperLimit(10);
+	char result = randGet();
+	if(result>5)
+	{
 		return 1;
-			}
+	}
 	else
 	{
 		return 0;	
-		}
+	}
+}
+
+char gmplRandomObject()
+{
+	randChangeLowerLimit(0);
+	randChangeUpperLimit(10);
+	char result = randGet();
+	if(reult<1)
+	{
+		return 0; 
+	}
+	else if(result <5)
+	{
+		return 1;
+	}
+	else 
+	{
+		return 2;	
+	}
+}
+
+char gmplRandomYCoord()
+{
+	randChangeLowerLimit(0);
+	randChangeUpperLimit(1);
+	return randGet();
+}
+char gmplRandomPowerUp()
+{
+	randChangeLowerLimit(0);
+	randChangeUpperLimit(3);
+	return randGet();
 }
 void gmplGenerateNewObject()
 {
 	char y = gmplRandomYCoord();
-	unsigned char typeOfObject = gmplRandomobject();
+	unsigned char typeOfObject = gmplRandomObject();
 	if(typeOfObject==0)//power up
 	switch(typeOfObject)
 	{
@@ -105,7 +155,7 @@ void gmplGenerateNewObject()
 			gmplPutEnemyOnGamefield(y);
 			break;
 		case 2://barrier
-			gmplPutEnemyOnGamefield(y);
+			gmplPutBarrierOnGamefield(y);
 			break;
 	}
 	
@@ -148,8 +198,9 @@ void gmplUpdateEnemyBulltetsPositions()
 void gmplUpdatePowerUpPosition()
 {
 	
-	beginOfPowerUp=(beginOfPowerUp+1)%16;
-	
+	powerUp1.beginOfPowerUp=(beginOfPowerUp+1)%16;
+	//or
+	powerUp1.x--;
 	}
 
 void gmplResolveObjectCollision()
