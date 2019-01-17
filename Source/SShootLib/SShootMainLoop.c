@@ -11,7 +11,7 @@
 #include "SShootMainLoop.h"
 #include "SShootMenu.h"
 #include "SShootGameplay.h"
-#include "EasyWeb2Utility"
+#include "EasyWeb2Utility/CommonUtil.h"
 
 void mainloopEnter()
 {
@@ -47,6 +47,5 @@ void mainloopEnter()
 		}		
 
 	}
-
 
 }

@@ -7,6 +7,7 @@
 	See LICENSE.md for full terms. This notice is not to be removed.
 */
 //---------------------------------------------------------------------------
+#include "SShootCommon.h"
 
 MainLoopState menuMainWindow();
 
@@ -18,3 +19,4 @@ MainLoopState menuAbout();
 
 
 void menuLoopEnter();
+

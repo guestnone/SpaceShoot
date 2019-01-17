@@ -15,13 +15,18 @@
 #include <EasyWeb2Utility/EW2Lcd.h>
 #include <EasyWeb2Utility/EW2Uart.h>
 #include <EasyWeb2Utility/CommonRand.h>
-//#include <SShootLib/SShootMainLoop.h>
+#include <SShootLib/SShootMainLoop.h>
 
 #include <stdlib.h>
 
 #define MAIN_INIT_BAUDRATE 1200
 //#define MAIN_EW2LIBTEST_MODE 1
 
+void mainStartUpDevice()
+{
+	
+}
+/**
 int main()
 {
 	commonTurnOffWatchdog();
@@ -67,15 +72,23 @@ int main()
 	
 	return 0;
 }
-/**
-#else
+*/
+
 int main()
 {
-	mainStartUpDevice();
+	buttonsSetUpPorts();
+	buzzerSetUpPorts();
+	diodesSetUpPorts();
+	lcdSetUpPorts();
+	uartSetUpPorts();
+	
+	lcdStartUp();
+	
+	//uartStartUp(MAIN_INIT_BAUDRATE);
 	mainloopEnter();
 
 	
 	return 0;
 }
-#endif
-*/
+
+

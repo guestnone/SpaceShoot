@@ -16,17 +16,23 @@
 
 void debugUartLog(char* message, LogChannel channel)
 {
+	char dbgLabel[] = "[DEBUG]: ";
+	char warnLabel[] = "[WARNING]: ";
+	char errLabel[] = "[ERROR]: ";
 	switch(channel)
 	{
 	case Debug:
-		uartTransmitString("[DEBUG]: " + message);
-		break:
+		uartTransmitString(dbgLabel);
+		uartTransmitString(message);
+		break;
 	case Warning:
-		uartTransmitString("[WARNING]: " + message);
+		uartTransmitString(warnLabel);
+		uartTransmitString(message);
 		break;
 	case Error:
-		uartTransmitString("[ERROR]: " + message);
-		break:
+		uartTransmitString(errLabel);
+		uartTransmitString(message);
+		break;
 	}
 }
 

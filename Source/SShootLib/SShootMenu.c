@@ -13,6 +13,7 @@
 #include "SShootData.h"
 #include "EasyWeb2Utility/EW2.h"
 
+char gSpaces[] = "                 ";
 
 void internal_moveSecondLineRight()
 {
@@ -38,7 +39,8 @@ void internal_menuMainMoveRight(char* string)
 {
 	internal_moveSecondLineRight();
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
-	lcdSendString("                 " + string);
+	lcdSendString(gSpaces);
+	lcdSendString(string);
 	internal_moveSecondLineRight();
 }
 
@@ -46,7 +48,8 @@ void internal_menuMainMoveLeft(char* string)
 {
 	internal_moveSecondLineLeft();
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
-	lcdSendString("                 " + string);
+	lcdSendString(gSpaces);
+	lcdSendString(string);
 	internal_moveSecondLineLeft();
 }
 
@@ -56,8 +59,9 @@ MainLoopState menuMainWindow()
 	
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
-	lcdSendString("   " + STR_MENU_MAIN_SELECT_INFO)
-	internal_menuMainMoveRight(STR_MENU_MAIN_ITEM_PLAY)
+	lcdSendString("   ");
+	lcdSendString(STR_MENU_MAIN_SELECT_INFO);
+	internal_menuMainMoveRight(STR_MENU_MAIN_ITEM_PLAY);
 
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
 
@@ -123,31 +127,35 @@ MainLoopState menuAbout()
 	lcdSendString(STR_ABOUT_NAME);
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
 	
-	lcdSendString("                 " + STR_ABOUT_BY);
-	internal_moveIt();
-	commonDelay(100000);	
-	internal_moveIt();
+	lcdSendString("                 ");
+	lcdSendString(STR_ABOUT_BY);
+	internal_moveSecondLineLeft();
+	commonDelay(65450);	
+	internal_moveSecondLineLeft();
 	commonDelay(100);
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 
-	lcdSendString("                 " + STR_ABOUT_AUTHOR_ONE);
-	internal_moveIt();
-	commonDelay(100000);	
-	internal_moveIt();
+	lcdSendString("                 ");
+	lcdSendString(STR_ABOUT_AUTHOR_ONE);
+	internal_moveSecondLineLeft();
+	commonDelay(65450);	
+	internal_moveSecondLineLeft();
 	commonDelay(100);
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 	
-	lcdSendString("                 " + STR_ABOUT_AUTHOR_TWO);
-	internal_moveIt();
-	commonDelay(100000);	
-	internal_moveIt();
+	lcdSendString("                 ");
+	lcdSendString(STR_ABOUT_AUTHOR_TWO);
+	internal_moveSecondLineLeft();
+	commonDelay(65450);	
+	internal_moveSecondLineLeft();
 	commonDelay(100);
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 
-	lcdSendString("                 " + STR_ABOUT_AUTHOR_THREE);
-	internal_moveIt();
-	commonDelay(100000);	
-	internal_moveIt();
+	lcdSendString("                 ");
+	lcdSendString(STR_ABOUT_AUTHOR_THREE);
+	internal_moveSecondLineLeft();
+	commonDelay(65450);	
+	internal_moveSecondLineLeft();
 	commonDelay(100);
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 

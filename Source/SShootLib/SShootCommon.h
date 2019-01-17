@@ -1,8 +1,10 @@
-enum MainLoopState
+#pragma once
+
+typedef enum
 {
 	MainScreen = 0,
 	Game,
-	Settings
+	Settings,
 	HighScore,
 	About
-}
+} MainLoopState;

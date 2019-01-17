@@ -12,11 +12,16 @@
 
 #pragma once
 
+/** @addtogroup Rand
+ *  @{
+ */
+
 /**
  * Initializes the Pseudo-Random Number Generator based on the 
  * temperature of the CPU
  *
  * @param[in]  max   Upper limit of the numbers get from the PRNG.
+ * @param[in]  min   Lower limit of the numbers get from the PRNG.
  */
 void randInit(int max, int min);
 
@@ -41,3 +46,5 @@ void randChangeUpperLimit(int max);
  * @param[in]  min   New lower limit.
  */
 void randChangeLowerLimit(int min);
+
+/* @} */

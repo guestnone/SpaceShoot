@@ -19,7 +19,7 @@ void commonDelay(unsigned int us)
 	int count;
 	for (count = 0 ; count != us; ++count)
 	{
-		_NOP();
+		 _NOP();
 		_NOP();
 		_NOP();
 		_NOP();

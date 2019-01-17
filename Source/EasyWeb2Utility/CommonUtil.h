@@ -14,6 +14,10 @@
 
 #include <stdbool.h>
 
+/** @addtogroup Utility
+ *  @{
+ */
+
 /**
  *  Delays the execution of the code by a given time.
  *  
@@ -40,3 +44,4 @@ void commonTurnOffWatchdog(void);
  */
 #define MSP_CLEAR_BIT(var,bitno) ((var) &= ~(1 << (bitno)))
 
+/* @} */

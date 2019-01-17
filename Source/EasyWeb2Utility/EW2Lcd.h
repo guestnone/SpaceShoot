@@ -11,15 +11,24 @@
 //---------------------------------------------------------------------------
 #pragma once
 
-#define MSP_LCD_DATA_PORT           P2OUT              
-#define MSP_LCD_EXECUTE_BIT             3                 // P2.3
-#define MSP_LCD_COMMUNICATION_MODE_BIT  2                 // P2.2
+/** @addtogroup LCD
+ *  @{
+ */
+/** The main port from which instructions for the LCD controller will be sent */
+#define MSP_LCD_DATA_PORT           P2OUT
+
+/** Used to execute the prepared instruction to the controller*/
+#define MSP_LCD_EXECUTE_BIT             3
+
+/** Used to define the mode of communication for the controller (command(0) or data(1)) */
+#define MSP_LCD_COMMUNICATION_MODE_BIT  2
 
 /************************************************************************/
 /* 	                          LCD COMMANDS                              */
 /************************************************************************/
 
 #define	MSP_LCD_COMMAND_CLEAR_DISPLAY                       0x01
+/** Reverts cursor back to first cell */
 #define MSP_LCD_COMMAND_SET_CURSOR_HOME	                    0x02
 #define MSP_LCD_COMMAND_ENTRYMODE_INCREMENT	                0x06
 #define MSP_LCD_COMMAND_ENTRYMODE_INCREMENT_WITH_ROLL       0x07
@@ -28,14 +37,22 @@
 #define MSP_LCD_COMMAND_DISPLAY_OFF	                        0x08
 #define MSP_LCD_COMMAND_DISPLAY_ON                          0x0c
 
+/** Moves the 16-element window onto left */
 #define MSP_LCD_COMMAND_DATA_ROLL_LEFT                      0x18
+/** Moves the 16-element window onto right */
 #define MSP_LCD_COMMAND_DATA_ROLL_RIGHT                     0x1c
+/** Moves the cursor one cell left */
 #define MSP_LCD_COMMAND_CURSOR_SHIFT_LEFT                   0x10
+/** Moves the cursor one cell right */
 #define MSP_LCD_COMMAND_CURSOR_SHIFT_RIGHT                  0x14
 
+/** Switch the entry mode to use the first LCD line */
 #define MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1            0x80
+/** Switch the entry mode to use the second LCD line */
 #define MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2            0xc0
+/** Not used, since the display can only display 2 lines */
 #define MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE3            0x28
+/** Switch the entry mode to write into built-in character generator RAM block */
 #define MSP_LCD_CHARACTER_GEN_RAM_ADDRESS                   0x40
 
 /************************************************************************/
@@ -49,6 +66,7 @@
 #define MSP_LCD_CUSTOM_CHAR_5 0x05
 #define MSP_LCD_CUSTOM_CHAR_6 0x06
 #define MSP_LCD_CUSTOM_CHAR_7 0x07
+
 /**
  *  Sends the command to the LCD controller to execute written command 
  *  @note Internal function.
@@ -110,3 +128,5 @@ void lcdGoToSecondLine(void);
  * @param  string  String that we want to send.
  */
 void lcdSendString(char *string);
+
+/* @} */

@@ -12,6 +12,10 @@
 #pragma once
 #include "CommonUtil.h"
 
+/** @addtogroup Buttons
+ *  @{
+ */
+
 /** Type of the button that the user wants to check. */
 #define MSP_BUTTON_FIRST 0
 #define MSP_BUTTON_SECOND 1
@@ -29,3 +33,4 @@ void buttonsSetUpPorts();
  */
 bool buttonsIsPressed(int button);
 
+/* @} */

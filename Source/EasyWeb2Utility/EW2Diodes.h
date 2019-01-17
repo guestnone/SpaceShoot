@@ -12,10 +12,14 @@
 
 #pragma once
 
+/** @addtogroup Diodes
+ *  @{
+ */
+
 /** Type of the diode that the user wants to use. */
-#define MSP_DIODES_STATUS      0
-#define MSP_DIODES_RELAY_TYPE1 1
-#define MSP_DIODES_RELAY_TYPE2 2
+#define MSP_DIODES_STATUS      0 /**< Status diode */
+#define MSP_DIODES_RELAY_TYPE1 1 /**< First diode plugged onto the relay */
+#define MSP_DIODES_RELAY_TYPE2 2 /**< Second diode plugged onto the relay */
 
 /** Initializes the diodes by setting up proper ports. */
 void diodesSetUpPorts(void);
@@ -26,3 +30,5 @@ void diodesSetUpPorts(void);
  *  @param[in] type Type of the diode. 
  */
 void diodesSwitch(int type);
+
+/* @} */

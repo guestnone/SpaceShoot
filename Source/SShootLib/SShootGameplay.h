@@ -8,13 +8,17 @@
 */
 //---------------------------------------------------------------------------
 
-enum ShipType
+#pragma once
+
+#include "SShootCommon.h"
+
+typedef enum
 {
 	First,
 	Second,
 	Third,
 	Fourth
-};
+} ShipType;
 
 void gmplUpdatePositions();
 

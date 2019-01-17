@@ -12,15 +12,15 @@
 
 #include "SShootConfig.h"
 
-#ifdef SSHOOT_DEBUG
+#if SSHOOT_DEBUG == 1
 
 /** Type of the channel for the message. */
-enum LogChannel
+typedef enum 
 {
 	Debug = 0,
 	Warning = 1,
 	Error = 2
-};
+} LogChannel;
 
 /**
  * Sends the log message to UART output.

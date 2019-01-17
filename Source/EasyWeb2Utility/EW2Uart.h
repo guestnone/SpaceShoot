@@ -12,12 +12,18 @@
 
 #pragma once
 
-/** Ports used to perform trasmission between devices */
+/** @addtogroup UART
+ *  @{
+ */
+
+/** Port used to perform trasmission to the connected device */
 #define MSP_UART_TRANSMIT_PORT  0x10                 // P3.4
+/** Port used to recieve data from connected device */
 #define MSP_UART_RECIEVE_PORT   0x20                 // P3.5
 
-/** Buffers used to recieve and transmit data between connected device. */
+/** Buffers used to transmit data to connected device. */
 #define MSP_UART_TRANSMIT_BUFFER TXBUF0
+/** Buffers used to recieve data from connected device. */
 #define MSP_UART_RECIEVE_BUFFER RXBUF0 
 
 /**
@@ -49,3 +55,5 @@ void uartTransmitCharacter(unsigned char character);
  * @param      string  Given set of characters.
  */
 void uartTransmitString(char *string);
+
+/* @} */

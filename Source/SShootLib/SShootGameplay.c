@@ -8,27 +8,39 @@
 */
 //---------------------------------------------------------------------------
 
-#include "EasyWeb2Utility/CommonRand.h";
+#include "SShootGameplay.h"
+
+/*
+
+#include "EasyWeb2Utility/CommonRand.h"
+#include "EasyWeb2Utility/CommonUtil.h"
+#include "EasyWeb2Utility/EW2Lcd.h"
 char obstacles[2][16];
 char bullets[2][16];
 char powerUpXPos;
 char powerUpYPos;
 //char powerUpType;
-//char playerYPos=0;
-//char playerXpos=0;
+char playerYPos=0;
+char playerXPos=0;
 char beginOfObstacles = 0;
 char beginOfBullets   = 0;
 //char beginOfPowerUp   = 0;
-char lifesLeft=3;
+char lifesLeft = 3 ;
+
+int gSlowdownTimer = 30000;
+
+bool isDead = false;
 
 char idOfBullet=0;
+
 typedef struct playerBullet
 {
 	char x;
 	char y;
-	char isShot=0;
-} playerBullets[2];
+	char isShot;
+} playerBullet;
 
+playerBullet playerBullets[2];
 
 typedef enum powerUpType
 {
@@ -36,44 +48,50 @@ typedef enum powerUpType
 	Defense,
 	LaserPowerUp,
 	DecreaseSpeed
-}powUpType;
+} powerUpType;
+
+
 
 typedef struct powerUp
 {
 	powerUpType powerUpType1;
-	char x=0;
-	char y=0;
-	char beginOfPowerUp=0;
+	char x;
+	char y;
+	char beginOfPowerUp;
 	
-}powerUp1;
+} powerUp1;
 
 void gmplUpdatePlayerXPos()
 {
-	playerXPos=(playerXPos+1)%16;	
+	playerXPos=(playerXPos+1)%16;
 }
+
 void gmplUpdateObjectsPositions()
 {
 	beginOfObstacles=(beginOfObstacles+1)%16;
 	obstacles[0][beginOfObstacles]=0;
 	obstacles[1][beginOfObstacles]=0;
 }
+
 void clearJunk()
 {
 	obstacles[0][beginOfObstacles]=0;
 	obstacles[1][beginOfObstacles]=0;	
 }
+
 void gmplDetectPlayerBulletCollision()
 {
 		for(char i=0;i<2;++i)
 		{
 			char y = playerBullets[i].y;
-			char x=(playerBullets[i].x + beginOfObstacles )%16;
+			char x = ((playerBullets[i].x) + beginOfObstacles )%16;
 			if(obstacles[y][x]==2)
 			{
 				gmplEnemyIsDown(y,x);	
 			}
 		}
 }
+
 void gmplPutBarrierOnGamefield(char y)
 {
 	obstacles[y][(beginOfObstacles-1+16)%16]=1;
@@ -92,6 +110,7 @@ void gmplPutPowerUpOnGamefield(char y, powerUpType put)
 	powerUp1.x=0;
 	powerUp1.y=y;
 }
+
 char gmplDoIGenerateNewObject()
 {
 	randChangeLowerLimit(0);
@@ -112,7 +131,7 @@ char gmplRandomObject()
 	randChangeLowerLimit(0);
 	randChangeUpperLimit(10);
 	char result = randGet();
-	if(reult<1)
+	if(result < 1)
 	{
 		return 0; 
 	}
@@ -132,12 +151,14 @@ char gmplRandomYCoord()
 	randChangeUpperLimit(1);
 	return randGet();
 }
+
 char gmplRandomPowerUp()
 {
 	randChangeLowerLimit(0);
 	randChangeUpperLimit(3);
 	return randGet();
 }
+
 void gmplGenerateNewObject()
 {
 	char y = gmplRandomYCoord();
@@ -158,50 +179,49 @@ void gmplGenerateNewObject()
 			gmplPutBarrierOnGamefield(y);
 			break;
 	}
-	
-			
-		
-		
-	
-	
 }
 
 void gmplEnemyIsDown(char x,char y)
-	{
+{
 	obstacles[y][x]=0;	
 }
+
 void gmplPlayerShootBullet()
-		{
+{
 	playerBullets[idOfBullet].y=playerYPos;
 	playerBullets[idOfBullet].x=0;
 }
+
 void gmplMovePlayerBullets()
-			{
+{
 	for(char i=0;i<2;++i)
 	{
 		if(playerBullets[i].isShot==true)
 		{
 			playerBullets[i].x=(playerBullets[i].x+1)%16;	
-			}
+			
 		}
-	}
+}
+
 void gmplEnemyShootBullet(char y)
 {
 	bullets[y][beginOfBullets]=1;
 }
+
 void gmplUpdateEnemyBulltetsPositions()
 {
 	beginOfBullets=(beginOfBullets+1)%16;
 	bullets[0][beginOfBullets=0;
 	bullets[1][beginOfBullets]=0;
 }
+
 void gmplUpdatePowerUpPosition()
 {
 	
 	powerUp1.beginOfPowerUp=(beginOfPowerUp+1)%16;
 	//or
 	powerUp1.x--;
-	}
+}
 
 void gmplResolveObjectCollision()
 {	
@@ -243,32 +263,68 @@ void gmplResolveObjectCollision()
 				
 				break;
 		}
-	}
-	
-	
-	
-	
-	}
+	}	
+}
+
 void HpDown()
-	{
+{
 	lifesLeft--;
+	
 	if(lifesLeft==0)
 	{
-		gameOver();	
-		}
+		isDead = true;
+	}
+}
+
+
+void gmplDisplayGameOver()
+{
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
+
+	lcdSendString("     GAME");
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
+	lcdSendString("          OVER");
+	commonDelay(20000);
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
+}
+
+void gmplRefreshDisplay()
+{
+	char tmpDisplay[2][16];
+
+
 }
 
 void gmplMainPart()
 {
-	// Paweł's stuff gets called here.
+	while (1)
+	{
+
+
+		gmplRefreshDisplay();
+
+		if (isDead)
+		{
+			gmplDisplayGameOver();
+		}
+		commonDelay(gSlowdownTimer);
+	}
+
 }
 
+
+ShipType gmplShipSelect()
+{
+
+}
+*/
 MainLoopState gmplLoopEnter()
 {
-	ShipType sType = gmplShipSelect();
-	gmplSetUp();
-	gmplMainPart();
-	gmplHighScoreInput();
+	//ShipType sType = gmplShipSelect();
+	//gmplSetUp();
+	//gmplMainPart();
+	//gmplHighScoreInput();
 
-	return MainWindow;
+	return MainScreen;
 }
