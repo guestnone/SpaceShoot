@@ -8,255 +8,281 @@
 */
 //---------------------------------------------------------------------------
 
-#include "EasyWeb2Utility/CommonRand.h";
-char obstacles[2][16];
-char bullets[2][16];
-char powerUpXPos;
-char powerUpYPos;
-//char powerUpType;
-//char playerYPos=0;
-//char playerXpos=0;
-char beginOfObstacles = 0;
-char beginOfBullets   = 0;
-//char beginOfPowerUp   = 0;
-char lifesLeft=3;
 
-char idOfBullet=0;
+char AMMOUNT_OF_OBJECTS =10;
+char AMMOUNT_OF_PLAYER_BULLETS = 2;
+char END_OF_GAMEFIELD =15;
+char BEGIN_OF_GAMEFIELD = 0;
+
+int gSlowdownTimer = 30000;
+
+
+
+
+
+///////////begin of edit
+
+typedef enum powerUp
+{
+	hp,barrier,laser,speed
+}powerUp;
+
+typedef struct playerObject
+{
+	char lives;
+	char y;
+	char isPowerUpActive;
+	powerUp powerup;
+	playerBullet playerBullets[2];
+}playerObject;
+
+typedef enum typeOfObject
+{
+	enemy,
+	barrier,
+	enemyBullet,
+	hpPowerUp,
+	barrierPowerUp,
+	laserPowerUp,
+	decreaseSpeedPowerUp
+}typeOfObject;
+
+typedef struct gameObject
+{
+	char x;
+	char y;
+	typeOfObject type;
+	char isDeleted;
+}gameObject;
 typedef struct playerBullet
 {
 	char x;
 	char y;
-	char isShot=0;
-} playerBullets[2];
+	char IsDeleted;
+}playerBullet;
 
 
-typedef enum powerUpType
+gameObject gameObjects[10];
+playerObject player;
+void shootPlayerBullet()
 {
-	HPUp,
-	Defense,
-	LaserPowerUp,
-	DecreaseSpeed
-}powUpType;
-
-typedef struct powerUp
-{
-	powerUpType powerUpType1;
-	char x=0;
-	char y=0;
-	char beginOfPowerUp=0;
-	
-}powerUp1;
-
-void gmplUpdatePlayerXPos()
-{
-	playerXPos=(playerXPos+1)%16;	
-}
-void gmplUpdateObjectsPositions()
-{
-	beginOfObstacles=(beginOfObstacles+1)%16;
-	obstacles[0][beginOfObstacles]=0;
-	obstacles[1][beginOfObstacles]=0;
-}
-void clearJunk()
-{
-	obstacles[0][beginOfObstacles]=0;
-	obstacles[1][beginOfObstacles]=0;	
-}
-void gmplDetectPlayerBulletCollision()
-{
-		for(char i=0;i<2;++i)
+	for(int i=0;i<AMMOUNT_OF_PLAYER_BULLETS;++i)
+	{
+		if(player.playerBullets[i].isDeleted=1)
 		{
-			char y = playerBullets[i].y;
-			char x=(playerBullets[i].x + beginOfObstacles )%16;
-			if(obstacles[y][x]==2)
-			{
-				gmplEnemyIsDown(y,x);	
-			}
+			player.playerBullets[i].x=BEGIN_OF_GAMEFIELD+1;
+			player.playerBullets[i].y=player.y;
+			player.playerBullets[i].isDeleted=0;
+			break;
 		}
-}
-void gmplPutBarrierOnGamefield(char y)
-{
-	obstacles[y][(beginOfObstacles-1+16)%16]=1;
-}
-	
-void gmplPutEnemyOnGamefield(char y)
-{
-	obstacles[y][(beginOfObstacles-1+16)%16]=2;
-	gmplEnemyShootBullet(y);
-	
-}
-
-void gmplPutPowerUpOnGamefield(char y, powerUpType put)
-{
-	powerUp1.powerUpType1 = put;
-	powerUp1.x=0;
-	powerUp1.y=y;
-}
-char gmplDoIGenerateNewObject()
-{
-	randChangeLowerLimit(0);
-	randChangeUpperLimit(10);
-	char result = randGet();
-	if(result>5)
-	{
-		return 1;
 	}
-	else
+}
+void shootEnemyBullet(char x,char y)
+{
+	for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
 	{
-		return 0;	
+		if(gameObjects[i].isDeleted=1)
+		{
+			gameObjects[i].isDeleted=0;
+			gameObjects[i].y=y;
+			gameObjects[i].x=x;
+			break;
+		}
 	}
 }
 
-char gmplRandomObject()
+char getYPos()
 {
 	randChangeLowerLimit(0);
-	randChangeUpperLimit(10);
-	char result = randGet();
-	if(reult<1)
-	{
-		return 0; 
-	}
-	else if(result <5)
-	{
-		return 1;
-	}
-	else 
-	{
-		return 2;	
-	}
-}
 
-char gmplRandomYCoord()
-{
-	randChangeLowerLimit(0);
 	randChangeUpperLimit(1);
+	
 	return randGet();
 }
-char gmplRandomPowerUp()
+char getObjectType()
 {
 	randChangeLowerLimit(0);
-	randChangeUpperLimit(3);
-	return randGet();
-}
-void gmplGenerateNewObject()
-{
-	char y = gmplRandomYCoord();
-	unsigned char typeOfObject = gmplRandomObject();
-	if(typeOfObject==0)//power up
-	switch(typeOfObject)
-	{
-		case 0://power up
-			{
-				char typeOfPowerUp = gmplRandomPowerUp();
-				gmplPutPowerUpOnGamefield(y,typeOfPowerUp);
-			}
-			break;
-		case 1://enemy
-			gmplPutEnemyOnGamefield(y);
-			break;
-		case 2://barrier
-			gmplPutBarrierOnGamefield(y);
-			break;
-	}
-	
-			
-		
-		
-	
-	
-}
 
-void gmplEnemyIsDown(char x,char y)
+	randChangeUpperLimit(98);
+	result = randGet();
+	if(result<=50)
 	{
-	obstacles[y][x]=0;	
+		return enemy;
+	}
+	if(result <= 90)
+	{
+		return barrier;
+	}
+	if(result <= 92)
+	{
+		return hpPowerUp;
+	}
+	if(result <= 94)
+	{
+		return barrierPowerUp;
+	}
+	if(result <= 96)
+	{
+		return laserPowerUp;
+	}
+	return decreaseSpeedPowerUp;
 }
-void gmplPlayerShootBullet()
+void putObjectOnGamefield()
+{
+		typeOfObject type = getObjectType();
+		char y = getYPos();
+		for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
 		{
-	playerBullets[idOfBullet].y=playerYPos;
-	playerBullets[idOfBullet].x=0;
-}
-void gmplMovePlayerBullets()
+			if(gameObjects[i].isDeleted = 1)
 			{
-	for(char i=0;i<2;++i)
-	{
-		if(playerBullets[i].isShot==true)
-		{
-			playerBullets[i].x=(playerBullets[i].x+1)%16;	
+				gameObjects[i].y=y;
+				gameObjects[i].x=END_OF_GAMEFIELD;
+				gameObjects.type=type;
+				gameObjects.isDeleted=0;
+				break;
 			}
 		}
-	}
-void gmplEnemyShootBullet(char y)
-{
-	bullets[y][beginOfBullets]=1;
 }
-void gmplUpdateEnemyBulltetsPositions()
+void updateFastElementsPositions()
 {
-	beginOfBullets=(beginOfBullets+1)%16;
-	bullets[0][beginOfBullets=0;
-	bullets[1][beginOfBullets]=0;
-}
-void gmplUpdatePowerUpPosition()
-{
-	
-	powerUp1.beginOfPowerUp=(beginOfPowerUp+1)%16;
-	//or
-	powerUp1.x--;
-	}
-
-void gmplResolveObjectCollision()
-{	
-	// do napisania funkcje HpDown
-	
-	if(playerYPos == 0 && obstacles[0][beginOfObstacles]!=0)
+	for(int i=0;i<AMMOUNT_OF_OBJECTS; i++)
 	{
-		HpDown();	
-	}
-	if(playerYPos == 1&& obstacles[1][beginOfObstacles]!=0)
-	{
-		HpDown();
-	}
-	
-	if(playerYPos == 0 && bullets[0][beginOfBullets]!=0)
-	{
-		HpDown();	
-	}
-	if(playerYPos == 1&& bullets[1][BeginOfBullets]!=0)
-	{
-		HpDown();
-	}
-	
-	if(playerYPos == powerUpYPos && beginOfPowerUp == powerUpXPos)
-	{
-		//do napisania: funkcje do odpalania PowerUpów
-		switch(powUpType)
+		if(gameObjects[i].isDeleted==0)
 		{
-			case HPUp:
-				
+			switch(gameObjects[i].type)
+			{
+				case enemyBullet:
+					gameObjects[i].x--;
 				break;
-			case Defense:
-				
+				case playerBullet:
+					gameObjects[i].x++;
 				break;
-			case LaserPowerUp:
 				
-				break;
-			case DecreaseSpeed:
-				
-				break;
+			}
 		}
 	}
 	
-	
-	
-	
-	}
-void HpDown()
+	for(int i=0;i<AMMOUNT_OF_PLAYER_BULLETS;++i)
 	{
-	lifesLeft--;
-	if(lifesLeft==0)
-	{
-		gameOver();	
+		if(playerBullets[i].isDeleted=0)
+		{
+			playerBullets[i].x++;
 		}
+	}
 }
+void updateSlowElementsPositions()
+{
+	for(int i=0;i<AMMOUNT_OF_OBJECTS; i++)
+	{
+		if(gameObjects[i].isDeleted==0)
+		{
+			switch(gameObjects[i].type)
+			{
+				case enemy:
+					gameObjects[i].x--;
+				break;
+				case barrier:
+					gameObjects[i].x--;
+				break;
+				
+				case hpPowerUp:
+					gameObjects[i].x--;
+				break;
+				case barrierPowerUp:
+					gameObjects[i].x--;
+				break;
+				case laserPowerUp:
+					gameObjects[i].x--;
+				break;
+				case decreaseSpeedPowerUp:
+					gameObjects[i].x--;
+				break;
+			}
+		}
+	}
+}
+
+void gmplPrepareStuff()
+{
+	for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
+	{
+		gameObjects[i].isDeleted=1;
+	}
+	for(int i=0;i<AMMOUNT_OF_PLAYER_BULLETS;++i)
+	{
+		player.playerBullets[i].isDeleted=1;
+	}
+	
+	player.lives=3;
+	player.y=0;
+	player.isPowerUpActive=0;
+}
+void decreaseHp()
+{
+	player.lives--;
+	
+}
+void pickUpPowerUp(powerUp powerup)
+{
+	player.powerup = powerup;
+}
+void CollisionOfPlayerBulletWithEnemy(int idOfEnemy)
+{
+	gameObjects[idOfEnemy].isDeleted=1;
+	decreaseHp();
+}
+void detectCollisions()
+{
+	for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
+	{
+		if(gameObjects[i].isDeleted==0 && gameObjects[i].x==0 && gameObjects[i].y==player.y )
+		{
+			switch(gameObjects[i].type)
+			{
+				
+				case enemy:
+					decreaseHp();
+					break;
+				case barrier:
+					decreaseHp();
+					break;
+				case enemyBullet:
+					decreaseHp();
+					break;
+				case hpPowerUp:
+					pickUpPowerUp(hpPowerUp);
+					break;
+				case barrierPowerUp:
+					pickUpPowerUp(barrierPowerUp);
+					break;
+				case laserPowerUp(laserPowerUp);
+					pickUpPowerUp(laserPowerUp);
+					break;
+				case decreaseSpeedPowerUp:;
+					pickUpPowerUp(decreaseSpeedPowerUp);
+					break;
+			}
+		}
+		for(int u=0;u<AMMOUNT_OF_PLAYER_BULLETS;++u)
+		{
+			if(gameObjects[i].idDeleted==0 && gameObjects[i].type = enemy && player.playerBullets[u].isDeleted==0 && gameObjects[i].x ==player.playerBullets[u].x  && gameObjects[i].y==player.playerBullets[u].y )
+			{
+				CollisionOfPlayerBulletWithEnemy(i);
+			}
+		}
+	}
+}
+char doIGenerateAnObject()
+{
+	randChangeUpperLimit(10);
+
+	randChangeLowerLimit(0);
+	if(randGet()>3)
+		return 0;
+	return 1;
+}
+
+
 
 void gmplMainPart()
 {
