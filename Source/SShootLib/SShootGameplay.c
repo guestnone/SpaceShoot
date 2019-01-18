@@ -9,9 +9,11 @@
 //---------------------------------------------------------------------------
 
 #include "SShootGameplay.h"
+#include "SShootData.h"
 #include "EasyWeb2Utility/CommonRand.h"
 #include "EasyWeb2Utility/CommonUtil.h"
 #include "EasyWeb2Utility/EW2Lcd.h"
+#include "EasyWeb2Utility/EW2Buttons.h"
 
 char AMMOUNT_OF_OBJECTS =10;
 char AMMOUNT_OF_PLAYER_BULLETS = 2;
@@ -27,6 +29,14 @@ typedef enum powerUp
 	hp,barrier,laser,speed
 }powerUp;
 
+typedef struct playerBullet
+{
+	char x;
+	char y;
+	char isDeleted;
+}playerBullet;
+
+
 typedef struct playerObject
 {
 	char lives;
@@ -34,13 +44,15 @@ typedef struct playerObject
 	char isPowerUpActive;
 	powerUp powerup;
 	playerBullet playerBullets[2];
-}playerObject;
+        char isDead;
+} playerObject;
 
 typedef enum typeOfObject
 {
 	enemy,
-	barrier,
+	theBarrier,
 	enemyBullet,
+        thePlayerBullet,
 	hpPowerUp,
 	barrierPowerUp,
 	laserPowerUp,
@@ -54,12 +66,6 @@ typedef struct gameObject
 	typeOfObject type;
 	char isDeleted;
 }gameObject;
-typedef struct playerBullet
-{
-	char x;
-	char y;
-	char IsDeleted;
-}playerBullet;
 
 
 gameObject gameObjects[10];
@@ -68,7 +74,7 @@ void shootPlayerBullet()
 {
 	for(int i=0;i<AMMOUNT_OF_PLAYER_BULLETS;++i)
 	{
-		if(player.playerBullets[i].isDeleted=1)
+		if(player.playerBullets[i].isDeleted == 1)
 		{
 			player.playerBullets[i].x=BEGIN_OF_GAMEFIELD+1;
 			player.playerBullets[i].y=player.y;
@@ -81,7 +87,7 @@ void shootEnemyBullet(char x,char y)
 {
 	for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
 	{
-		if(gameObjects[i].isDeleted=1)
+		if(gameObjects[i].isDeleted == 1)
 		{
 			gameObjects[i].isDeleted=0;
 			gameObjects[i].y=y;
@@ -99,19 +105,20 @@ char getYPos()
 	
 	return randGet();
 }
-char getObjectType()
+
+typeOfObject getObjectType()
 {
 	randChangeLowerLimit(0);
 
 	randChangeUpperLimit(98);
-	result = randGet();
+	int result = randGet();
 	if(result<=50)
 	{
 		return enemy;
 	}
 	if(result <= 90)
 	{
-		return barrier;
+		return theBarrier;
 	}
 	if(result <= 92)
 	{
@@ -133,12 +140,12 @@ void putObjectOnGamefield()
 		char y = getYPos();
 		for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
 		{
-			if(gameObjects[i].isDeleted = 1)
+			if(gameObjects[i].isDeleted == 1)
 			{
 				gameObjects[i].y=y;
 				gameObjects[i].x=END_OF_GAMEFIELD;
-				gameObjects.type=type;
-				gameObjects.isDeleted=0;
+				gameObjects[i].type=type;
+				gameObjects[i].isDeleted=0;
 				break;
 			}
 		}
@@ -154,7 +161,7 @@ void updateFastElementsPositions()
 				case enemyBullet:
 					gameObjects[i].x--;
 				break;
-				case playerBullet:
+				case thePlayerBullet:
 					gameObjects[i].x++;
 				break;
 				
@@ -164,9 +171,9 @@ void updateFastElementsPositions()
 	
 	for(int i=0;i<AMMOUNT_OF_PLAYER_BULLETS;++i)
 	{
-		if(playerBullets[i].isDeleted=0)
+		if(player.playerBullets[i].isDeleted == 0)
 		{
-			playerBullets[i].x++;
+			player.playerBullets[i].x++;
 		}
 	}
 }
@@ -181,7 +188,7 @@ void updateSlowElementsPositions()
 				case enemy:
 					gameObjects[i].x--;
 				break;
-				case barrier:
+				case theBarrier:
 					gameObjects[i].x--;
 				break;
 				
@@ -250,22 +257,25 @@ void detectCollisions()
 					decreaseHp();
 					break;
 				case hpPowerUp:
-					pickUpPowerUp(hpPowerUp);
+					pickUpPowerUp(hp);
 					break;
 				case barrierPowerUp:
-					pickUpPowerUp(barrierPowerUp);
+					pickUpPowerUp(barrier);
 					break;
-				case laserPowerUp(laserPowerUp);
-					pickUpPowerUp(laserPowerUp);
+                                case laserPowerUp:
+					pickUpPowerUp(laser);
 					break;
-				case decreaseSpeedPowerUp:;
-					pickUpPowerUp(decreaseSpeedPowerUp);
+				case decreaseSpeedPowerUp:
+					pickUpPowerUp(speed);
 					break;
 			}
 		}
 		for(int u=0;u<AMMOUNT_OF_PLAYER_BULLETS;++u)
 		{
-			if(gameObjects[i].idDeleted==0 && gameObjects[i].type = enemy && player.playerBullets[u].isDeleted==0 && gameObjects[i].x ==player.playerBullets[u].x  && gameObjects[i].y==player.playerBullets[u].y )
+			if(gameObjects[i].isDeleted==0 && gameObjects[i].type == enemy
+                           && player.playerBullets[u].isDeleted==0
+                           && gameObjects[i].x == player.playerBullets[u].x
+                           && gameObjects[i].y == player.playerBullets[u].y )
 			{
 				CollisionOfPlayerBulletWithEnemy(i);
 			}
@@ -310,7 +320,7 @@ void gmplMainPart()
 
 		gmplRefreshDisplay();
 
-		if (isDead)
+		if (player.isDead == 1)
 		{
 			gmplDisplayGameOver();
 		}
@@ -319,32 +329,85 @@ void gmplMainPart()
 
 }
 
+
+
+
 ShipType gmplShipSelect()
 {
-
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
+	ShipType ret = First;
+	char pressed = 0;
+	dataUploadAllShipCustomChars();
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
+	lcdSendString("Select a Ship");
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
+	lcdSendString("1.");
+	lcdSendCharacter(MSP_LCD_CUSTOM_CHAR_0);
+	lcdSendString(" 2.");
+	lcdSendCharacter(MSP_LCD_CUSTOM_CHAR_1);
+	lcdSendString(" 3.");
+	lcdSendCharacter(MSP_LCD_CUSTOM_CHAR_2);
+	lcdSendString(" 4.");
+	lcdSendCharacter(MSP_LCD_CUSTOM_CHAR_3);
+	
+	
+	
+	while (pressed == 0)
+	{
+		if (buttonsIsPressed(MSP_BUTTON_FIRST))
+		{
+			ret = First;
+			pressed = 1;
+		}
+		
+		if (buttonsIsPressed(MSP_BUTTON_SECOND))
+		{
+			ret = Second;
+			pressed = 1;
+		}
+		    
+		if (buttonsIsPressed(MSP_BUTTON_THIRD))
+		{
+			ret = Third;
+			pressed = 1;
+		}
+		    
+		if (buttonsIsPressed(MSP_BUTTON_FOURTH))
+		{
+			ret = Fourth;
+			pressed = 1;
+		}
+	}
+		    
+	return ret;
 }
 
-void gmplMainPart()
+void gmplSetUp(ShipType ship)
 {
-	// Paweł's stuff gets called here.
+	// set the characters
+	
+	dataSwitchCustomScreenCharset(ship);
+	
+	// set the variables
+	player.lives = 3;
+	player.y = 0;
+	player.isPowerUpActive = 0;
+	player.playerBullets[0].isDeleted = 1;
+	player.playerBullets[1].isDeleted = 1;
+	player.isDead = 0;
+	
+	for (int i = 0; i < 10; i++)
+	{
+		 gameObjects[i].isDeleted = 1;
+	}
 }
 
 MainLoopState gmplLoopEnter()
 {
 	ShipType sType = gmplShipSelect();
-	gmplSetUp();
-	gmplMainPart();
-	gmplHighScoreInput();
-
-	return MainWindow;
-}
-
-MainLoopState gmplLoopEnter()
-{
-	//ShipType sType = gmplShipSelect();
-	//gmplSetUp();
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
+	gmplSetUp(sType);
 	//gmplMainPart();
-	//gmplHighScoreInput();
 
 	return MainScreen;
 }

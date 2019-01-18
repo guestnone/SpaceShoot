@@ -41,6 +41,7 @@ void internal_menuMainMoveRight(char* string)
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 	lcdSendString(gSpaces);
 	lcdSendString(string);
+        lcdSendString(gSpaces);
 	internal_moveSecondLineRight();
 }
 
@@ -50,8 +51,11 @@ void internal_menuMainMoveLeft(char* string)
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 	lcdSendString(gSpaces);
 	lcdSendString(string);
+        lcdSendString(gSpaces);
 	internal_moveSecondLineLeft();
 }
+
+
 
 MainLoopState menuMainWindow()
 {
@@ -59,37 +63,15 @@ MainLoopState menuMainWindow()
 	
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
-	lcdSendString("   ");
-	lcdSendString(STR_MENU_MAIN_SELECT_INFO);
-	internal_menuMainMoveRight(STR_MENU_MAIN_ITEM_PLAY);
+	internal_menuMainMoveLeft(STR_MENU_MAIN_SELECT_INFO);
+	commonDelay(65450);
+        commonDelay(65450);
+        internal_moveSecondLineLeft();
+        internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_PLAY);
+        
 
-	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
-
-	while (buttonsIsPressed(MSP_BUTTON_THIRD))
+	while (!buttonsIsPressed(MSP_BUTTON_SECOND))
 	{
-		if (buttonsIsPressed(MSP_BUTTON_SECOND))
-		{
-			switch(ret)
-			{
-			case Game:
-				internal_menuMainMoveRight(STR_MENU_MAIN_ITEM_SETTINGS);
-				ret = Game;
-				break;
-			case Settings:
-				internal_menuMainMoveRight(STR_MENU_MAIN_ITEM_HIGHSCORES);
-				ret = HighScore;
-				break;
-			case HighScore:
-				internal_menuMainMoveRight(STR_MENU_MAIN_ITEM_ABOUT);
-				ret = About;
-				break;
-			case About:
-				internal_menuMainMoveRight(STR_MENU_MAIN_ITEM_PLAY);
-				ret = Game;
-				break;
-			}
-		}
-
 		if (buttonsIsPressed(MSP_BUTTON_FIRST))
 		{
 			switch(ret)
@@ -98,17 +80,9 @@ MainLoopState menuMainWindow()
 				internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_ABOUT);
 				ret = About;
 				break;
-			case Settings:
+			case About:
 				internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_PLAY);
 				ret = Game;
-				break;
-			case HighScore:
-				internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_SETTINGS);
-				ret = Settings;
-				break;
-			case About:
-				internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_HIGHSCORES);
-				ret = HighScore;
 				break;
 			}
 		}
@@ -124,54 +98,35 @@ MainLoopState menuAbout()
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 
-	lcdSendString(STR_ABOUT_NAME);
-	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
+	internal_menuMainMoveLeft(STR_ABOUT_NAME);
+        commonDelay(65450);
+        internal_moveSecondLineLeft();
+        lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 	
-	lcdSendString("                 ");
-	lcdSendString(STR_ABOUT_BY);
-	internal_moveSecondLineLeft();
+	internal_menuMainMoveLeft(STR_ABOUT_BY);
 	commonDelay(65450);	
 	internal_moveSecondLineLeft();
 	commonDelay(100);
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 
-	lcdSendString("                 ");
-	lcdSendString(STR_ABOUT_AUTHOR_ONE);
-	internal_moveSecondLineLeft();
+	internal_menuMainMoveLeft(STR_ABOUT_AUTHOR_ONE);
 	commonDelay(65450);	
 	internal_moveSecondLineLeft();
 	commonDelay(100);
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 	
-	lcdSendString("                 ");
-	lcdSendString(STR_ABOUT_AUTHOR_TWO);
-	internal_moveSecondLineLeft();
+	internal_menuMainMoveLeft(STR_ABOUT_AUTHOR_TWO);
 	commonDelay(65450);	
 	internal_moveSecondLineLeft();
 	commonDelay(100);
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 
-	lcdSendString("                 ");
-	lcdSendString(STR_ABOUT_AUTHOR_THREE);
-	internal_moveSecondLineLeft();
+	internal_menuMainMoveLeft(STR_ABOUT_AUTHOR_THREE);
 	commonDelay(65450);	
 	internal_moveSecondLineLeft();
 	commonDelay(100);
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 
 
-	return MainScreen;
-}
-
-
-MainLoopState menuSettings()
-{
-	// @TODO implement
-	return MainScreen;
-}
-
-MainLoopState menuHighScores()
-{
-	// @TODO implement
 	return MainScreen;
 }

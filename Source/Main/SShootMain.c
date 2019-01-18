@@ -76,6 +76,7 @@ int main()
 
 int main()
 {
+        commonTurnOffWatchdog();
 	buttonsSetUpPorts();
 	buzzerSetUpPorts();
 	diodesSetUpPorts();

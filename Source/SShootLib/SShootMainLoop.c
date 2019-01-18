@@ -18,7 +18,7 @@ void mainloopEnter()
 	// @TODO variables used by the game here
 
 	MainLoopState mainLS = MainScreen;
-
+        
 	while(true)
 	{
 		if (mainLS == MainScreen)
@@ -29,17 +29,7 @@ void mainloopEnter()
 		if (mainLS == Game)
 		{
 			mainLS = gmplLoopEnter();
-		}
-
-		if (mainLS == Settings)
-		{
-			mainLS = menuSettings();
-		}		
-
-		if (mainLS == HighScore)
-		{
-			mainLS = menuHighScores();
-		}		
+		}	
 
 		if (mainLS == About)
 		{

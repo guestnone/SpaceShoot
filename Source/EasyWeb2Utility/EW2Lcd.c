@@ -87,31 +87,31 @@ void lcdSetUpPorts(void)
 void lcdStartUp(void)
 {	
 	MSP_CLEAR_BIT(MSP_LCD_DATA_PORT, MSP_LCD_COMMUNICATION_MODE_BIT);
-	//commonDelay(250*100);
-	//commonDelay(250*100);
-	//commonDelay(250*100);
-	commonDelay(250);
+	commonDelay(250*100);
+	commonDelay(250*100);
+	commonDelay(250*100);
+	commonDelay(250*100);
 	
 	MSP_LCD_DATA_PORT |= BIT4 | BIT5;
 	MSP_LCD_DATA_PORT &= ~BIT6 & ~BIT7;
 	
 	lcdExecuteCommand();
-	commonDelay(1000); //10ms
+	commonDelay(100*100); //10ms
 	lcdExecuteCommand();
-	commonDelay(1000); //10ms
+	commonDelay(100*100); //10ms
 	lcdExecuteCommand();
-	commonDelay(1000); //10ms	
+	commonDelay(100*100); //10ms	
 	
 	MSP_LCD_DATA_PORT &= ~BIT4;
 	lcdExecuteCommand();
 	
-    lcdSendCommand(MSP_LCD_COMMAND_DISPLAY_ON);
+        lcdSendCommand(MSP_LCD_COMMAND_DISPLAY_ON);
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 
-	commonDelay(2500);
-	commonDelay(2500);
-	commonDelay(2500);
-	commonDelay(2500);
+	commonDelay(250*100);
+	commonDelay(250*100);
+	commonDelay(250*100);
+	commonDelay(250*100);
 
 }
 

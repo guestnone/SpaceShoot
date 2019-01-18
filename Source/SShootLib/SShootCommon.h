@@ -8,3 +8,11 @@ typedef enum
 	HighScore,
 	About
 } MainLoopState;
+
+typedef enum
+{
+	First,
+	Second,
+	Third,
+	Fourth
+} ShipType;

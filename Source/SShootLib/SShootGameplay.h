@@ -12,13 +12,9 @@
 
 #include "SShootCommon.h"
 
-typedef enum
-{
-	First,
-	Second,
-	Third,
-	Fourth
-} ShipType;
+
+
+
 
 void gmplUpdatePositions();
 
@@ -29,7 +25,7 @@ void gmplMainPart();
 
 void gmplHighScoreInput();
 
-void gmplSetUp();
+void gmplSetUp(ShipType ship);
 
 
 MainLoopState gmplLoopEnter();

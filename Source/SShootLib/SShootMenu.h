@@ -11,9 +11,9 @@
 
 MainLoopState menuMainWindow();
 
-MainLoopState menuSettings();
+//MainLoopState menuSettings();
 
-MainLoopState menuHighScores();
+//MainLoopState menuHighScores();
 
 MainLoopState menuAbout();
 
