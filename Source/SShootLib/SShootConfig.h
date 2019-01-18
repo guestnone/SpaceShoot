@@ -1,0 +1,1 @@
+#define SSHOOT_DEBUG 1
