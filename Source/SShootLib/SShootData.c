@@ -19,7 +19,7 @@ char AllShipData[4][8] = {
 	{0,17,26,5,5,26,17,0}	//fourth
 };
 
-char AllEnemyData[2][8] ={ 
+char AllEnemyData[2][8] = { 
 	{25,5,10,16,16,10,5,25},	// enemy
 	{4,10,10,10,10,10,10,4}	// barrier
 };
@@ -29,7 +29,7 @@ char SecondShipData[8] = {6,9,18,21,21,18,9,6};
 char ThirdShipData[8] = {24,4,26,17,17,26,4,24};
 char FourthShipData[8] = {0,17,26,5,5,26,17,0};
 
-char polishCharacters[8][8] = {
+char PolishCharacters[8][8] = {
 
     {4,0,31,2,4,8,31,0}, //ż albo ź
     {1,2,0,4,10,17,10,4}, //ó
@@ -42,6 +42,13 @@ char polishCharacters[8][8] = {
 
 };
 
+/**
+ * Uploads one character into the LCD data port when active on CGRAM memory.
+ *
+ * @param      cPart  Data of the character set.
+ * 
+ * @note Internal Function, only used on implementation.
+ */
 void internal_uploadOneCSet(char cPart[8])
 {
     for (int i = 0; i < 8; i++)

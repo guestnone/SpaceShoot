@@ -1,14 +1,19 @@
 #pragma once
 
+/**
+ * The mode in which the program is running.
+ */
 typedef enum
 {
+	/** Main menu */
 	MainScreen = 0,
+	/** Gameplay mode */
 	Game,
-	Settings,
-	HighScore,
+	/** About screen */
 	About
 } MainLoopState;
 
+/** Type of the ship chosen by the player */
 typedef enum
 {
 	First,

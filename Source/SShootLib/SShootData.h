@@ -45,10 +45,14 @@
 /* 	                              OTHER                                 */
 /************************************************************************/
 
-
-
-
-
+/**
+ * Uploads all ship characters into CGRAM. Used on Ship selections.
+ */
 void dataUploadAllShipCustomChars();
 
+/**
+ * Prepares the gameplay's custom chararacter set based on the ship type.
+ *
+ * @param[in]  ship  Chosen ship type.
+ */
 void dataSwitchCustomScreenCharset(ShipType ship);

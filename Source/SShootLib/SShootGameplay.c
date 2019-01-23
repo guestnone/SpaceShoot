@@ -15,83 +15,37 @@
 #include "EasyWeb2Utility/EW2Lcd.h"
 #include "EasyWeb2Utility/EW2Buttons.h"
 
-char AMMOUNT_OF_OBJECTS =10;
-char AMMOUNT_OF_PLAYER_BULLETS = 2;
-char END_OF_GAMEFIELD =15;
+char AMOUNT_OF_OBJECTS = 10;
+char AMOUNT_OF_PLAYER_BULLETS = 2;
+char END_OF_GAMEFIELD = 15;
 char BEGIN_OF_GAMEFIELD = 0;
 
 int gSlowdownTimer = 30000;
+GameObject gGameObjects[10];
+PlayerObject gPlayer;
 
-///////////begin of edit
-
-typedef enum powerUp
-{
-	hp,barrier,laser,speed
-}powerUp;
-
-typedef struct playerBullet
-{
-	char x;
-	char y;
-	char isDeleted;
-}playerBullet;
-
-
-typedef struct playerObject
-{
-	char lives;
-	char y;
-	char isPowerUpActive;
-	powerUp powerup;
-	playerBullet playerBullets[2];
-        char isDead;
-} playerObject;
-
-typedef enum typeOfObject
-{
-	enemy,
-	theBarrier,
-	enemyBullet,
-        thePlayerBullet,
-	hpPowerUp,
-	barrierPowerUp,
-	laserPowerUp,
-	decreaseSpeedPowerUp
-}typeOfObject;
-
-typedef struct gameObject
-{
-	char x;
-	char y;
-	typeOfObject type;
-	char isDeleted;
-}gameObject;
-
-
-gameObject gameObjects[10];
-playerObject player;
 void shootPlayerBullet()
 {
-	for(int i=0;i<AMMOUNT_OF_PLAYER_BULLETS;++i)
+	for (int i=0;i<AMOUNT_OF_PLAYER_BULLETS;++i)
 	{
-		if(player.playerBullets[i].isDeleted == 1)
+		if (gPlayer.playerBullets[i].isDeleted == 1)
 		{
-			player.playerBullets[i].x=BEGIN_OF_GAMEFIELD+1;
-			player.playerBullets[i].y=player.y;
-			player.playerBullets[i].isDeleted=0;
+			gPlayer.playerBullets[i].x = BEGIN_OF_GAMEFIELD + 1;
+			gPlayer.playerBullets[i].y = gPlayer.y;
+			gPlayer.playerBullets[i].isDeleted = 0;
 			break;
 		}
 	}
 }
 void shootEnemyBullet(char x,char y)
 {
-	for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
+	for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
 	{
-		if(gameObjects[i].isDeleted == 1)
+		if (gGameObjects[i].isDeleted == 1)
 		{
-			gameObjects[i].isDeleted=0;
-			gameObjects[i].y=y;
-			gameObjects[i].x=x;
+			gGameObjects[i].isDeleted = 0;
+			gGameObjects[i].y = y;
+			gGameObjects[i].x = x;
 			break;
 		}
 	}
@@ -106,29 +60,29 @@ char getYPos()
 	return randGet();
 }
 
-typeOfObject getObjectType()
+TypeOfObject getObjectType()
 {
 	randChangeLowerLimit(0);
 
 	randChangeUpperLimit(98);
 	int result = randGet();
-	if(result<=50)
+	if (result <= 50)
 	{
 		return enemy;
 	}
-	if(result <= 90)
+	if (result <= 90)
 	{
 		return theBarrier;
 	}
-	if(result <= 92)
+	if (result <= 92)
 	{
 		return hpPowerUp;
 	}
-	if(result <= 94)
+	if (result <= 94)
 	{
 		return barrierPowerUp;
 	}
-	if(result <= 96)
+	if (result <= 96)
 	{
 		return laserPowerUp;
 	}
@@ -136,115 +90,102 @@ typeOfObject getObjectType()
 }
 void putObjectOnGamefield()
 {
-		typeOfObject type = getObjectType();
+		TypeOfObject type = getObjectType();
 		char y = getYPos();
-		for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
+		for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
 		{
-			if(gameObjects[i].isDeleted == 1)
+			if (gGameObjects[i].isDeleted == 1)
 			{
-				gameObjects[i].y=y;
-				gameObjects[i].x=END_OF_GAMEFIELD;
-				gameObjects[i].type=type;
-				gameObjects[i].isDeleted=0;
+				gGameObjects[i].y = y;
+				gGameObjects[i].x = END_OF_GAMEFIELD;
+				gGameObjects[i].type = type;
+				gGameObjects[i].isDeleted = 0;
 				break;
 			}
 		}
 }
 void updateFastElementsPositions()
 {
-	for(int i=0;i<AMMOUNT_OF_OBJECTS; i++)
+	for (int i=0; i<AMOUNT_OF_OBJECTS; i++)
 	{
-		if(gameObjects[i].isDeleted==0)
+		if (gGameObjects[i].isDeleted == 0)
 		{
-			switch(gameObjects[i].type)
+			switch(gGameObjects[i].type)
 			{
-				case enemyBullet:
-					gameObjects[i].x--;
-				break;
-				case thePlayerBullet:
-					gameObjects[i].x++;
-				break;
-				
+			case enemyBullet:
+				gGameObjects[i].x--;
+			break;
+			case thePlayerBullet:
+				gGameObjects[i].x++;
+			break;	
 			}
 		}
 	}
 	
-	for(int i=0;i<AMMOUNT_OF_PLAYER_BULLETS;++i)
+	for(int i=0; i<AMOUNT_OF_PLAYER_BULLETS; ++i)
 	{
-		if(player.playerBullets[i].isDeleted == 0)
+		if(gPlayer.playerBullets[i].isDeleted == 0)
 		{
-			player.playerBullets[i].x++;
+			gPlayer.playerBullets[i].x++;
 		}
 	}
 }
 void updateSlowElementsPositions()
 {
-	for(int i=0;i<AMMOUNT_OF_OBJECTS; i++)
+	for (int i = 0; i<AMOUNT_OF_OBJECTS; i++)
 	{
-		if(gameObjects[i].isDeleted==0)
+		if (gGameObjects[i].isDeleted == 0)
 		{
-			switch(gameObjects[i].type)
+			switch (gGameObjects[i].type)
 			{
-				case enemy:
-					gameObjects[i].x--;
-				break;
-				case theBarrier:
-					gameObjects[i].x--;
-				break;
+			case enemy:
+				gGameObjects[i].x--;
+			break;
+			case theBarrier:
+				gGameObjects[i].x--;
+			break;
 				
-				case hpPowerUp:
-					gameObjects[i].x--;
-				break;
-				case barrierPowerUp:
-					gameObjects[i].x--;
-				break;
-				case laserPowerUp:
-					gameObjects[i].x--;
-				break;
-				case decreaseSpeedPowerUp:
-					gameObjects[i].x--;
-				break;
+			case hpPowerUp:
+				gGameObjects[i].x--;
+			break;
+			case barrierPowerUp:
+				gGameObjects[i].x--;
+			break;
+			case laserPowerUp:
+				gGameObjects[i].x--;
+			break;
+			case decreaseSpeedPowerUp:
+				gGameObjects[i].x--;
+			break;
 			}
 		}
 	}
 }
 
-void gmplPrepareStuff()
-{
-	for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
-	{
-		gameObjects[i].isDeleted=1;
-	}
-	for(int i=0;i<AMMOUNT_OF_PLAYER_BULLETS;++i)
-	{
-		player.playerBullets[i].isDeleted=1;
-	}
-	
-	player.lives=3;
-	player.y=0;
-	player.isPowerUpActive=0;
-}
 void decreaseHp()
 {
-	player.lives--;
+	gPlayer.lives--;
 	
 }
-void pickUpPowerUp(powerUp powerup)
+
+void pickUpPowerUp(PowerUp powerup)
 {
-	player.powerup = powerup;
+	gPlayer.powerup = powerup;
 }
+
 void CollisionOfPlayerBulletWithEnemy(int idOfEnemy)
 {
-	gameObjects[idOfEnemy].isDeleted=1;
+	gGameObjects[idOfEnemy].isDeleted=1;
 	decreaseHp();
 }
+
 void detectCollisions()
 {
-	for(int i=0;i<AMMOUNT_OF_OBJECTS;++i)
+	for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
 	{
-		if(gameObjects[i].isDeleted==0 && gameObjects[i].x==0 && gameObjects[i].y==player.y )
+		if (gGameObjects[i].isDeleted == 0 && gGameObjects[i].x == 0 && gGameObjects[i].y == gPlayer.y )
 		{
-			switch(gameObjects[i].type)
+			switch (gGameObjects[i].type)
 			{
 				
 				case enemy:
@@ -262,7 +203,7 @@ void detectCollisions()
 				case barrierPowerUp:
 					pickUpPowerUp(barrier);
 					break;
-                                case laserPowerUp:
+                case laserPowerUp:
 					pickUpPowerUp(laser);
 					break;
 				case decreaseSpeedPowerUp:
@@ -270,18 +211,19 @@ void detectCollisions()
 					break;
 			}
 		}
-		for(int u=0;u<AMMOUNT_OF_PLAYER_BULLETS;++u)
+		for (int u = 0; u<AMOUNT_OF_PLAYER_BULLETS; ++u)
 		{
-			if(gameObjects[i].isDeleted==0 && gameObjects[i].type == enemy
-                           && player.playerBullets[u].isDeleted==0
-                           && gameObjects[i].x == player.playerBullets[u].x
-                           && gameObjects[i].y == player.playerBullets[u].y )
+			if (gGameObjects[i].isDeleted == 0 && gGameObjects[i].type == enemy
+                           && gPlayer.playerBullets[u].isDeleted == 0
+                           && gGameObjects[i].x == gPlayer.playerBullets[u].x
+                           && gGameObjects[i].y == gPlayer.playerBullets[u].y )
 			{
 				CollisionOfPlayerBulletWithEnemy(i);
 			}
 		}
 	}
 }
+
 char doIGenerateAnObject()
 {
 	randChangeUpperLimit(10);
@@ -316,11 +258,9 @@ void gmplMainPart()
 {
 	while (1)
 	{
-
-
 		gmplRefreshDisplay();
 
-		if (player.isDead == 1)
+		if (gPlayer.isDead == 1)
 		{
 			gmplDisplayGameOver();
 		}
@@ -389,16 +329,19 @@ void gmplSetUp(ShipType ship)
 	dataSwitchCustomScreenCharset(ship);
 	
 	// set the variables
-	player.lives = 3;
-	player.y = 0;
-	player.isPowerUpActive = 0;
-	player.playerBullets[0].isDeleted = 1;
-	player.playerBullets[1].isDeleted = 1;
-	player.isDead = 0;
-	
-	for (int i = 0; i < 10; i++)
+	gPlayer.lives = 3;
+	gPlayer.y = 0;
+	gPlayer.isPowerUpActive = 0;
+	gPlayer.isDead = 0;
+
+	for(int i = 0; i<AMOUNT_OF_OBJECTS; ++i)
 	{
-		 gameObjects[i].isDeleted = 1;
+		gGameObjects[i].isDeleted = 1;
+	}
+	
+	for(int i = 0; i<AMOUNT_OF_PLAYER_BULLETS; ++i)
+	{
+		gPlayer.playerBullets[i].isDeleted = 1;
 	}
 }
 

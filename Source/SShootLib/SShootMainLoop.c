@@ -15,8 +15,6 @@
 
 void mainloopEnter()
 {
-	// @TODO variables used by the game here
-
 	MainLoopState mainLS = MainScreen;
         
 	while(true)

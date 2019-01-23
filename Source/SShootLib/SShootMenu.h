@@ -9,14 +9,17 @@
 //---------------------------------------------------------------------------
 #include "SShootCommon.h"
 
+/**
+ * Invokes the main menu and lets the player choose a game mode.
+ *
+ * @return     Value chosed by the player (About or game).
+ */
 MainLoopState menuMainWindow();
 
-//MainLoopState menuSettings();
-
-//MainLoopState menuHighScores();
-
+/**
+ * Displays the Authors
+ *
+ * @return     MainMenu when finished.
+ */
 MainLoopState menuAbout();
-
-
-void menuLoopEnter();
 

@@ -22,61 +22,9 @@
 #define MAIN_INIT_BAUDRATE 1200
 //#define MAIN_EW2LIBTEST_MODE 1
 
-void mainStartUpDevice()
-{
-	
-}
-/**
 int main()
 {
-	commonTurnOffWatchdog();
-	
-	// port set-up
-	buttonsSetUpPorts();
-	buzzerSetUpPorts();
-	diodesSetUpPorts();
-	commonDelay(100*100); //10ms
-	lcdSetUpPorts();
-	uartSetUpPorts();
-	
-	commonDelay(100*100); //10ms
-	lcdStartUp();
-	
-	uartStartUp(MAIN_INIT_BAUDRATE);
-	
-	lcdSendCharacter('B');
-	lcdSendCharacter('B');
-	lcdSendCharacter('C');
-	randInit(150, 50);
-	lcdSendCharacter('B');
-	lcdSendCharacter('B');
-	lcdSendCharacter('C');
-	int rand = randGet();
-	lcdSendCharacter('B');
-	lcdSendCharacter('B');
-	lcdSendCharacter('C');
-	buzzerSwitch(MSP_BUZZER_TYPE1);
-	buzzerSwitch(MSP_BUZZER_TYPE1);
-	buzzerSwitch(MSP_BUZZER_TYPE1);
-	buzzerSwitch(MSP_BUZZER_TYPE1);
-	buzzerSwitch(MSP_BUZZER_TYPE1);
-	
-	while(true) {
-	diodesSwitch(MSP_DIODES_STATUS);
-	if ( buttonsIsPressed(MSP_BUTTON_FIRST))
-	diodesSwitch(MSP_DIODES_RELAY_TYPE1);
-	if ( buttonsIsPressed(MSP_BUTTON_SECOND))
-	diodesSwitch(MSP_DIODES_RELAY_TYPE2);
-	}
-	// @todo plug (implemented) tests for EW2 lib
-	
-	return 0;
-}
-*/
-
-int main()
-{
-        commonTurnOffWatchdog();
+    commonTurnOffWatchdog();
 	buttonsSetUpPorts();
 	buzzerSetUpPorts();
 	diodesSetUpPorts();

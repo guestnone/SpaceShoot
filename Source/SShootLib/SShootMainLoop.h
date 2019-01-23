@@ -8,6 +8,9 @@
 */
 //---------------------------------------------------------------------------
 
-
+/**
+ * This is the "actual main loop of the program" called after the hardware initialization.
+ * Handles the mode in which the game runs.
+ */
 void mainloopEnter();
 
