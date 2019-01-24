@@ -50,6 +50,12 @@ void internal_menuMainMoveLeft(char* string)
 
 MainLoopState menuMainWindow()
 {
+	uartTransmitCharacter(12);
+	uartTransmitString("Space Shooter");
+	uartTransmitCharacter(10);
+	uartTransmitString(STR_UART_INFO);
+
+
 	MainLoopState ret = Game;
 	
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);

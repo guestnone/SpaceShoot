@@ -14,6 +14,7 @@
 #include "EasyWeb2Utility/CommonUtil.h"
 #include "EasyWeb2Utility/EW2Lcd.h"
 #include "EasyWeb2Utility/EW2Buttons.h"
+#include "EasyWeb2Utility/EW2Uart.h"
 
 char AMOUNT_OF_OBJECTS = 10;
 char AMOUNT_OF_PLAYER_BULLETS = 2;
@@ -27,6 +28,7 @@ char BEGIN_OF_GAMEFIELD = 0;
 int gSlowdownTimer = 30000;
 GameObject gGameObjects[AMOUNT_OF_OBJECTS];
 PlayerObject gPlayer;
+int gScore;
 
 void shootPlayerBullet()
 {
@@ -421,6 +423,21 @@ void gmplSetUp(ShipType ship)
 	}
 
 	gSlowdownTimer = 30000;
+
+	gScore = 0;
+}
+
+void gmplUartRefresh()
+{
+	uartTransmitCharacter(12);
+	uartTransmitString(STR_UART_LIVES);
+	uartTransmitCharacter(gPlayer.lives + 48);
+	uartTransmitCharacter(10);
+	uartTransmitString(STR_UART_SCORE);
+	uartTransmitCharacter(gScore + 48);
+	uartTransmitCharacter(10);
+	uartTransmitCharacter(12);
+
 }
 
 MainLoopState gmplLoopEnter()
