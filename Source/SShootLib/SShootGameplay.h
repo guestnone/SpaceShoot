@@ -46,11 +46,16 @@ typedef struct PlayerObject
 	/** desc */
 	char isPowerUpActive;
 	/** desc */
+	char powerUpRemainingTime;
+	
+	
 	PowerUp powerup;
 	/** desc */
 	Bullet playerBullets[2];
 	/** desc */
     char isDead;
+	
+	
 } PlayerObject;
 
 /** desc */
@@ -61,7 +66,7 @@ typedef enum TypeOfObject
 	/** desc */
 	theBarrier,
 	/** desc */
-	//enemyBullet,
+	enemyBullet,
 	/** desc */
     //thePlayerBullet,
     /** desc */
@@ -220,3 +225,4 @@ MainLoopState gmplLoopEnter();
  * @note Internal Function
  */
 ShipType gmplShipSelect();
+
