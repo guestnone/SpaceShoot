@@ -39,23 +39,17 @@ void internal_moveLineLeft()
  */
 void internal_menuMainMoveLeft(char* string)
 {
-	internal_moveSecondLineLeft();
+	internal_moveLineLeft();
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 	lcdSendString(gSpaces);
 	lcdSendString(string);
     lcdSendString(gSpaces);
-	internal_moveSecondLineLeft();
+	internal_moveLineLeft();
 }
 
 
 MainLoopState menuMainWindow()
 {
-	uartTransmitCharacter(12);
-	uartTransmitString("Space Shooter");
-	uartTransmitCharacter(10);
-	uartTransmitString(STR_UART_INFO);
-
-
 	MainLoopState ret = Game;
 	
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);

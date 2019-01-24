@@ -26,7 +26,7 @@ typedef enum PowerUp
 } PowerUp;
 
 /** desc */
-typedef struct PlayerBullet
+typedef struct Bullet
 {
 	/** desc */
 	char x;
@@ -34,7 +34,7 @@ typedef struct PlayerBullet
 	char y;
 	/** desc */
 	char isDeleted;
-} PlayerBullet;
+} Bullet;
 
 /** desc */
 typedef struct PlayerObject
@@ -48,7 +48,7 @@ typedef struct PlayerObject
 	/** desc */
 	PowerUp powerup;
 	/** desc */
-	PlayerBullet playerBullets[2];
+	Bullet playerBullets[2];
 	/** desc */
     char isDead;
 } PlayerObject;
@@ -61,9 +61,9 @@ typedef enum TypeOfObject
 	/** desc */
 	theBarrier,
 	/** desc */
-	enemyBullet,
+	//enemyBullet,
 	/** desc */
-    thePlayerBullet,
+    //thePlayerBullet,
     /** desc */
 	hpPowerUp,
 	/** desc */

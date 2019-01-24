@@ -14,12 +14,12 @@
 #include "EasyWeb2Utility/CommonUtil.h"
 #include "EasyWeb2Utility/EW2Lcd.h"
 #include "EasyWeb2Utility/EW2Buttons.h"
-#include "EasyWeb2Utility/EW2Uart.h"
 
-char AMOUNT_OF_OBJECTS = 10;
+#define AMOUNT_OF_OBJECTS 10
 char AMOUNT_OF_PLAYER_BULLETS = 2;
 char END_OF_GAMEFIELD = 15;
 char BEGIN_OF_GAMEFIELD = 0;
+#define AMOUNT_OF_ENEMY_BULLETS 2
 
 #define PLAYER_SHIP_CHAR MSP_LCD_CUSTOM_CHAR_0
 #define ENEMY_CHAR MSP_LCD_CUSTOM_CHAR_1
@@ -28,7 +28,8 @@ char BEGIN_OF_GAMEFIELD = 0;
 int gSlowdownTimer = 30000;
 GameObject gGameObjects[AMOUNT_OF_OBJECTS];
 PlayerObject gPlayer;
-int gScore;
+Bullet enemyBullets[AMOUNT_OF_ENEMY_BULLETS];
+
 
 void shootPlayerBullet()
 {
@@ -112,21 +113,15 @@ void putObjectOnGamefield()
 }
 void updateFastElementsPositions()
 {
-	for (int i=0; i<AMOUNT_OF_OBJECTS; i++)
-	{
-		if (gGameObjects[i].isDeleted == 0)
-		{
-			switch(gGameObjects[i].type)
-			{
-			case enemyBullet:
-				gGameObjects[i].x--;
-			break;
-			case thePlayerBullet:
-				gGameObjects[i].x++;
-			break;	
-			}
-		}
-	}
+	
+        
+        for(int i=0;i<AMOUNT_OF_ENEMY_BULLETS;++i)
+        {
+          if(enemyBullets[i].isDeleted == 0)
+          {
+            enemyBullets[i].x--; 
+          }
+        }
 	
 	for(int i=0; i<AMOUNT_OF_PLAYER_BULLETS; ++i)
 	{
@@ -200,16 +195,16 @@ void detectCollisions()
 				case barrier:
 					decreaseHp();
 					break;
-				case enemyBullet:
-					decreaseHp();
-					break;
+				//case enemyBullet:
+				//	decreaseHp();
+				//	break;
 				case hpPowerUp:
 					pickUpPowerUp(hp);
 					break;
 				case barrierPowerUp:
 					pickUpPowerUp(barrier);
 					break;
-                case laserPowerUp:
+                                case laserPowerUp:
 					pickUpPowerUp(laser);
 					break;
 				case decreaseSpeedPowerUp:
@@ -227,6 +222,7 @@ void detectCollisions()
 				CollisionOfPlayerBulletWithEnemy(i);
 			}
 		}
+                for(int i=0;i<AMOUNT_OF_PLAYER_BULLETS)
 	}
 }
 
@@ -257,13 +253,13 @@ void gmplRefreshDisplay()
 {
 	char tmpDisplay[2][16];
 	for (int i = 0; i < 2; i++)
-		for (int i = 2; i < 16; i++)
+		for (int j = 2; j < 16; j++)
 			tmpDisplay[i][j] = 0;
 
 	if (gPlayer.isDead == 0)
-		tmpDisplay[gPlayer.y][1] = PLAYER_SHIP_CHAR;
+		tmpDisplay[gPlayer.y][0] = PLAYER_SHIP_CHAR;
 	else
-		tmpDisplay[gPlayer.y][1] = 0x00101010; //10100010
+		tmpDisplay[gPlayer.y][0] = 42;
 
 	for (int go = 0; go < AMOUNT_OF_OBJECTS; go++)
 	{
@@ -279,44 +275,46 @@ void gmplRefreshDisplay()
 				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = BARRIER_CHAR;
 			}
 
-			if (gGameObjects[go].type == enemyBullet || gGameObjects[go].type == thePlayerBullet)
+			/*if (gGameObjects[go].type == enemyBullet || gGameObjects[go].type == thePlayerBullet)
 			{
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x10110111; // 01111011
-			}
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 183; // 01111011
+			}*/
 
 			if (gGameObjects[go].type == hpPowerUp)
 			{
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x10011101; // 11011001
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 157; // 11011001
 			}
 
 			if (gGameObjects[go].type == barrierPowerUp)
 			{
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x00111100; // 1100011
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] =60 // 1100011
 			}
 
 			if (gGameObjects[go].type == laserPowerUp)
 			{
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x10100100; // 01001010
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 164; // 01001010
 			}
 
 			if (gGameObjects[go].type == decreaseSpeedPowerUp)
 			{
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x00010101; // 01010001
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 21; // 01010001
 			}
 		}
 	}
 
-	for (int pb = 0; i < AMOUNT_OF_PLAYER_BULLETS; pb++)
+	for (int pb = 0; pb < AMOUNT_OF_PLAYER_BULLETS; pb++)
 	{
-		if (gPlayer.playerBullets[pb].isDeleted = 0)
+		if (gPlayer.playerBullets[pb].isDeleted == 0)
 		{
-			tmpDisplay[gPlayer.playerBullets[pb].y][gPlayer.playerBullets[pb].x] = = 0x10110111; // 01111011
+			tmpDisplay[gPlayer.playerBullets[pb].y][gPlayer.playerBullets[pb].x] = 183; // 01111011
 		}
 	}
-
-	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1)
+        
+        
+        
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 	lcdSendString(tmpDisplay[0]);
-	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2)
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
 	lcdSendString(tmpDisplay[1]);
 
 }
@@ -329,13 +327,17 @@ void gmplMainPart()
 		if (slowCounter == 20)
 		{
 			gSlowdownTimer = gSlowdownTimer - 1000;
+                       
 		}
+                putObjectOnGamefield();
+                
 
 		// pawełs code gets called here
 
 		if (gPlayer.isDead == 1)
 		{	
 			gmplRefreshDisplay();
+                        commonDelay(20000);
 			gmplDisplayGameOver();
 			break;
 		}
@@ -343,6 +345,7 @@ void gmplMainPart()
 		gmplRefreshDisplay();
 
 		commonDelay(gSlowdownTimer);
+                slowCounter++;
 	}
 
 }
@@ -421,23 +424,12 @@ void gmplSetUp(ShipType ship)
 	{
 		gPlayer.playerBullets[i].isDeleted = 1;
 	}
+        for(int i=0; i < AMOUNT_OF_ENEMY_BULLETS; i++)
+        {
+                enemyBullets[i].isDeleted=1; 
+        }
 
 	gSlowdownTimer = 30000;
-
-	gScore = 0;
-}
-
-void gmplUartRefresh()
-{
-	uartTransmitCharacter(12);
-	uartTransmitString(STR_UART_LIVES);
-	uartTransmitCharacter(gPlayer.lives + 48);
-	uartTransmitCharacter(10);
-	uartTransmitString(STR_UART_SCORE);
-	uartTransmitCharacter(gScore + 48);
-	uartTransmitCharacter(10);
-	uartTransmitCharacter(12);
-
 }
 
 MainLoopState gmplLoopEnter()
