@@ -20,8 +20,12 @@ char AMOUNT_OF_PLAYER_BULLETS = 2;
 char END_OF_GAMEFIELD = 15;
 char BEGIN_OF_GAMEFIELD = 0;
 
+#define PLAYER_SHIP_CHAR MSP_LCD_CUSTOM_CHAR_0
+#define ENEMY_CHAR MSP_LCD_CUSTOM_CHAR_1
+#define BARRIER_CHAR MSP_LCD_CUSTOM_CHAR_2
+
 int gSlowdownTimer = 30000;
-GameObject gGameObjects[10];
+GameObject gGameObjects[AMOUNT_OF_OBJECTS];
 PlayerObject gPlayer;
 
 void shootPlayerBullet()
@@ -250,7 +254,68 @@ void gmplDisplayGameOver()
 void gmplRefreshDisplay()
 {
 	char tmpDisplay[2][16];
+	for (int i = 0; i < 2; i++)
+		for (int i = 2; i < 16; i++)
+			tmpDisplay[i][j] = 0;
 
+	if (gPlayer.isDead == 0)
+		tmpDisplay[gPlayer.y][1] = PLAYER_SHIP_CHAR;
+	else
+		tmpDisplay[gPlayer.y][1] = 0x00101010; //10100010
+
+	for (int go = 0; go < AMOUNT_OF_OBJECTS; go++)
+	{
+		if (gGameObjects[go].isDeleted == 0)
+		{
+			if (gGameObjects[go].type == enemy)
+			{
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = ENEMY_CHAR;
+			}
+
+			if (gGameObjects[go].type == theBarrier)
+			{
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = BARRIER_CHAR;
+			}
+
+			if (gGameObjects[go].type == enemyBullet || gGameObjects[go].type == thePlayerBullet)
+			{
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x10110111; // 01111011
+			}
+
+			if (gGameObjects[go].type == hpPowerUp)
+			{
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x10011101; // 11011001
+			}
+
+			if (gGameObjects[go].type == barrierPowerUp)
+			{
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x00111100; // 1100011
+			}
+
+			if (gGameObjects[go].type == laserPowerUp)
+			{
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x10100100; // 01001010
+			}
+
+			if (gGameObjects[go].type == decreaseSpeedPowerUp)
+			{
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 0x00010101; // 01010001
+			}
+		}
+	}
+
+	for (int pb = 0; i < AMOUNT_OF_PLAYER_BULLETS; pb++)
+	{
+		if (gPlayer.playerBullets[pb].isDeleted = 0)
+		{
+			tmpDisplay[gPlayer.playerBullets[pb].y][gPlayer.playerBullets[pb].x] = = 0x10110111; // 01111011
+		}
+	}
+
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1)
+	lcdSendString(tmpDisplay[0]);
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2)
+	lcdSendString(tmpDisplay[1]);
 
 }
 
@@ -258,12 +323,23 @@ void gmplMainPart()
 {
 	while (1)
 	{
-		gmplRefreshDisplay();
+		int slowCounter = 0;
+		if (slowCounter == 20)
+		{
+			gSlowdownTimer = gSlowdownTimer - 1000;
+		}
+
+		// pawełs code gets called here
 
 		if (gPlayer.isDead == 1)
-		{
+		{	
+			gmplRefreshDisplay();
 			gmplDisplayGameOver();
+			break;
 		}
+
+		gmplRefreshDisplay();
+
 		commonDelay(gSlowdownTimer);
 	}
 
@@ -343,6 +419,8 @@ void gmplSetUp(ShipType ship)
 	{
 		gPlayer.playerBullets[i].isDeleted = 1;
 	}
+
+	gSlowdownTimer = 30000;
 }
 
 MainLoopState gmplLoopEnter()
@@ -350,7 +428,7 @@ MainLoopState gmplLoopEnter()
 	ShipType sType = gmplShipSelect();
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 	gmplSetUp(sType);
-	//gmplMainPart();
+	gmplMainPart();
 
 	return MainScreen;
 }
