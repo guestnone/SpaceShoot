@@ -46,11 +46,16 @@ typedef struct PlayerObject
 	/** desc */
 	char isPowerUpActive;
 	/** desc */
+	char powerUpRemainingTime;
+	
+	
 	PowerUp powerup;
 	/** desc */
 	Bullet playerBullets[2];
 	/** desc */
     char isDead;
+	
+	
 } PlayerObject;
 
 /** desc */
@@ -61,7 +66,7 @@ typedef enum TypeOfObject
 	/** desc */
 	theBarrier,
 	/** desc */
-	//enemyBullet,
+	enemyBullet,
 	/** desc */
     //thePlayerBullet,
     /** desc */
@@ -92,6 +97,7 @@ typedef struct GameObject
  * 
  * @note Internal Function
  */
+
 void shootPlayerBullet();
 
 /**
@@ -120,7 +126,7 @@ char getYPos();
  * 
  * @note Internal Function
  */
-TypeOfObject getObjectType();
+TypeOfObject getRandomObjectType();
 
 /**
  * Puts an object on gamefield.
@@ -150,6 +156,15 @@ void updateSlowElementsPositions();
  */
 void decreaseHp();
 
+void hpPowerUpSetUpEvent();
+
+void barrierPowerUpSetUpEvent();
+
+void laserPowerUpSetUpEvent();
+
+void speedPowerUpSetUpEvent();
+
+
 /**
  * 
  *
@@ -166,13 +181,19 @@ void pickUpPowerUp(PowerUp powerup);
  * 
  * @note Internal Function
  */
-void collisionOfPlayerBulletWithEnemy(int idOfEnemy);
+
+void decreasePowerUpRemaingTime();
+
+void collisionOfPlayerBulletWithEnemy(char idOfEnemy, char  idOfPlayerBullet);
 
 /**
  * Perfoms the colission detection between a player and the objects/enemies.
  * 
  * @note Internal Function
  */
+
+void collisionOfPlayerBulletWithBarrier(char idOfBarrier, char idOfPlayerBullet);
+
 void detectCollisions();
 
 /**
@@ -180,6 +201,13 @@ void detectCollisions();
  * 
  * @note Internal Function
  */
+
+char doIGenerateAnObject();
+
+
+void gmplDisplayGameOver();
+
+
 void gmplRefreshDisplay();
 
 /**

@@ -19,17 +19,15 @@
 
 #include <stdlib.h>
 
-#define MAIN_INIT_BAUDRATE 1200
-//#define MAIN_EW2LIBTEST_MODE 1
-
 int main()
 {
-    commonTurnOffWatchdog();
+    
+  commonTurnOffWatchdog();
 	buttonsSetUpPorts();
-	buzzerSetUpPorts();
+	initBuzzer();
 	diodesSetUpPorts();
 	lcdSetUpPorts();
-	uartSetUpPorts();
+	//uartSetUpPorts();
 	
 	lcdStartUp();
 	

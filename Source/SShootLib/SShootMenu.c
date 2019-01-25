@@ -11,7 +11,12 @@
 #include "SShootMenu.h"
 #include "SShootCommon.h"
 #include "SShootData.h"
-#include "EasyWeb2Utility/EW2.h"
+#include "EasyWeb2Utility/EW2Buttons.h"
+#include "EasyWeb2Utility/EW2Buzzer.h"
+#include "EasyWeb2Utility/EW2Diodes.h"
+#include "EasyWeb2Utility/EW2Lcd.h"
+#include "EasyWeb2Utility/EW2Uart.h"
+#include "EasyWeb2Utility/CommonUtil.h"
 
 char gSpaces[] = "                 ";
 
@@ -51,7 +56,7 @@ void internal_menuMainMoveLeft(char* string)
 MainLoopState menuMainWindow()
 {
 	MainLoopState ret = Game;
-	
+	buzzing(100, 50);
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 	internal_menuMainMoveLeft(STR_MENU_MAIN_SELECT_INFO);

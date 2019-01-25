@@ -24,22 +24,9 @@ char AllEnemyData[2][8] = {
 	{4,10,10,10,10,10,10,4}	// barrier
 };
 
-char FirstShipData[8] = {16,9,6,31,31,6,9,16};
-char SecondShipData[8] = {6,9,18,21,21,18,9,6};
-char ThirdShipData[8] = {24,4,26,17,17,26,4,24};
-char FourthShipData[8] = {0,17,26,5,5,26,17,0};
-
-char PolishCharacters[8][8] = {
-
-    {4,0,31,2,4,8,31,0}, //ż albo ź
-    {1,2,0,4,10,17,10,4}, //ó
+char PolishCharacters[2][8] = {
     {4,4,5,6,12,20,4,4}, //ł
-    {0,0,14,17,31,16,15,4}, //ę
-    {4,10,17,31,17,17,18,1}, //ą
     {2,4,14,17,16,16,17,14}, //ć
-    {2,4,22,25,17,17,17,17}, //ń
-    {2,4,14,17,12,2,17,14} // ś
-
 };
 
 /**
@@ -69,6 +56,7 @@ void dataUploadAllShipCustomChars()
 
 void dataSwitchCustomScreenCharset(ShipType ship)
 {
+        lcdSendCommand(MSP_LCD_CHARACTER_GEN_RAM_ADDRESS);
 	switch(ship)
 	{
 	case First:
@@ -87,4 +75,5 @@ void dataSwitchCustomScreenCharset(ShipType ship)
 	
 	internal_uploadOneCSet(AllEnemyData[0]);
 	internal_uploadOneCSet(AllEnemyData[1]);
+        lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 }

@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include <stdbool.h>
+typedef enum {true = 1, false = 0 } bool;
 
 /** @addtogroup Utility
  *  @{

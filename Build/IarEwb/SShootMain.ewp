@@ -1696,9 +1696,6 @@
       <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\CommonUtil.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Buttons.c</name>
     </file>
     <file>
@@ -1722,20 +1719,11 @@
     <file>
       <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Lcd.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Uart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Source\EasyWeb2Utility\EW2Uart.h</name>
-    </file>
   </group>
   <group>
     <name>LibGame</name>
     <file>
       <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootCommon.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootConfig.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootData.c</name>
@@ -1744,28 +1732,10 @@
       <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootData.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootDebug.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootDebug.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootField.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootField.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootGameplay.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootGameplay.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootLogic.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootLogic.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\Source\SShootLib\SShootMainLoop.c</name>
