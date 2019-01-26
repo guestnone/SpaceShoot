@@ -12,6 +12,10 @@
 
 #include "SShootDebug.h"
 #include "SShootCommon.h"
+
+/** @addtogroup Data
+ *  @{
+ */
 	
 /************************************************************************/
 /* 	                           LCD STRINGS                              */
@@ -23,7 +27,6 @@
 #define STR_MENU_MAIN_ITEM_ABOUT "About"
 
 #define STR_MENU_SHIPSEL_MAIN "Select your ship"
-// @TODO came up with names
 #define STR_MENU_SHIPSEL_NAME_ONE "First"
 #define STR_MENU_SHIPSEL_NAME_TWO "Second"
 #define STR_MENU_SHIPSEL_NAME_THREE "Third"
@@ -56,3 +59,22 @@ void dataUploadAllShipCustomChars();
  * @param[in]  ship  Chosen ship type.
  */
 void dataSwitchCustomScreenCharset(ShipType ship);
+
+/**
+ * Emits the intro sound
+ */
+void playSoundForOn();
+
+/**
+ * Emits the bullet shot sound.
+ */
+void playSoundForShot();
+
+void playSoundForSwitch();
+
+/**
+ * Emits the player's ship explosion sound.
+ */
+void playSoundForBoom();
+
+/** @} */

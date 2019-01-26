@@ -33,33 +33,3 @@ void buzzing(unsigned int note, unsigned int duration)
     }
     commonDelay(20);
 }
-/*
-void playSoundForOn(){
-  buzzing(560, 80);
-  buzzing(560, 50);
-  buzzing(560, 50);
-  
-  buzzing(100, 30);
-  buzzing(100, 30);
-  buzzing(100, 30);
-  
-  buzzing(560, 80);
-  buzzing(560, 80);
-}
-*/
-/*
-void playSoundForShot(){
-  buzzing(1000, 80);
-  buzzing(1000, 70);
-}
-
-void playSoundForSwitch(){
-  buzzing(600, 50);
-  buzzing(560, 80);
-}
-
-void playSoundForBoom(){
-   buzzing(1500, 100);
-  buzzing(1000, 80);
-  buzzing(500, 40);
-}*/

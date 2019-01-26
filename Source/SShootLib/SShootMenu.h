@@ -9,10 +9,14 @@
 //---------------------------------------------------------------------------
 #include "SShootCommon.h"
 
+/** @addtogroup Menu
+ *  @{
+ */
+
 /**
  * Invokes the main menu and lets the player choose a game mode.
  *
- * @return     Value chosed by the player (About or game).
+ * @return     Value chosed by the player.
  */
 MainLoopState menuMainWindow();
 
@@ -23,3 +27,4 @@ MainLoopState menuMainWindow();
  */
 MainLoopState menuAbout();
 
+/** @} */

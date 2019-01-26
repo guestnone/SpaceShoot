@@ -17,13 +17,13 @@
 
 /** Initializes the buzzers by setting up proper ports. */
 void initBuzzer();
+
 /**
- *  Emits or silence the given buzzer on the board. 
+ *  Emits the sound from the buzzer on the board. 
  *  
- *  @param [in] type Description for type
+ *  @param [in] note Pitch from which the sound will be emited.
+ *  @param [in] duration Emission time.
  */
 void buzzing(unsigned int note, unsigned int duration);
-void playSoundForOn();
-void playSoundForShot();
-void playSoundForSwitch();
-void playSoundForBoom();
+
+/* @} */

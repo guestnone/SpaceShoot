@@ -12,6 +12,10 @@
 
 #include "SShootCommon.h"
 
+/** @addtogroup Gameplay
+ *  @{
+ */
+
 /** PowerUp */
 typedef enum PowerUp
 {
@@ -150,22 +154,6 @@ void updateFastElementsPositions();
 void updateSlowElementsPositions();
 
 /**
- * Decreases the health for the player by 1.
- * 
- * @note Internal Function
- */
-void decreaseHp();
-
-void hpPowerUpSetUpEvent();
-
-void barrierPowerUpSetUpEvent();
-
-void laserPowerUpSetUpEvent();
-
-void speedPowerUpSetUpEvent();
-
-
-/**
  * 
  *
  * @param[in]  powerup  The powerup
@@ -184,15 +172,6 @@ void pickUpPowerUp(PowerUp powerup);
 
 void decreasePowerUpRemaingTime();
 
-void collisionOfPlayerBulletWithEnemy(char idOfEnemy, char  idOfPlayerBullet);
-
-/**
- * Perfoms the colission detection between a player and the objects/enemies.
- * 
- * @note Internal Function
- */
-
-void collisionOfPlayerBulletWithBarrier(char idOfBarrier, char idOfPlayerBullet);
 
 void detectCollisions();
 
@@ -248,3 +227,5 @@ MainLoopState gmplLoopEnter();
  * @note Internal Function
  */
 ShipType gmplShipSelect();
+
+/** @} */

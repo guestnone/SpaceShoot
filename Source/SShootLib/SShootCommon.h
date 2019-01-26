@@ -1,3 +1,7 @@
+/** @addtogroup Common
+ *  @{
+ */
+
 #pragma once
 
 /**
@@ -21,3 +25,5 @@ typedef enum
 	Third,
 	Fourth
 } ShipType;
+
+/* @} */
