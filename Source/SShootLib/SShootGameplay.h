@@ -16,83 +16,83 @@
  *  @{
  */
 
-/** PowerUp */
+/** Type of the Power Up that can be spawned. */
 typedef enum PowerUp
 {
-	/** desc */
+	/** Health Pack */
 	hp,
-	/** desc */
+	/**  */
 	barrier,
-	/** desc */
+	/**  */
 	laser,
-	/** desc */
+	/** Slows down the ship */
 	speed
 } PowerUp;
 
-/** desc */
+/** Contains informations about the Bullet */
 typedef struct Bullet
 {
-	/** desc */
+	/** X position on the map */
 	char x;
-	/** desc */
+	/** Y position on the map */
 	char y;
-	/** desc */
+	/** Check if the bullet was destroyed */
 	char isDeleted;
 } Bullet;
 
-/** desc */
+/**  Contains informations about the controllable player object. */
 typedef struct PlayerObject
 {
-	/** desc */
+	/** Number of lives. */
 	char lives;
-	/** desc */
+	/** Y position on the map (X position is constant) */
 	char y;
-	/** desc */
+	/** Check if the Power up is active */
 	char isPowerUpActive;
-	/** desc */
+	/** Time in which the power up is active */
 	char powerUpRemainingTime;
 	
-	
+	/** Type of the Power Up picked by the player*/
 	PowerUp powerup;
-	/** desc */
+	/** Contains the bullets that were shot be the player */
 	Bullet playerBullets[2];
-	/** desc */
+	/** Check if the player is dead. */
     char isDead;
 	
 	
 } PlayerObject;
 
-/** desc */
+/** Type of the object that can be spawned on the map. */
 typedef enum TypeOfObject
 {
-	/** desc */
+	/** Enemy ship. */
 	enemy,
-	/** desc */
+	/** Barrier, which the player can collide with. */
 	theBarrier,
-	/** desc */
+	/** Bullet shot be the enemy. */
 	enemyBullet,
-	/** desc */
+	///** desc */
     //thePlayerBullet,
-    /** desc */
+    /** Health pack - restores life */
 	hpPowerUp,
-	/** desc */
+	/** Shield - protect from collsion */
 	barrierPowerUp,
-	/** desc */
+	/** Laser - destroys enemies in its range */
 	laserPowerUp,
-	/** desc */
+	/** Speed decrease */
 	decreaseSpeedPowerUp
 } TypeOfObject;
 
-/** desc */
+/** Object other than player or its bullet that can be spawned on the map. */
 typedef struct GameObject
 {
-	/** desc */
+	/** X position on the map */
 	char x;
-	/** desc */
+	/** Y position on the map */
 	char y;
-	/** desc */
+	/** Type of spawned object */
 	TypeOfObject type;
-	/** desc */
+	/** Check, if the object was destroyed */
 	char isDeleted;
 } GameObject;
 
@@ -172,7 +172,9 @@ void pickUpPowerUp(PowerUp powerup);
 
 void decreasePowerUpRemaingTime();
 
-
+/**
+ * Performs the actual collision detection between object.
+ */
 void detectCollisions();
 
 /**
@@ -184,9 +186,18 @@ void detectCollisions();
 char doIGenerateAnObject();
 
 
+/**
+ * Displays the Game over screen. Flashes a few times and print a word "GAME OVER"
+ *
+ * @note Internal Function
+ */
 void gmplDisplayGameOver();
 
-
+/**
+ * Updates the players LCD Screen based on the state of the game.
+ *
+ * @note Internal Function
+ */
 void gmplRefreshDisplay();
 
 /**

@@ -19,10 +19,14 @@
 
 #include <stdlib.h>
 
+/**
+ * This is the main entry point of the program. It sets up the hardware and then passes the excecution 
+ * to the game librarys main loop
+ */
 int main()
 {
     
-  commonTurnOffWatchdog();
+	commonTurnOffWatchdog();
 	buttonsSetUpPorts();
 	initBuzzer();
 	diodesSetUpPorts();
