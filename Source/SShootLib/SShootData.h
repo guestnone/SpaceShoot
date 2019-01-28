@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 /*  SPDX-License-Identifier: Expat
 	
-	Copyright (C) 2018 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
+	Copyright (C) 2018-2019 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
 	
 	This source file is released under the MIT License.
 	See LICENSE.md for full terms. This notice is not to be removed.
@@ -42,7 +42,7 @@
 void dataUploadAllShipCustomChars();
 
 /**
- * Prepares the gameplay's custom chararacter set based on the ship type.
+ * Prepares the gameplay's custom character set based on the ship type.
  *
  * @param[in]  ship  Chosen ship type.
  */

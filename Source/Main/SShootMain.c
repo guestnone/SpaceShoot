@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 /*  SPDX-License-Identifier: Expat
 	
-	Copyright (C) 2018 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
+	Copyright (C) 2018-2019 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
 	
 	This source file is released under the MIT License.
 	See LICENSE.md for full terms. This notice is not to be removed.
@@ -19,9 +19,14 @@
 
 #include <stdlib.h>
 
+/** @defgroup SShootMain Main
+ *	Main entry point.
+ *  @{
+ */
+
 /**
- * This is the main entry point of the program. It sets up the hardware and then passes the excecution 
- * to the game librarys main loop
+ * This is the main entry point of the program. It sets up the hardware and then passes the execution 
+ * to the game library's main loop
  */
 int main()
 {
@@ -40,4 +45,4 @@ int main()
 	return 0;
 }
 
-
+/** @} */

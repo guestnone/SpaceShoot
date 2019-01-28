@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 /*  SPDX-License-Identifier: Expat
 	
-	Copyright (C) 2018 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
+	Copyright (C) 2018-2019 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
 	
 	This source file is released under the MIT License.
 	See LICENSE.md for full terms. This notice is not to be removed.
@@ -21,9 +21,9 @@ typedef enum PowerUp
 {
 	/** Health Pack */
 	hp,
-	/**  */
+	/** Shield on the player */
 	barrier,
-	/**  */
+	/** Destroys all enemies that are on the line */
 	laser,
 	/** Slows down the ship */
 	speed
@@ -71,11 +71,9 @@ typedef enum TypeOfObject
 	theBarrier,
 	/** Bullet shot be the enemy. */
 	enemyBullet,
-	///** desc */
-    //thePlayerBullet,
 	/** Health pack - restores life */
 	hpPowerUp,
-	/** Shield - protect from collsion */
+	/** Shield - protect from collision */
 	barrierPowerUp,
 	/** Laser - destroys enemies in its range */
 	laserPowerUp,
@@ -97,25 +95,28 @@ typedef struct GameObject
 } GameObject;
 
 /**
- * todo doc
+ * Handles creation of the players bullet.
+ * 
+ * @param[in] y Player's current position.
  * 
  * @note Internal Function
  */
-
 void shootPlayerBullet(char y);
 
 /**
- * { function_description }
+ * Handles creation of the enemy's bullet.
  *
- * @param[in]  x     { parameter_description }
- * @param[in]  y     { parameter_description }
+ * @param[in]  x     Enemy's current X position
+ * @param[in]  y     Enemy's current X position
  * 
  * @note Internal Function
  */
 void shootEnemyBullet(char x, char y);
 
 /**
- * Gets the y position.
+ * Gets the random Y position.
+ *
+ * Used during non-player object placement.
  *
  * @return     The y position.
  * 
@@ -124,7 +125,8 @@ void shootEnemyBullet(char x, char y);
 char getYPos();
 
 /**
- * Gets the object type.
+ * Gets the randomly generated object ID.
+ * Used during creation a new field object
  *
  * @return     The object type.
  * 
@@ -133,47 +135,46 @@ char getYPos();
 TypeOfObject getRandomObjectType();
 
 /**
- * Puts an object on gamefield.
+ * Puts an object on game-field.
  * 
  * @note Internal Function
  */
 void putObjectOnGamefield();
 
 /**
- * { function_description }
+ * Updates the positions of the enemy bullets.
  * 
  * @note Internal Function
  */
 void updateFastElementsPositions();
 
 /**
- * { function_description }
+ * Updates the positions of everything except enemy bullets.
  * 
  * @note Internal Function
  */
 void updateSlowElementsPositions();
 
 /**
- * 
+ * Handles the power-ups logic when they were picked during gameplay.
  *
- * @param[in]  powerup  The powerup
+ * @param[in]  powerup  Picked power-up.
  * 
  * @note Internal Function
  */
 void pickUpPowerUp(PowerUp powerup);
 
 /**
- * 
- *
- * @param[in]  idOfEnemy  The identifier of enemy
+ * Handles the timer for shield power-up and disable it if ran out of time.
  * 
  * @note Internal Function
  */
-
 void decreasePowerUpRemaingTime();
 
 /**
  * Performs the actual collision detection between object.
+ *
+ * @note Internal Function
  */
 void detectCollisions();
 
@@ -182,21 +183,23 @@ void detectCollisions();
  * 
  * @note Internal Function
  */
-
 char doIGenerateAnObject();
 
 /**
- * Switch diodes with number of lives
+ * Update the number of lightened-up diodes with number of lifes
  *
- * @param[in]  play Object type of PlayerObject whith subsection lives 
+ * @param[in]  play Current player.
  * 
  * @note Internal Function
+ * If number of lifes is over or equal 3, all the diodes will be turned on.
  */
 void diodesLives(PlayerObject play);
 
 
 /**
- * Displays the Game over screen. Flashes a few times and print a word "GAME OVER"
+ * @brief Displays the Game over screen.
+ *
+ * Flashes a few times and print a word "GAME OVER"
  *
  * @note Internal Function
  */
@@ -210,7 +213,7 @@ void gmplDisplayGameOver();
 void gmplRefreshDisplay();
 
 /**
- * Inokes the actual gameplay loop of the game.
+ * Invokes the actual gameplay loop of the game.
  * 
  * @note Internal Function
  */

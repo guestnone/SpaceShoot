@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 /*  SPDX-License-Identifier: Expat
 	
-	Copyright (C) 2018 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
+	Copyright (C) 2018-2019 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
 	
 	This source file is released under the MIT License.
 	See LICENSE.md for full terms. This notice is not to be removed.
@@ -12,6 +12,7 @@
 
 #pragma once
 
+/** Custom boolean type (used to mostly shave a memory from linking a C standard libary) */
 typedef enum {true = 1, false = 0 } bool;
 
 /** @addtogroup Utility

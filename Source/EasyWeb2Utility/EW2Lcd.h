@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 /*  SPDX-License-Identifier: Expat
 	
-	Copyright (C) 2018 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
+	Copyright (C) 2018-2019 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
 	
 	This source file is released under the MIT License.
 	See LICENSE.md for full terms. This notice is not to be removed.
@@ -26,7 +26,7 @@
 /************************************************************************/
 /* 	                          LCD COMMANDS                              */
 /************************************************************************/
-
+/** Wipes off the controllers memory and cleans up the display. */
 #define	MSP_LCD_COMMAND_CLEAR_DISPLAY                       0x01
 /** Reverts cursor back to first cell */
 #define MSP_LCD_COMMAND_SET_CURSOR_HOME	                    0x02
@@ -34,7 +34,9 @@
 #define MSP_LCD_COMMAND_ENTRYMODE_INCREMENT_WITH_ROLL       0x07
 #define MSP_LCD_COMMAND_ENTRYMODE_DECREMENT                 0x04
 #define MSP_LCD_COMMAND_ENTRYMODE_DECREMENT_WITH_ROLL       0x05
+/** Turn of display */
 #define MSP_LCD_COMMAND_DISPLAY_OFF	                        0x08
+/** Turn on display */
 #define MSP_LCD_COMMAND_DISPLAY_ON                          0x0c
 
 /** Moves the 16-element window onto left */

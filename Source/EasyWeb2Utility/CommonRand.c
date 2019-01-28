@@ -13,7 +13,6 @@
 #include "CommonRand.h"
 
 #include <msp430x14x.h>
-#include <stdlib.h>
 
 static unsigned int gRandSeed = 1;
 static unsigned int gRandMin = 1;
@@ -40,18 +39,15 @@ void randInit(int max, int min)
 	gRandSeed = ADC12MEM0 * 1.0318-2777.4647;
 
 	gRandMax = max;
-	gRandMin = min;
-        
-        //srand(ADC12MEM0 * 1.0318-2777.4647);        
+	gRandMin = min;        
         
 }
 
 int randGet()
 {
 	gRandSeed = (gRandSeed * 1103515245U + 12345U) & 0x7fffffffU;
-	//unsigned int ret = rand();
-        char ret = gRandSeed % gRandMax;
-        ret = ret % gRandMax;
+	char ret = gRandSeed % gRandMax;
+	ret = ret % gRandMax;
 	if (ret < gRandMin)
 		return gRandMin;
 	else
@@ -67,10 +63,4 @@ void randChangeLowerLimit(int min)
 {
 	gRandMin = min;
 }
-/*
-#pragma vector=TIMERA0_VECTOR
-__interrupt void Timer_A (void)
-{
-  _BIC_SR_IRQ(LPM0_bits);
-}
-*/
+

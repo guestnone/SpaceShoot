@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 /*  SPDX-License-Identifier: Expat
 	
-	Copyright (C) 2018 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
+	Copyright (C) 2018-2019 Patrick Rećko, Yan Yanutsevich, Paweł Krzywosz
 	
 	This source file is released under the MIT License.
 	See LICENSE.md for full terms. This notice is not to be removed.
@@ -16,18 +16,26 @@
 #include "EasyWeb2Utility/EW2Buttons.h"
 #include "EasyWeb2Utility/EW2Diodes.h"
 
+/** Amount of the non player game object that can be spawned at the same time. */
 #define AMOUNT_OF_OBJECTS 10
+/** Amount of the player bullets that can be spawned at the same time. */
 #define AMOUNT_OF_PLAYER_BULLETS 2
 #define END_OF_GAMEFIELD 15
 #define BEGIN_OF_GAMEFIELD 0
+/** Amount of the enemy bullets that can be spawned at the same time. */
 #define AMOUNT_OF_ENEMY_BULLETS 2
+/** Amount of the player bullets that can be spawned at the same time. */
 #define POWER_UP_MAX_TIME 10
+/** Maximum time of the activated power-up. */
 #define SPEED_DECREASE 10
+/** Amount of the delay value for which the speed will be slowed down. */
 #define TIME_DELAY_INCREASE_VALUE 3000 
 
-
+/** Easier access to the ship's custom character. */
 #define PLAYER_SHIP_CHAR MSP_LCD_CUSTOM_CHAR_0
+/** Easier access to the enemy's custom character. */
 #define ENEMY_CHAR MSP_LCD_CUSTOM_CHAR_1
+/** Easier access to the barrier's custom character. */
 #define BARRIER_CHAR MSP_LCD_CUSTOM_CHAR_2
 
 
@@ -41,22 +49,21 @@ Bullet enemyBullets[AMOUNT_OF_ENEMY_BULLETS];
 
 void shootEnemyBullets()
 {
-	
-        for(int u=0;u<AMOUNT_OF_OBJECTS ; u++) 
-        {
-          if(gGameObjects[u].type==barrier)
-          for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
-	  {
-		if (gGameObjects[i].isDeleted == 1)
-		{
-			gGameObjects[i].isDeleted = 0;
-			gGameObjects[i].y = gGameObjects[u].y;
-			gGameObjects[i].x = gGameObjects[u].x;
-			break;
-		}
-	  }
+	for(int u=0;u<AMOUNT_OF_OBJECTS ; u++) 
+	{
+		if(gGameObjects[u].type==barrier)
+			for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
+			{
+				if (gGameObjects[i].isDeleted == 1)
+				{
+					gGameObjects[i].isDeleted = 0;
+					gGameObjects[i].y = gGameObjects[u].y;
+					gGameObjects[i].x = gGameObjects[u].x;
+					break;
+				}
+			}
           
-        }
+	}
 	
 }
 
@@ -119,8 +126,6 @@ TypeOfObject getRandomObjectType()
 		return laserPowerUp;
 	}
 	return decreaseSpeedPowerUp;
-	
-	
 
 }
 
@@ -262,9 +267,9 @@ void detectCollisions()
 		for (u = 0; u<AMOUNT_OF_PLAYER_BULLETS; ++u)
 		{
 			if (gGameObjects[i].isDeleted == 0 && gGameObjects[i].type == enemy
-                           && gPlayer.playerBullets[u].isDeleted == 0
-                           && gGameObjects[i].x == gPlayer.playerBullets[u].x
-                           && gGameObjects[i].y == gPlayer.playerBullets[u].y )
+				&& gPlayer.playerBullets[u].isDeleted == 0
+				&& gGameObjects[i].x == gPlayer.playerBullets[u].x
+				&& gGameObjects[i].y == gPlayer.playerBullets[u].y )
 			{
 				// enemy
 				gGameObjects[i].isDeleted=1;
@@ -272,12 +277,12 @@ void detectCollisions()
 				score += 5;
 			}
 			if (gGameObjects[i].isDeleted == 0 
-                            && gGameObjects[i].type == barrier
-			&& gPlayer.isPowerUpActive==1 
-                          && gPlayer.powerup == laser
-                           && gPlayer.playerBullets[u].isDeleted == 0
-                           && gGameObjects[i].x == gPlayer.playerBullets[u].x
-                           && gGameObjects[i].y == gPlayer.playerBullets[u].y )
+				&& gGameObjects[i].type == barrier
+				&& gPlayer.isPowerUpActive==1 
+				&& gPlayer.powerup == laser
+				&& gPlayer.playerBullets[u].isDeleted == 0
+				&& gGameObjects[i].x == gPlayer.playerBullets[u].x
+				&& gGameObjects[i].y == gPlayer.playerBullets[u].y)
 			{
 				// barrier
 				gGameObjects[i].isDeleted=1;
@@ -318,7 +323,7 @@ void diodesLives(PlayerObject play)
 	}
 	else
 	{
-    		diodesSwitch(MSP_DIODES_STATUS);
+		diodesSwitch(MSP_DIODES_STATUS);
 	}
 }
 
@@ -347,7 +352,7 @@ void gmplDisplayGameOver()
 			lcdSendCharacter(32);
 		commonDelay(10000);
 	}
-        commonDelay(10000);
+	commonDelay(10000);
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 	lcdSendString("   GAME");
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
@@ -419,21 +424,6 @@ void gmplRefreshDisplay()
 		lcdSendCharacter(tmpDisplay[1][i]);
 
 }
-/*
-void displayWinScreen()
-{
-	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
-	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
-	lcdSendString("   YOU");
-	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
-	lcdSendString("        WIN");
-	commonDelay(50000);
-	commonDelay(50000);
-	commonDelay(50000);
-	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
-	
-}
-*/
 
 void gmplMainPart()
 {
@@ -465,9 +455,9 @@ void gmplMainPart()
 			gPlayer.y=(gPlayer.y+1)%2;
 		}
 		if(buttonsIsPressed(MSP_BUTTON_SECOND))
-                {
+		{
 			shootPlayerBullet(gPlayer.y); 
-                }
+		}
 		
 		detectCollisions();
 		
