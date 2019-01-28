@@ -73,7 +73,7 @@ typedef enum TypeOfObject
 	enemyBullet,
 	///** desc */
     //thePlayerBullet,
-    /** Health pack - restores life */
+	/** Health pack - restores life */
 	hpPowerUp,
 	/** Shield - protect from collsion */
 	barrierPowerUp,
@@ -102,7 +102,7 @@ typedef struct GameObject
  * @note Internal Function
  */
 
-void shootPlayerBullet();
+void shootPlayerBullet(char y);
 
 /**
  * { function_description }
@@ -184,6 +184,8 @@ void detectCollisions();
  */
 
 char doIGenerateAnObject();
+
+void diodesLives(PlayerObject play);
 
 
 /**

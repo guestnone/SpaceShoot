@@ -22,27 +22,15 @@
 /************************************************************************/
 #define STR_MENU_MAIN_SELECT_INFO "Main Menu"
 #define STR_MENU_MAIN_ITEM_PLAY "Play"
-#define STR_MENU_MAIN_ITEM_HIGHSCORES "High Scores"
-#define STR_MENU_MAIN_ITEM_SETTINGS "Settings"
 #define STR_MENU_MAIN_ITEM_ABOUT "About"
 
 #define STR_MENU_SHIPSEL_MAIN "Select your ship"
-#define STR_MENU_SHIPSEL_NAME_ONE "First"
-#define STR_MENU_SHIPSEL_NAME_TWO "Second"
-#define STR_MENU_SHIPSEL_NAME_THREE "Third"
-#define STR_MENU_SHIPSEL_NAME_FOUR "Fourth"
-
-#define STR_MENU_SCORES_POINTS "pts."
-
-#define STR_GAME_LIVES_LEFT " lives remains"
 
 #define STR_ABOUT_NAME "Space Shooter"
 #define STR_ABOUT_BY "by"
 #define STR_ABOUT_AUTHOR_ONE "Patrick Recko"
 #define STR_ABOUT_AUTHOR_TWO "Yan Yanutsevich"
-#define STR_ABOUT_AUTHOR_THREE "Paweł Krzywosz"
-
-#define STR_WAIT "WAIT!"
+#define STR_ABOUT_AUTHOR_THREE "Pawel Krzywosz"
 
 /************************************************************************/
 /* 	                              OTHER                                 */

@@ -48,7 +48,7 @@ void internal_menuMainMoveLeft(char* string)
 	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 	lcdSendString(gSpaces);
 	lcdSendString(string);
-    lcdSendString(gSpaces);
+	lcdSendString(gSpaces);
 	internal_moveLineLeft();
 }
 
@@ -56,16 +56,15 @@ void internal_menuMainMoveLeft(char* string)
 MainLoopState menuMainWindow()
 {
 	MainLoopState ret = Game;
-	buzzing(100, 50);
+	playSoundForOn();
 	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 	internal_menuMainMoveLeft(STR_MENU_MAIN_SELECT_INFO);
 	commonDelay(65450);
-    commonDelay(65450);
-    internal_moveLineLeft();
-    internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_PLAY);
-        
-
+	commonDelay(65450);
+	internal_moveLineLeft();
+	internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_PLAY);
+	
 	while (!buttonsIsPressed(MSP_BUTTON_SECOND))
 	{
 		if (buttonsIsPressed(MSP_BUTTON_FIRST))
@@ -73,10 +72,12 @@ MainLoopState menuMainWindow()
 			switch(ret)
 			{
 			case Game:
+				playSoundForSwitch();
 				internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_ABOUT);
 				ret = About;
 				break;
 			case About:
+				playSoundForSwitch();
 				internal_menuMainMoveLeft(STR_MENU_MAIN_ITEM_PLAY);
 				ret = Game;
 				break;
@@ -95,9 +96,9 @@ MainLoopState menuAbout()
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 
 	internal_menuMainMoveLeft(STR_ABOUT_NAME);
-    commonDelay(65450);
-    internal_moveLineLeft();
-    lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
+	commonDelay(65450);
+	internal_moveLineLeft();
+	lcdSendCommand(MSP_LCD_COMMAND_SET_CURSOR_HOME);
 	
 	internal_menuMainMoveLeft(STR_ABOUT_BY);
 	commonDelay(65450);	

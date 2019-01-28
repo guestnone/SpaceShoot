@@ -38,3 +38,10 @@ void diodesSwitch(int type)
 		break;
 	}
 }
+
+void diodesTurnOffAll()
+{
+	P2OUT &= ~BIT1;
+	P1OUT &= ~BIT5;
+	P1OUT &= ~BIT6;
+}

@@ -11,6 +11,7 @@
 #include "SShootData.h"
 #include "SShootCommon.h"
 #include "EasyWeb2Utility/EW2Lcd.h"
+#include "EasyWeb2Utility/EW2Buzzer.h"
 
 char AllShipData[4][8] = {
 	{16,9,6,31,31,6,9,16},	//firest
@@ -23,12 +24,12 @@ char AllEnemyData[2][8] = {
 	{25,5,10,16,16,10,5,25},	// enemy
 	{4,10,10,10,10,10,10,4}	// barrier
 };
-
+/*
 char PolishCharacters[2][8] = {
     {4,4,5,6,12,20,4,4}, //ł
     {2,4,14,17,16,16,17,14}, //ć
 };
-
+*/
 /**
  * Uploads one character into the LCD data port when active on CGRAM memory.
  *
@@ -78,8 +79,9 @@ void dataSwitchCustomScreenCharset(ShipType ship)
     lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 }
 
-/*
-void playSoundForOn(){
+
+void playSoundForOn()
+{
   buzzing(560, 80);
   buzzing(560, 50);
   buzzing(560, 50);
@@ -91,20 +93,26 @@ void playSoundForOn(){
   buzzing(560, 80);
   buzzing(560, 80);
 }
-*/
+
+void playSoundForSwitch()
+{
+  buzzing(600, 50);
+  buzzing(560, 80);
+}
+
+void playSoundForBoom()
+{
+	buzzing(500, 100);
+	buzzing(100, 80);
+	buzzing(500, 40);
+}
+
 /*
 void playSoundForShot(){
   buzzing(1000, 80);
   buzzing(1000, 70);
 }
 
-void playSoundForSwitch(){
-  buzzing(600, 50);
-  buzzing(560, 80);
-}
 
-void playSoundForBoom(){
-   buzzing(1500, 100);
-  buzzing(1000, 80);
-  buzzing(500, 40);
-}*/
+
+*/

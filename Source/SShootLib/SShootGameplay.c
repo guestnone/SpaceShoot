@@ -14,6 +14,7 @@
 #include "EasyWeb2Utility/CommonUtil.h"
 #include "EasyWeb2Utility/EW2Lcd.h"
 #include "EasyWeb2Utility/EW2Buttons.h"
+#include "EasyWeb2Utility/EW2Diodes.h"
 
 #define AMOUNT_OF_OBJECTS 10
 #define AMOUNT_OF_PLAYER_BULLETS 2
@@ -30,7 +31,7 @@
 #define BARRIER_CHAR MSP_LCD_CUSTOM_CHAR_2
 
 
-int score=0;
+long int score=0;
 
 int gSlowdownTimer = 10000;
 GameObject gGameObjects[AMOUNT_OF_OBJECTS];
@@ -38,33 +39,39 @@ PlayerObject gPlayer;
 Bullet enemyBullets[AMOUNT_OF_ENEMY_BULLETS];
 
 
-void shootPlayerBullet()
+void shootEnemyBullets()
+{
+	
+        for(int u=0;u<AMOUNT_OF_OBJECTS ; u++) 
+        {
+          if(gGameObjects[u].type==barrier)
+          for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
+	  {
+		if (gGameObjects[i].isDeleted == 1)
+		{
+			gGameObjects[i].isDeleted = 0;
+			gGameObjects[i].y = gGameObjects[u].y;
+			gGameObjects[i].x = gGameObjects[u].x;
+			break;
+		}
+	  }
+          
+        }
+	
+}
+
+void shootPlayerBullet(char y)
 {
 	for (int i=0;i<AMOUNT_OF_PLAYER_BULLETS;++i)
 	{
 		if (gPlayer.playerBullets[i].isDeleted == 1)
 		{
 			gPlayer.playerBullets[i].x = BEGIN_OF_GAMEFIELD + 1;
-			gPlayer.playerBullets[i].y = gPlayer.y;
+			gPlayer.playerBullets[i].y = y;
 			gPlayer.playerBullets[i].isDeleted = 0;
 			break;
 		}
 	}
-}
-
-void shootEnemyBullet(char x,char y)
-{
-	for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
-	{
-		if (gGameObjects[i].isDeleted == 1)
-		{
-			gGameObjects[i].isDeleted = 0;
-			gGameObjects[i].y = y;
-			gGameObjects[i].x = x;
-			break;
-		}
-	}
-	
 }
 
 char getYPos()
@@ -87,26 +94,27 @@ TypeOfObject getRandomObjectType()
 	else
 	{
 		randChangeLowerLimit(0);
-		randChangeUpperLimit(90);
+		randChangeUpperLimit(105);
 	}
+        
 	int result = randGet();
-	if (result <= 50)
+	if (result <= 40)
 	{
 		return enemy;
 	}
-	if (result <= 90)
+	else if (result <= 75)
 	{
 		return theBarrier;
 	}
-	if (result <= 92)
+	else if (result <= 85)
 	{
 		return hpPowerUp;
 	}
-	if (result <= 94)
+	else if (result <= 95)
 	{
 		return barrierPowerUp;
 	}
-	if (result <= 96)
+	else if (result <= 100)
 	{
 		return laserPowerUp;
 	}
@@ -118,19 +126,19 @@ TypeOfObject getRandomObjectType()
 
 void putObjectOnGamefield()
 {
-		TypeOfObject type = getRandomObjectType();
-		char y = getYPos();
-		for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
+	TypeOfObject type = getRandomObjectType();
+	char y = getYPos();
+	for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
+	{
+		if (gGameObjects[i].isDeleted == 1)
 		{
-			if (gGameObjects[i].isDeleted == 1)
-			{
-				gGameObjects[i].y = y;
-				gGameObjects[i].x = END_OF_GAMEFIELD;
-				gGameObjects[i].type = type;
-				gGameObjects[i].isDeleted = 0;
-				break;
-			}
+			gGameObjects[i].y = y;
+			gGameObjects[i].x = END_OF_GAMEFIELD;
+			gGameObjects[i].type = type;
+			gGameObjects[i].isDeleted = 0;
+			break;
 		}
+	}
 }
 
 void updateFastElementsPositions()
@@ -182,8 +190,7 @@ void pickUpPowerUp(PowerUp powerup)
 	switch(powerup)
 	{
 		case hp:
-			if(gPlayer.lives<3)
-				gPlayer.lives++;
+			gPlayer.lives++;
 		break;
 		case barrier:
 			gPlayer.powerUpRemainingTime=POWER_UP_MAX_TIME;
@@ -205,7 +212,8 @@ void pickUpPowerUp(PowerUp powerup)
 
 void decreasePowerUpRemaingTime()
 {
-	gPlayer.powerUpRemainingTime--;
+	if (gPlayer.isPowerUpActive == 1)
+		gPlayer.powerUpRemainingTime--;
 	if(gPlayer.powerUpRemainingTime==0)
 	{
 		gPlayer.isPowerUpActive=0;
@@ -228,6 +236,8 @@ void detectCollisions()
 					if(gPlayer.isPowerUpActive==1 && gPlayer.powerup==barrier)
 						break;
 					gPlayer.lives--;
+					playSoundForBoom();
+					diodesLives(gPlayer);
 					gGameObjects[i].isDeleted = 1;
 					break;
 				case hpPowerUp:
@@ -238,7 +248,7 @@ void detectCollisions()
 					pickUpPowerUp(barrier);
 					gGameObjects[i].isDeleted = 1;
 					break;
-                case laserPowerUp:
+				case laserPowerUp:
 					pickUpPowerUp(laser);
 					gGameObjects[i].isDeleted = 1;
 					break;
@@ -290,6 +300,28 @@ char doIGenerateAnObject()
 	return 0;
 }
 
+void diodesLives(PlayerObject play)
+{
+	if(play.lives >= 3)
+	{
+		diodesTurnOffAll();
+		diodesSwitch(MSP_DIODES_RELAY_TYPE1);
+		diodesSwitch(MSP_DIODES_RELAY_TYPE2);
+  	}
+	else if(play.lives == 2)
+	{
+		diodesSwitch(MSP_DIODES_RELAY_TYPE1);
+	}
+	else if(play.lives == 1)
+	{
+    		diodesSwitch(MSP_DIODES_RELAY_TYPE2);
+	}
+	else
+	{
+    		diodesSwitch(MSP_DIODES_STATUS);
+	}
+}
+
 void gmplDisplayGameOver()
 {
 	int i; int j;
@@ -297,27 +329,29 @@ void gmplDisplayGameOver()
 	
 	for(i = 0; i < 5; i++)
 	{
+		
 		lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
-		for(j = 0; i < 16; i++)
+		for(j = 0; j < 16; j++)
  			lcdSendCharacter(240);
 	
 		lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
- 		for(j = 0; i < 16; i++)
+ 		for(j = 0; j < 16; j++)
  				lcdSendCharacter(240);
 	
 		lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
-		for(j = 0; i < 16; i++)
+		for(j = 0; j < 16; j++)
 			lcdSendCharacter(32);
 	
 		lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
-		for(j = 0; i < 16; i++)
+		for(j = 0; j < 16; j++)
 			lcdSendCharacter(32);
-		commonDelay(700);
+		commonDelay(10000);
 	}
+        commonDelay(10000);
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
-	lcdSendString("     GAME");
+	lcdSendString("   GAME");
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
-	lcdSendString("          OVER");
+	lcdSendString("        OVER");
 	commonDelay(50000);
 	commonDelay(50000);
 	commonDelay(50000);
@@ -342,26 +376,26 @@ void gmplRefreshDisplay()
 		{
 			switch(gGameObjects[go].type)
 			{
-			enemy:
+			case enemy:
 				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = ENEMY_CHAR;
 				break;
-			theBarrier:
+			case theBarrier:
 				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = BARRIER_CHAR;
 				break;
-			enemyBullet:
+			case enemyBullet:
 				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 183; // 01111011
 				break;
-			hpPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 157; // 11011001
+			case hpPowerUp:
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'H'; // 11011001
 				break;
-			barrierPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] =60; // 1100011
+			case barrierPowerUp:
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'B'; // 1100011
 				break;
-			laserPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 164; // 01001010
+			case laserPowerUp:
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'L'; // 01001010
 				break;
-			decreaseSpeedPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 21; // 01010001
+			case decreaseSpeedPowerUp:
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'S'; // 01010001
 				break;
 			}
 		}
@@ -385,6 +419,21 @@ void gmplRefreshDisplay()
 		lcdSendCharacter(tmpDisplay[1][i]);
 
 }
+/*
+void displayWinScreen()
+{
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
+	lcdSendString("   YOU");
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
+	lcdSendString("        WIN");
+	commonDelay(50000);
+	commonDelay(50000);
+	commonDelay(50000);
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
+	
+}
+*/
 
 void gmplMainPart()
 {
@@ -394,6 +443,12 @@ void gmplMainPart()
 	putObjectOnGamefield();
 	while (1)
 	{
+		if (buttonsIsPressed(MSP_BUTTON_FOURTH))
+		{	
+			break;
+		}
+		
+	  
 		score++;
 		
 		if (slowCounter == 2)
@@ -402,18 +457,22 @@ void gmplMainPart()
 				gSlowdownTimer -= 1000;
 			slowCounter = 0;
 		}
-		
-		//putObjectOnGamefield();
-
                 
+		// player barrier
+		
 		if(buttonsIsPressed(MSP_BUTTON_FIRST))
 		{
 			gPlayer.y=(gPlayer.y+1)%2;
 		}
-
+		if(buttonsIsPressed(MSP_BUTTON_SECOND))
+                {
+			shootPlayerBullet(gPlayer.y); 
+                }
 		
 		detectCollisions();
 		
+                decreasePowerUpRemaingTime();
+                
 		doIUpdateSlowElements=(doIUpdateSlowElements+1)%2;
 		doIGenarateAnObject=(doIGenarateAnObject+1)%6;
 		if(doIUpdateSlowElements==1)
@@ -433,14 +492,26 @@ void gmplMainPart()
 			gmplDisplayGameOver();
 			break;
 		}
-
+		
 		gmplRefreshDisplay();
                 
                 
 		commonDelay(gSlowdownTimer);
 			slowCounter++;
 	}
-
+	
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
+	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
+	lcdSendString("SCORE: ");
+	lcdSendCharacter((score/10000)%10 + 48);
+	lcdSendCharacter((score/1000)%10 + 48);
+	lcdSendCharacter((score/100)%10 + 48);
+	lcdSendCharacter((score/10)%10 + 48);
+	lcdSendCharacter((score%10) + 48);
+	commonDelay(50000);
+	commonDelay(50000);
+	commonDelay(50000);
+	lcdSendCommand(MSP_LCD_COMMAND_CLEAR_DISPLAY);
 }
 
 
@@ -502,6 +573,7 @@ void gmplSetUp(ShipType ship)
 	
 	// set the variables
 	gPlayer.lives = 3;
+	diodesLives(gPlayer);
 	gPlayer.y = 0;
 	gPlayer.isPowerUpActive = 0;
 	gPlayer.isDead = 0;
@@ -521,6 +593,7 @@ void gmplSetUp(ShipType ship)
         }
 
 	gSlowdownTimer = 30000;
+	
 }
 
 MainLoopState gmplLoopEnter()

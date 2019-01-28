@@ -31,4 +31,6 @@ void diodesSetUpPorts(void);
  */
 void diodesSwitch(int type);
 
+void diodesTurnOffAll();
+
 /* @} */

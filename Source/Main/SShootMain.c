@@ -31,11 +31,9 @@ int main()
 	initBuzzer();
 	diodesSetUpPorts();
 	lcdSetUpPorts();
-	//uartSetUpPorts();
 	
 	lcdStartUp();
 	
-	//uartStartUp(MAIN_INIT_BAUDRATE);
 	mainloopEnter();
 
 	
