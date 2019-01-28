@@ -185,6 +185,13 @@ void detectCollisions();
 
 char doIGenerateAnObject();
 
+/**
+ * Switch diodes with number of lives
+ *
+ * @param[in]  play Object type of PlayerObject whith subsection lives 
+ * 
+ * @note Internal Function
+ */
 void diodesLives(PlayerObject play);
 
 

@@ -58,6 +58,9 @@ void playSoundForOn();
  */
 void playSoundForShot();
 
+/**
+ * Emits the menu position switch sound.
+ */
 void playSoundForSwitch();
 
 /**

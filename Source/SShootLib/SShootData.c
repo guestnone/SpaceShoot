@@ -14,7 +14,7 @@
 #include "EasyWeb2Utility/EW2Buzzer.h"
 
 char AllShipData[4][8] = {
-	{16,9,6,31,31,6,9,16},	//firest
+	{16,9,6,31,31,6,9,16},	//first
 	{6,9,18,21,21,18,9,6},	//second
 	{24,4,26,17,17,26,4,24},	//third
 	{0,17,26,5,5,26,17,0}	//fourth
@@ -24,12 +24,12 @@ char AllEnemyData[2][8] = {
 	{25,5,10,16,16,10,5,25},	// enemy
 	{4,10,10,10,10,10,10,4}	// barrier
 };
-/*
+
 char PolishCharacters[2][8] = {
     {4,4,5,6,12,20,4,4}, //ł
     {2,4,14,17,16,16,17,14}, //ć
 };
-*/
+
 /**
  * Uploads one character into the LCD data port when active on CGRAM memory.
  *
@@ -107,12 +107,8 @@ void playSoundForBoom()
 	buzzing(500, 40);
 }
 
-/*
 void playSoundForShot(){
   buzzing(1000, 80);
   buzzing(1000, 70);
 }
 
-
-
-*/

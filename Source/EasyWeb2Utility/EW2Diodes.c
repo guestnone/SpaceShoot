@@ -27,21 +27,25 @@ void diodesSwitch(int type)
 {
 	switch (type)
 	{
+		// Switch on/off the status diode
 	case MSP_DIODES_STATUS:
 		P2OUT ^= BIT1;
 		break;
+		// Switch on/off the relay diode
 	case MSP_DIODES_RELAY_TYPE1:
 		P1OUT ^= BIT5;
 		break;
+		// Switch on/off the relay diode
 	case MSP_DIODES_RELAY_TYPE2:
 		P1OUT ^= BIT6;
 		break;
 	}
 }
 
+//off all diodes
 void diodesTurnOffAll()
 {
-	P2OUT &= ~BIT1;
+	P2OUT &= ~BIT1; 
 	P1OUT &= ~BIT5;
 	P1OUT &= ~BIT6;
 }
