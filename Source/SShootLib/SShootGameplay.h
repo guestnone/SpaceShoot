@@ -49,7 +49,7 @@ typedef struct PlayerObject
 	char y;
 	/** Check if the Power up is active */
 	char isPowerUpActive;
-	/** Time in which the power up is active */
+	/** Remaining time in which the power up is active */
 	char powerUpRemainingTime;
 	
 	/** Type of the Power Up picked by the player*/
@@ -179,7 +179,7 @@ void decreasePowerUpRemaingTime();
 void detectCollisions();
 
 /**
- * Refreshes the LCD screen based on the state of the gameplay.
+ * Internal check for generating a object.
  * 
  * @note Internal Function
  */
@@ -218,13 +218,6 @@ void gmplRefreshDisplay();
  * @note Internal Function
  */
 void gmplMainPart();
-
-/**
- * Invokes the high score input screen.
- * 
- * @note Internal Function
- */
-void gmplHighScoreInput();
 
 /**
  * Initializes the game part based on the selected ship.

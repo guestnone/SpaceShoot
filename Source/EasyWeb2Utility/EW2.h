@@ -41,7 +41,7 @@
  */
 
 /** @defgroup Rand Random Number Generation
- *  ADC (CPU temperature) base pseudo-random number generation
+ *  ADC (CPU temperature) based pseudo-random number generation
  */ 
 
 /** @defgroup Utility Utility

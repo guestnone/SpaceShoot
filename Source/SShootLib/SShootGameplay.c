@@ -38,14 +38,17 @@
 /** Easier access to the barrier's custom character. */
 #define BARRIER_CHAR MSP_LCD_CUSTOM_CHAR_2
 
-
+/// Final Score that the player will get.
 long int score=0;
 
+/// Global timer for the game play.
 int gSlowdownTimer = 10000;
+/// Contains all internal game objects in the gameplay session
 GameObject gGameObjects[AMOUNT_OF_OBJECTS];
+/// Active player object in the gameplay session
 PlayerObject gPlayer;
-Bullet enemyBullets[AMOUNT_OF_ENEMY_BULLETS];
 
+Bullet enemyBullets[AMOUNT_OF_ENEMY_BULLETS];
 
 void shootEnemyBullets()
 {
@@ -399,19 +402,19 @@ void gmplRefreshDisplay()
 				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = BARRIER_CHAR;
 				break;
 			case enemyBullet:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 183; // 01111011
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 183;
 				break;
 			case hpPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'H'; // 11011001
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'H';
 				break;
 			case barrierPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'B'; // 1100011
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'B';
 				break;
 			case laserPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'L'; // 01001010
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'L';
 				break;
 			case decreaseSpeedPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'S'; // 01010001
+				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'S';
 				break;
 			}
 		}
@@ -421,7 +424,7 @@ void gmplRefreshDisplay()
 	{
 		if (gPlayer.playerBullets[pb].isDeleted == 0)
 		{
-			tmpDisplay[gPlayer.playerBullets[pb].y][gPlayer.playerBullets[pb].x] = 183; // 01111011
+			tmpDisplay[gPlayer.playerBullets[pb].y][gPlayer.playerBullets[pb].x] = 183;
 		}
 	}
 
