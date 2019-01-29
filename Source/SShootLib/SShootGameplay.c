@@ -62,7 +62,6 @@ void shootEnemyBullets()
 					break;
 				}
 			}
-          
 	}
 	
 }
@@ -134,7 +133,7 @@ void putObjectOnGamefield(char t)
 	TypeOfObject type = getRandomObjectType();
 	char y = getYPos();
 	if(t < 7)
-            type = t;
+			type = t;
 	for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
 	{
 		if (gGameObjects[i].isDeleted == 1)
@@ -316,26 +315,26 @@ void diodesLives(PlayerObject play)
 	if(play.lives >= 3)
 	{
 		diodesTurnOffAll();
-                diodesTurnOn(MSP_DIODES_STATUS);
-                diodesTurnOn(MSP_DIODES_RELAY_TYPE1);
-                diodesTurnOn(MSP_DIODES_RELAY_TYPE2);
-  	}
+		diodesTurnOn(MSP_DIODES_STATUS);
+		diodesTurnOn(MSP_DIODES_RELAY_TYPE1);
+		diodesTurnOn(MSP_DIODES_RELAY_TYPE2);
+	}
 	else if(play.lives == 2)
 	{
 		diodesTurnOffAll();
-                diodesTurnOn(MSP_DIODES_STATUS);
+		diodesTurnOn(MSP_DIODES_STATUS);
 		diodesTurnOn(MSP_DIODES_RELAY_TYPE1);
 	}
 	else if(play.lives == 1)
 	{
 		diodesTurnOffAll();
-    		diodesTurnOn(MSP_DIODES_STATUS);
+		diodesTurnOn(MSP_DIODES_STATUS);
 	}
 	else
 	{
 		diodesTurnOff(MSP_DIODES_STATUS);
-                diodesTurnOff(MSP_DIODES_RELAY_TYPE1);
-                diodesTurnOff(MSP_DIODES_RELAY_TYPE2);;
+		diodesTurnOff(MSP_DIODES_RELAY_TYPE1);
+		diodesTurnOff(MSP_DIODES_RELAY_TYPE2);;
 	}
 }
 
@@ -349,11 +348,11 @@ void gmplDisplayGameOver()
 		
 		lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 		for(j = 0; j < 16; j++)
- 			lcdSendCharacter(240);
+			lcdSendCharacter(240);
 	
 		lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE2);
- 		for(j = 0; j < 16; j++)
- 				lcdSendCharacter(240);
+		for(j = 0; j < 16; j++)
+				lcdSendCharacter(240);
 	
 		lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 		for(j = 0; j < 16; j++)
@@ -425,9 +424,8 @@ void gmplRefreshDisplay()
 			tmpDisplay[gPlayer.playerBullets[pb].y][gPlayer.playerBullets[pb].x] = 183; // 01111011
 		}
 	}
-        
-        
-        
+
+	
 	lcdSendCommand(MSP_LCD_DIRECT_DISPLAY_RAM_ADDRESS_LINE1);
 	for(int i = 0; i < 16; i++)
 		lcdSendCharacter(tmpDisplay[0][i]);
@@ -459,11 +457,11 @@ void gmplMainPart()
 				gSlowdownTimer -= 1000;
 			slowCounter = 0;
 		}
-                
+
 		// player barrier
 		
 		shootEnemyBullets();
-                decreasePowerUpRemaingTime();
+		decreasePowerUpRemaingTime();
 		
 		if(buttonsIsPressed(MSP_BUTTON_FIRST))
 		{
@@ -475,14 +473,14 @@ void gmplMainPart()
 		}
 		
 		detectCollisions();
-                
+
 		doIUpdateSlowElements=(doIUpdateSlowElements+1)%2;
 		doIGenarateAnObject=(doIGenarateAnObject+1)%6;
 		if(doIUpdateSlowElements==1)
 		{
 			updateSlowElementsPositions();            
 		}
-                
+
 		if(doIGenarateAnObject==5)
 			if(doIGenerateAnObject() == 1)
 			{
@@ -497,8 +495,7 @@ void gmplMainPart()
 		}
 		
 		gmplRefreshDisplay();
-                
-                
+
 		commonDelay(gSlowdownTimer);
 			slowCounter++;
 	}
@@ -557,7 +554,7 @@ ShipType gmplShipSelect()
 			ret = Third;
 			pressed = 1;
 		}
-		    
+		
 		if (buttonsIsPressed(MSP_BUTTON_FOURTH))
 		{
 			ret = Fourth;
@@ -580,7 +577,7 @@ void gmplSetUp(ShipType ship)
 	gPlayer.y = 0;
 	gPlayer.isPowerUpActive = 0;
 	gPlayer.isDead = 0;
-        
+
 	for(int i = 0; i<AMOUNT_OF_OBJECTS; ++i)
 	{
 		gGameObjects[i].isDeleted = 1;
@@ -590,10 +587,10 @@ void gmplSetUp(ShipType ship)
 	{
 		gPlayer.playerBullets[i].isDeleted = 1;
 	}
-        for(int i=0; i < AMOUNT_OF_ENEMY_BULLETS; i++)
-        {
-                enemyBullets[i].isDeleted=1; 
-        }
+	for(int i=0; i < AMOUNT_OF_ENEMY_BULLETS; i++)
+	{
+		enemyBullets[i].isDeleted=1; 
+	}
 
 	gSlowdownTimer = 30000;
 	

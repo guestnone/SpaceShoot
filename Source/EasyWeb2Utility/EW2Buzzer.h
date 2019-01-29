@@ -21,7 +21,7 @@ void initBuzzer();
 /**
  *  Emits the sound from the buzzer on the board. 
  *  
- *  @param [in] note Pitch from which the sound will be emited.
+ *  @param [in] note Pitch from which the sound will be emitted.
  *  @param [in] duration Emission time.
  */
 void buzzing(unsigned int note, unsigned int duration);

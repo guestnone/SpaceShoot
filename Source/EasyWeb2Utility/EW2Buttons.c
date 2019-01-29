@@ -19,9 +19,9 @@ void buttonsSetUpPorts()
 {
 	P4DIR &= ~(BIT4 // One
 	         | BIT5 // Two
-			 | BIT6 // Three
-			 | BIT7 // Four
-			 ); 
+	         | BIT6 // Three
+	         | BIT7 // Four
+	         ); 
 }
 
 bool buttonsIsPressed(int button)

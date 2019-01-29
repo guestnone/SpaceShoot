@@ -34,9 +34,9 @@
 #define MSP_LCD_COMMAND_ENTRYMODE_INCREMENT_WITH_ROLL       0x07
 #define MSP_LCD_COMMAND_ENTRYMODE_DECREMENT                 0x04
 #define MSP_LCD_COMMAND_ENTRYMODE_DECREMENT_WITH_ROLL       0x05
-/** Turn of display */
+/** Turn off the display */
 #define MSP_LCD_COMMAND_DISPLAY_OFF	                        0x08
-/** Turn on display */
+/** Turn on the display */
 #define MSP_LCD_COMMAND_DISPLAY_ON                          0x0c
 
 /** Moves the 16-element window onto left */
@@ -109,14 +109,6 @@ void lcdStartUp(void);
 
 /** Clears up the display */
 void lcdClearDisplay(void);
-
-/**
- * Uploads the custom defined character set to the Memory of the Character Generator
- *
- * @param      customCharSet    Arrary containing the character set
- * @param[in]  numOfCharacters  The number of characters to be send to the memory.
- */
-void lcdUploadCustomCharacters(char *customCharSet, unsigned int numOfCharacters);
 
 /** Sets the controller to first line of display */
 void lcdGoToFirstLine(void);

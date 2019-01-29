@@ -12,12 +12,13 @@
 
 #pragma once
 
-/** Custom boolean type (used to mostly shave a memory from linking a C standard libary) */
-typedef enum {true = 1, false = 0 } bool;
 
 /** @addtogroup Utility
  *  @{
  */
+
+/** Custom boolean type (used to mostly shave a memory from linking a C standard libary) */
+typedef enum {true = 1, false = 0 } bool;
 
 /**
  *  Delays the execution of the code by a given time.

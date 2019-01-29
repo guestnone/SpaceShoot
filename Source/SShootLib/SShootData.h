@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "SShootDebug.h"
 #include "SShootCommon.h"
 
 /** @addtogroup Data

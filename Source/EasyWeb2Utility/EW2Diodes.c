@@ -27,22 +27,19 @@ void diodesSwitch(int type)
 {
 	switch (type)
 	{
-		// Switch on/off the status diode
 	case MSP_DIODES_STATUS:
 		P2OUT ^= BIT1;
 		break;
-		// Switch on/off the relay diode
 	case MSP_DIODES_RELAY_TYPE1:
 		P1OUT ^= BIT5;
 		break;
-		// Switch on/off the relay diode
 	case MSP_DIODES_RELAY_TYPE2:
 		P1OUT ^= BIT6;
 		break;
 	}
 }
 
-//off all diodes
+
 void diodesTurnOffAll()
 {
 	P2OUT &= ~BIT1; 
@@ -52,41 +49,38 @@ void diodesTurnOffAll()
 
 void diodesTurnOn(int type)
 {
- switch (type)              // w zale¿noœci od tego, na ktorej diodzie pracujemy
-    {
-    case MSP_DIODES_STATUS:
-        P2OUT &= ~(1<<1);      //zapala diode 1
-        break;
-    case MSP_DIODES_RELAY_TYPE1:
-        P1OUT |= (1<<5);      //zapala diode 2
-        break;
+	switch (type)
+	{
+	case MSP_DIODES_STATUS:
+		P2OUT &= ~(1<<1);
+		break;
+	case MSP_DIODES_RELAY_TYPE1:
+		P1OUT |= (1<<5);
+		break;
     case MSP_DIODES_RELAY_TYPE2:
-        P1OUT |= (1<<6);      //zapala diode 3
-        break;
+		P1OUT |= (1<<6);
+		break;
 	default:
 		break;
-    }
+	}
 
 }
 
 void diodesTurnOff(int type)
 {
-  switch(type)
-    {
-    case MSP_DIODES_STATUS:
-        P2OUT |= (1<<1);      //wylaczanie diody 1
-        break;
-
-    case MSP_DIODES_RELAY_TYPE1:
-        P1OUT &= ~(1<<5);     //wylaczanie diody 2
-        break;
-
-    case MSP_DIODES_RELAY_TYPE2:
-        P1OUT &= ~(1<<6);     //wylaczanie diody 3
-        break;
+	switch(type)
+	{
+	case MSP_DIODES_STATUS:
+		P2OUT |= (1<<1);
+		break;
+	case MSP_DIODES_RELAY_TYPE1:
+		P1OUT &= ~(1<<5);
+		break;
+	case MSP_DIODES_RELAY_TYPE2:
+		P1OUT &= ~(1<<6); 
+		break;
 	default:
 		break;
-    }
-
+	}
 }
 

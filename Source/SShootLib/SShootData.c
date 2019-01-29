@@ -99,16 +99,16 @@ void dataSwitchCustomScreenCharset(ShipType ship)
 
 void playSoundForOn()
 {
-  buzzing(560, 80);
-  buzzing(560, 50);
-  buzzing(560, 50);
-  
-  buzzing(100, 30);
-  buzzing(100, 30);
-  buzzing(100, 30);
-  
-  buzzing(560, 80);
-  buzzing(560, 80);
+	buzzing(560, 80);
+	buzzing(560, 50);
+	buzzing(560, 50);
+	
+	buzzing(100, 30);
+	buzzing(100, 30);
+	buzzing(100, 30);
+	
+	buzzing(560, 80);
+	buzzing(560, 80);
 }
 
 void playSoundForSwitch()
