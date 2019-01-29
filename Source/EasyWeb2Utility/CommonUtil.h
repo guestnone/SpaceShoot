@@ -39,7 +39,7 @@ void commonTurnOffWatchdog(void);
 #define MSP_SET_BIT(var,bitno) ((var) |= 1 << (bitno))
 
 /**
- *  Sets the bit in the variable/address to a positive value.
+ *  Sets the bit in the variable/address to a negative value.
  *
  *  @param [in] var Given variable.
  *  @param [in] bitno Given bit in that variable.

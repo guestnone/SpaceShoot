@@ -57,7 +57,7 @@ typedef struct PlayerObject
 	/** Contains the bullets that were shot be the player */
 	Bullet playerBullets[2];
 	/** Check if the player is dead. */
-    char isDead;
+	char isDead;
 	
 	
 } PlayerObject;
@@ -126,7 +126,7 @@ char getYPos();
 
 /**
  * Gets the randomly generated object ID.
- * Used during creation a new field object
+ * Used during creation a new field object.
  *
  * @return     The object type.
  * 
@@ -186,12 +186,12 @@ void detectCollisions();
 char doIGenerateAnObject();
 
 /**
- * Update the number of lightened-up diodes with number of lifes
+ * Update the number of lightened-up diodes with number of life's
  *
  * @param[in]  play Current player.
  * 
  * @note Internal Function
- * If number of lifes is over or equal 3, all the diodes will be turned on.
+ * If number of life's is over or equal 3, all the diodes will be turned on.
  */
 void diodesLives(PlayerObject play);
 
@@ -199,7 +199,7 @@ void diodesLives(PlayerObject play);
 /**
  * @brief Displays the Game over screen.
  *
- * Flashes a few times and print a word "GAME OVER"
+ * Flashes a few times and prints a word "GAME OVER"
  *
  * @note Internal Function
  */

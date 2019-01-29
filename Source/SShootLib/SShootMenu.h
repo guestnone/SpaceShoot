@@ -16,7 +16,7 @@
 /**
  * Invokes the main menu and lets the player choose a game mode.
  *
- * @return     Value chosed by the player.
+ * @return     Value chosen by the player.
  */
 MainLoopState menuMainWindow();
 

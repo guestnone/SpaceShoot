@@ -16,14 +16,14 @@
  *  @{
  */
 
-/** Port used to perform trasmission to the connected device */
+/** Port used to perform transmission to the connected device */
 #define MSP_UART_TRANSMIT_PORT  0x10                 // P3.4
-/** Port used to recieve data from connected device */
+/** Port used to receive data from connected device */
 #define MSP_UART_RECIEVE_PORT   0x20                 // P3.5
 
 /** Buffers used to transmit data to connected device. */
 #define MSP_UART_TRANSMIT_BUFFER TXBUF0
-/** Buffers used to recieve data from connected device. */
+/** Buffers used to receive data from connected device. */
 #define MSP_UART_RECIEVE_BUFFER RXBUF0 
 
 /**
@@ -43,14 +43,14 @@ void uartSetUpPorts(void);
 void uartStartUp(unsigned int baudRate);
 
 /**
- * Sends one character to the recieving device.
+ * Sends one character to the receiving device.
  *
  * @param[in]  character  Given character
  */
 void uartTransmitCharacter(unsigned char character);
 
 /**
- * Sends the series of characters to the recieving device.
+ * Sends the series of characters to the receiving device.
  *
  * @param      string  Given set of characters.
  */
