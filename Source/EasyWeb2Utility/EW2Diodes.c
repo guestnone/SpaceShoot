@@ -49,3 +49,44 @@ void diodesTurnOffAll()
 	P1OUT &= ~BIT5;
 	P1OUT &= ~BIT6;
 }
+
+void diodesTurnOn(int type)
+{
+ switch (type)              // w zale¿noœci od tego, na ktorej diodzie pracujemy
+    {
+    case MSP_DIODES_STATUS:
+        P2OUT &= ~(1<<1);      //zapala diode 1
+        break;
+    case MSP_DIODES_RELAY_TYPE1:
+        P1OUT |= (1<<5);      //zapala diode 2
+        break;
+    case MSP_DIODES_RELAY_TYPE2:
+        P1OUT |= (1<<6);      //zapala diode 3
+        break;
+	default:
+		break;
+    }
+
+}
+
+void diodesTurnOff(int type)
+{
+  switch(type)
+    {
+    case MSP_DIODES_STATUS:
+        P2OUT |= (1<<1);      //wylaczanie diody 1
+        break;
+
+    case MSP_DIODES_RELAY_TYPE1:
+        P1OUT &= ~(1<<5);     //wylaczanie diody 2
+        break;
+
+    case MSP_DIODES_RELAY_TYPE2:
+        P1OUT &= ~(1<<6);     //wylaczanie diody 3
+        break;
+	default:
+		break;
+    }
+
+}
+

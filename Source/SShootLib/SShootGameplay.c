@@ -96,12 +96,12 @@ TypeOfObject getRandomObjectType()
 	{
 		randChangeLowerLimit(0);
 
-		randChangeUpperLimit(98);
+		randChangeUpperLimit(105);
 	}
 	else
 	{
 		randChangeLowerLimit(0);
-		randChangeUpperLimit(105);
+		randChangeUpperLimit(84);
 	}
         
 	int result = randGet();
@@ -129,10 +129,12 @@ TypeOfObject getRandomObjectType()
 
 }
 
-void putObjectOnGamefield()
+void putObjectOnGamefield(char t)
 {
 	TypeOfObject type = getRandomObjectType();
 	char y = getYPos();
+	if(t < 7)
+            type = t;
 	for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
 	{
 		if (gGameObjects[i].isDeleted == 1)
@@ -195,7 +197,11 @@ void pickUpPowerUp(PowerUp powerup)
 	switch(powerup)
 	{
 		case hp:
-			gPlayer.lives++;
+			if(gPlayer.lives<3)
+			{
+				gPlayer.lives++;
+				diodesLives(gPlayer);
+			}
 		break;
 		case barrier:
 			gPlayer.powerUpRemainingTime=POWER_UP_MAX_TIME;
@@ -268,7 +274,7 @@ void detectCollisions()
 		{
 			if (gGameObjects[i].isDeleted == 0 && gGameObjects[i].type == enemy
 				&& gPlayer.playerBullets[u].isDeleted == 0
-				&& gGameObjects[i].x == gPlayer.playerBullets[u].x
+				&& gGameObjects[i].x - gPlayer.playerBullets[u].x < 2
 				&& gGameObjects[i].y == gPlayer.playerBullets[u].y )
 			{
 				// enemy
@@ -281,7 +287,7 @@ void detectCollisions()
 				&& gPlayer.isPowerUpActive==1 
 				&& gPlayer.powerup == laser
 				&& gPlayer.playerBullets[u].isDeleted == 0
-				&& gGameObjects[i].x == gPlayer.playerBullets[u].x
+				&& gGameObjects[i].x - gPlayer.playerBullets[u].x < 2
 				&& gGameObjects[i].y == gPlayer.playerBullets[u].y)
 			{
 				// barrier
@@ -310,20 +316,26 @@ void diodesLives(PlayerObject play)
 	if(play.lives >= 3)
 	{
 		diodesTurnOffAll();
-		diodesSwitch(MSP_DIODES_RELAY_TYPE1);
-		diodesSwitch(MSP_DIODES_RELAY_TYPE2);
+                diodesTurnOn(MSP_DIODES_STATUS);
+                diodesTurnOn(MSP_DIODES_RELAY_TYPE1);
+                diodesTurnOn(MSP_DIODES_RELAY_TYPE2);
   	}
 	else if(play.lives == 2)
 	{
-		diodesSwitch(MSP_DIODES_RELAY_TYPE1);
+		diodesTurnOffAll();
+                diodesTurnOn(MSP_DIODES_STATUS);
+		diodesTurnOn(MSP_DIODES_RELAY_TYPE1);
 	}
 	else if(play.lives == 1)
 	{
-    		diodesSwitch(MSP_DIODES_RELAY_TYPE2);
+		diodesTurnOffAll();
+    		diodesTurnOn(MSP_DIODES_STATUS);
 	}
 	else
 	{
-		diodesSwitch(MSP_DIODES_STATUS);
+		diodesTurnOff(MSP_DIODES_STATUS);
+                diodesTurnOff(MSP_DIODES_RELAY_TYPE1);
+                diodesTurnOff(MSP_DIODES_RELAY_TYPE2);;
 	}
 }
 
@@ -430,7 +442,7 @@ void gmplMainPart()
 	char doIUpdateSlowElements = 0;
 	char doIGenarateAnObject = 0;
 	int slowCounter = 0;
-	putObjectOnGamefield();
+	putObjectOnGamefield(4);
 	while (1)
 	{
 		if (buttonsIsPressed(MSP_BUTTON_FOURTH))
@@ -450,6 +462,9 @@ void gmplMainPart()
                 
 		// player barrier
 		
+		shootEnemyBullets();
+                decreasePowerUpRemaingTime();
+		
 		if(buttonsIsPressed(MSP_BUTTON_FIRST))
 		{
 			gPlayer.y=(gPlayer.y+1)%2;
@@ -460,8 +475,6 @@ void gmplMainPart()
 		}
 		
 		detectCollisions();
-		
-                decreasePowerUpRemaingTime();
                 
 		doIUpdateSlowElements=(doIUpdateSlowElements+1)%2;
 		doIGenarateAnObject=(doIGenarateAnObject+1)%6;
@@ -473,7 +486,7 @@ void gmplMainPart()
 		if(doIGenarateAnObject==5)
 			if(doIGenerateAnObject() == 1)
 			{
-				putObjectOnGamefield();
+				putObjectOnGamefield(7);
 			}
 		updateFastElementsPositions();
 		
