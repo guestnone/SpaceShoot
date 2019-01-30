@@ -104,16 +104,6 @@ typedef struct GameObject
 void shootPlayerBullet(char y);
 
 /**
- * Handles creation of the enemy's bullet.
- *
- * @param[in]  x     Enemy's current X position
- * @param[in]  y     Enemy's current X position
- * 
- * @note Internal Function
- */
-void shootEnemyBullet(char x, char y);
-
-/**
  * Gets the random Y position.
  *
  * Used during non-player object placement.
@@ -139,7 +129,7 @@ TypeOfObject getRandomObjectType();
  * 
  * @note Internal Function
  */
-void putObjectOnGamefield();
+void putObjectOnGamefield(/*char t*/);
 
 /**
  * Updates the positions of the enemy bullets.

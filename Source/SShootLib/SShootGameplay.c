@@ -27,7 +27,7 @@
 /** Amount of the player bullets that can be spawned at the same time. */
 #define POWER_UP_MAX_TIME 30
 /** Maximum time of the activated power-up. */
-#define SPEED_DECREASE 10
+#define SPEED_DECREASE 1000
 /** Amount of the delay value for which the speed will be slowed down. */
 #define TIME_DELAY_INCREASE_VALUE 3000 
 
@@ -49,25 +49,6 @@ GameObject gGameObjects[AMOUNT_OF_OBJECTS];
 PlayerObject gPlayer;
 
 Bullet enemyBullets[AMOUNT_OF_ENEMY_BULLETS];
-
-void shootEnemyBullets()
-{
-	for(int u=0;u<AMOUNT_OF_OBJECTS ; u++) 
-	{
-		if(gGameObjects[u].type==barrier)
-			for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
-			{
-				if (gGameObjects[i].isDeleted == 1)
-				{
-					gGameObjects[i].isDeleted = 0;
-					gGameObjects[i].y = gGameObjects[u].y;
-					gGameObjects[i].x = gGameObjects[u].x;
-					break;
-				}
-			}
-	}
-	
-}
 
 void shootPlayerBullet(char y)
 {
@@ -123,20 +104,16 @@ TypeOfObject getRandomObjectType()
 	{
 		return barrierPowerUp;
 	}
-	else if (result <= 100)
-	{
-		return laserPowerUp;
-	}
 	return decreaseSpeedPowerUp;
 
 }
 
-void putObjectOnGamefield(char t)
+void putObjectOnGamefield(/*char t*/)
 {
 	TypeOfObject type = getRandomObjectType();
 	char y = getYPos();
-	if(t < 7)
-			type = t;
+	//if(t < 7)
+		//	type = t;
 	for (int i=0; i<AMOUNT_OF_OBJECTS; ++i)
 	{
 		if (gGameObjects[i].isDeleted == 1)
@@ -210,11 +187,6 @@ void pickUpPowerUp(PowerUp powerup)
 			gPlayer.isPowerUpActive=1;
 			gPlayer.powerup=barrier;
 		break;
-		case laser:
-			gPlayer.powerUpRemainingTime=POWER_UP_MAX_TIME;
-			gPlayer.isPowerUpActive=1;
-			gPlayer.powerup=laser;
-		break;
 		case speed:
 			gPlayer.powerUpRemainingTime=POWER_UP_MAX_TIME;
 			gSlowdownTimer += TIME_DELAY_INCREASE_VALUE;
@@ -261,10 +233,6 @@ void detectCollisions()
 					pickUpPowerUp(barrier);
 					gGameObjects[i].isDeleted = 1;
 					break;
-				case laserPowerUp:
-					pickUpPowerUp(laser);
-					gGameObjects[i].isDeleted = 1;
-					break;
 				case decreaseSpeedPowerUp:
 					pickUpPowerUp(speed);
 					gGameObjects[i].isDeleted = 1;
@@ -284,20 +252,6 @@ void detectCollisions()
 				gPlayer.playerBullets[u].isDeleted=1;
 				score += 5;
 			}
-			if (gGameObjects[i].isDeleted == 0 
-				&& gGameObjects[i].type == barrier
-				&& gPlayer.isPowerUpActive==1 
-				&& gPlayer.powerup == laser
-				&& gPlayer.playerBullets[u].isDeleted == 0
-				&& gGameObjects[i].x - gPlayer.playerBullets[u].x < 2
-				&& gGameObjects[i].y == gPlayer.playerBullets[u].y)
-			{
-				// barrier
-				gGameObjects[i].isDeleted=1;
-				gPlayer.playerBullets[u].isDeleted = 1;
-				score += 10;
-			}
-			
 		}
                
 	}
@@ -410,9 +364,6 @@ void gmplRefreshDisplay()
 			case barrierPowerUp:
 				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'B';
 				break;
-			case laserPowerUp:
-				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'L';
-				break;
 			case decreaseSpeedPowerUp:
 				tmpDisplay[gGameObjects[go].y][gGameObjects[go].x] = 'S';
 				break;
@@ -443,7 +394,7 @@ void gmplMainPart()
 	char doIUpdateSlowElements = 0;
 	char doIGenarateAnObject = 0;
 	int slowCounter = 0;
-	putObjectOnGamefield(4);
+	putObjectOnGamefield();
 	while (1)
 	{
 		if (buttonsIsPressed(MSP_BUTTON_FOURTH))
@@ -463,7 +414,6 @@ void gmplMainPart()
 
 		// player barrier
 		
-		shootEnemyBullets();
 		decreasePowerUpRemaingTime();
 		
 		if(buttonsIsPressed(MSP_BUTTON_FIRST))
@@ -487,7 +437,7 @@ void gmplMainPart()
 		if(doIGenarateAnObject==5)
 			if(doIGenerateAnObject() == 1)
 			{
-				putObjectOnGamefield(7);
+				putObjectOnGamefield();
 			}
 		updateFastElementsPositions();
 		
