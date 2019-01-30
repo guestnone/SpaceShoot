@@ -210,7 +210,7 @@ void detectCollisions()
 	int i; int u;
 	for (i=0; i<AMOUNT_OF_OBJECTS; ++i)
 	{
-		//collision of player with enemy items
+		//collision of player with enemies and items items
 		if (gGameObjects[i].isDeleted == 0 && gGameObjects[i].x == 0 && gGameObjects[i].y == gPlayer.y )
 		{
 			switch (gGameObjects[i].type)
