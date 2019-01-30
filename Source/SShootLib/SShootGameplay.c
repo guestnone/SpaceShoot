@@ -25,7 +25,7 @@
 /** Amount of the enemy bullets that can be spawned at the same time. */
 #define AMOUNT_OF_ENEMY_BULLETS 2
 /** Amount of the player bullets that can be spawned at the same time. */
-#define POWER_UP_MAX_TIME 10
+#define POWER_UP_MAX_TIME 30
 /** Maximum time of the activated power-up. */
 #define SPEED_DECREASE 10
 /** Amount of the delay value for which the speed will be slowed down. */
